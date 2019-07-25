@@ -28,6 +28,7 @@ public class BossController : EnemyCQC {
         healthBar.value = health;
         SwitchAttackIntension();
         EnableBehaviour();
+        ChangeBlockColorAtRandom();
         if(missileCount >= 5)
         {
             isRangeMode = false;

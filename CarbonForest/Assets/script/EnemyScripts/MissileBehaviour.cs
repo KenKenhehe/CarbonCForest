@@ -54,7 +54,10 @@ public class MissileBehaviour : MonoBehaviour {
                     player.GetComponent<PlayerMovement>().facingRight != FindObjectOfType<BossController>().facingRight)
                 {
                     FindObjectOfType<ShakeController>().CamShake();
-                    RetargetToBoss();
+                    if (target != null)
+                    {
+                        RetargetToBoss();
+                    }
                 }
                 else
                 {
@@ -92,6 +95,7 @@ public class MissileBehaviour : MonoBehaviour {
     void RetargetToBoss()
     {
         target = FindObjectOfType<BossController>().gameObject;
+        
         targetPlayer = false;
         rotateSpeed += Random.Range(1000, 2000);
     }

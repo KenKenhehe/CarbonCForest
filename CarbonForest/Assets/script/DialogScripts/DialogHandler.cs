@@ -51,6 +51,7 @@ public class DialogHandler : MonoBehaviour {
         if(sentences.Count == 0)
         {
             EndDialog();
+            StopAllCoroutines();
             return;
         }
         string sentence = sentences.Dequeue();
@@ -66,7 +67,6 @@ public class DialogHandler : MonoBehaviour {
         animator.SetBool("IsOpen", false);
         player.enabled = true;
         player.ReactivateControl();
-
     }
 
     IEnumerator typeSentence(string s)
