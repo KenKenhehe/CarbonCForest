@@ -6,10 +6,12 @@ public class PlayerHeavyAttack : MonoBehaviour {
     public float HeavyAttackRange = 1.5f;
     public int HeavyAttackDamage = 6;
     PlayerAttack playerAttack;
+    Animator animator;
     
 	// Use this for initialization
 	void Start () {
         playerAttack = GetComponent<PlayerAttack>();
+        animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -22,7 +24,7 @@ public class PlayerHeavyAttack : MonoBehaviour {
         if (Input.GetButtonDown("Fire3"))
         {
             playerAttack.attacking = true;
-            playerAttack.PlayHeavyAttackAni();
+            playerAttack.currentWeapon.PlayHeavyAttackAnimationOnAttackNum(animator);
         }
     }
 

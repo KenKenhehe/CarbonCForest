@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour {
-    public int currentWeaponNum = 1;
+    public int currentWeaponNum = 0;
+    public int currentWeaponCount = 1;
 
     public float friction = 600;
     public bool attacking;
 
-    public float attack1Range = 0.4f;
+    public float attack1Range = 1f;
     public float attack2Range = 1;
     public float attack3Range = 1.53f;
 
@@ -34,12 +35,9 @@ public class PlayerAttack : MonoBehaviour {
 
     Animator animator;
 
-    public enum Weapon{Sword, Spear, Bike};
+    public Weapon[] weapons;
     public Weapon currentWeapon;
 
-    public RuntimeAnimatorController weapon1Controller;
-    public RuntimeAnimatorController weapon2Controller;
-    public RuntimeAnimatorController weapon3Controller;
     Rigidbody2D rb2d;
     PlayerMovement playerMovement;
     BoxCollider2D bx2d;
@@ -47,33 +45,18 @@ public class PlayerAttack : MonoBehaviour {
     ShakeController shakeController;
     SpriteRenderer renderer;
     CameraControl cameraControl;
-    public string[] attackTriggerNames = new string[] { "Attack", "Attack2", "Attack3"};
-    public string[] spearAttackTriggerNames = new string[] { "Attack", "Attack2", "Attack3", "Attack4", "Attack5" };
-    public string[] HeavyAttackTriggerNames = new string[] { "HeavyAttack1", "HeavyAttack2", "HeavyAttack3" };
-
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
-
-        if(currentWeapon == Weapon.Sword)
-        {
-            animator.runtimeAnimatorController = weapon1Controller;
-        }
-        else if (currentWeapon == Weapon.Spear)
-        {
-            animator.runtimeAnimatorController = weapon2Controller;
-            attack1Range = 1.5f;
-            attack2Range = 1.6f;
-            attack3Range = 4.25f;
-            attack1Damage = 1;
-            attack2Damage = 1;
-            attack3Damage = 2;
-        }
+        currentWeapon = weapons[currentWeaponNum];
+        animator.runtimeAnimatorController = currentWeapon.animatorController;
+        
         rb2d = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
         bx2d = GetComponent<BoxCollider2D>();
         shakeController = FindObjectOfType<ShakeController>();
         renderer = GetComponent<SpriteRenderer>();
+        
     }
 	
 	// Update is called once per frame
@@ -86,41 +69,22 @@ public class PlayerAttack : MonoBehaviour {
         if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.J))
         {
             attacking = true;
-            if (currentWeapon == Weapon.Spear)
-            {
-                PlaySpearAttackAnimationOnAttackNum();
-                
-            }
-            else if(currentWeapon == Weapon.Sword)
-            {
-                attack1Range = 0.4f;
-                attack2Range = 1;
-                attack3Range = 1.53f;
-                PlayAttackAnimationOnAttackNum();
-               
-            }
+            currentWeapon.PlayAttackAnimationOnAttackNum(animator);
         }
-        if(currentWeapon == Weapon.Spear && Input.GetKeyDown(KeyCode.E) )
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            currentWeapon = Weapon.Sword;
-            animator.runtimeAnimatorController = weapon1Controller;
-            attack1Range = 0.4f;
-            attack2Range = 1;
-            attack3Range = 1.53f;
-            attack1Damage = 2;
-            attack2Damage = 2;
-            attack3Damage = 4;
-        }
-        else if(currentWeapon == Weapon.Sword && Input.GetKeyDown(KeyCode.E))
-        {
-            currentWeapon = Weapon.Spear;
-            animator.runtimeAnimatorController = weapon2Controller;
-            attack1Range = 1.5f;
-            attack2Range = 1.6f;
-            attack3Range = 4.25f;
-            attack1Damage = 1;
-            attack2Damage = 1;
-            attack3Damage = 2;
+
+            if (currentWeaponNum >= currentWeaponCount)
+            {
+                currentWeaponNum = 0;
+            }
+            else
+            {
+                currentWeaponNum += 1;
+            }
+            currentWeapon = weapons[currentWeaponNum];
+            animator.runtimeAnimatorController = currentWeapon.animatorController;
         }
 
         if (attacking == true)
@@ -130,29 +94,7 @@ public class PlayerAttack : MonoBehaviour {
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
             || animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
         {
-            foreach(string attackTriggerName in attackTriggerNames)
-            {
-                if(attackTriggerName != "Attack")
-                {
-                    animator.ResetTrigger(attackTriggerName);
-                }
-            }
-
-            foreach (string HeavyAttackName in HeavyAttackTriggerNames)
-            {
-                if (HeavyAttackName != "HeavyAttack1")
-                {
-                    animator.ResetTrigger(HeavyAttackName);
-                }
-            }
-            foreach (string spearAttackTriggerName in spearAttackTriggerNames)
-            {
-                if (spearAttackTriggerName != "Attack")
-                {
-                    animator.ResetTrigger(spearAttackTriggerName);
-                }
-            }
-
+            currentWeapon.resetTriggerNames(animator);
         }
   
         if (attacking && playerMovement != null)
@@ -196,70 +138,10 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
-    //only plays the animation, damage is handled elsewhere...
-    void PlayAttackAnimationOnAttackNum()
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
-            || animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-        {
-            animator.SetTrigger(attackTriggerNames[0]);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("KinghtAttack1"))
-        {
-            animator.SetTrigger(attackTriggerNames[1]);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
-        {
-            animator.SetTrigger(attackTriggerNames[2]);
-        }
-    }
-
-    void PlaySpearAttackAnimationOnAttackNum()
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
-            || animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-        {
-            animator.SetTrigger(spearAttackTriggerNames[0]);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
-        {
-            animator.SetTrigger(spearAttackTriggerNames[1]);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
-        {
-            animator.SetTrigger(spearAttackTriggerNames[2]);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3"))
-        {
-            animator.SetTrigger(spearAttackTriggerNames[3]);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack4"))
-        {
-            animator.SetTrigger(spearAttackTriggerNames[4]);
-        }
-    }
-
-    public void PlayHeavyAttackAni()
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
-            || animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-        {
-            animator.SetTrigger(HeavyAttackTriggerNames[0]);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("HeavyAttack1"))
-        {
-            animator.SetTrigger(HeavyAttackTriggerNames[1]);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("HeavyAttack2"))
-        {
-            animator.SetTrigger(HeavyAttackTriggerNames[2]);
-        }
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position - new Vector3(attackRangeOffset, 0, 0), attack3Range);
+        //Gizmos.DrawWireSphere(transform.position - new Vector3(attackRangeOffset, 0, 0), attack3Range);
     }
 
     //AttackN are handled by animation event
@@ -269,21 +151,57 @@ public class PlayerAttack : MonoBehaviour {
         {
             FindObjectOfType<SoundFXHandler>().Play("SowrdSwing1");
         }
-        AttackAtRightTime(attack1Damage, attack1Range, .3f);
+        AttackAtRightTime(currentWeapon.attack1Damage,currentWeapon.attack1Range, .3f);
     }
 
     void Attack2()
     {
         if (FindObjectOfType<SoundFXHandler>() != null)
             FindObjectOfType<SoundFXHandler>().Play("SowrdSwing2");
-        AttackAtRightTime(attack2Damage, attack2Range, .4f);
+        AttackAtRightTime(currentWeapon.attack2Damage, currentWeapon.attack2Range, .4f);
     }
 
     void Attack3()
     {
         if (FindObjectOfType<SoundFXHandler>() != null)
-            FindObjectOfType<SoundFXHandler>().Play("SowrdSwing2");
-        AttackAtRightTime(attack3Damage, attack3Range, 1f);
+            FindObjectOfType<SoundFXHandler>().Play("SowrdSwing1");
+        AttackAtRightTime(currentWeapon.attack3Damage, currentWeapon.attack3Range, 1f);
+    }
+
+    void SpearAttack1()
+    {
+        if (FindObjectOfType<SoundFXHandler>() != null)
+        {
+            FindObjectOfType<SoundFXHandler>().Play("SwordSwing3");
+        }
+        AttackAtRightTime(currentWeapon.attack1Damage, currentWeapon.attack1Range, .3f);
+    }
+    void SpearAttack2()
+    {
+        if (FindObjectOfType<SoundFXHandler>() != null)
+            FindObjectOfType<SoundFXHandler>().Play("SwordSwing4");
+        AttackAtRightTime(currentWeapon.attack2Damage, currentWeapon.attack2Range, .4f);
+    }
+
+    void SpearAttack3()
+    {
+        if (FindObjectOfType<SoundFXHandler>() != null)
+            FindObjectOfType<SoundFXHandler>().Play("SwordSwing3");
+        AttackAtRightTime(currentWeapon.attack3Damage, currentWeapon.attack3Range, 1f);
+    }
+
+    void SpearAttack4()
+    {
+        if (FindObjectOfType<SoundFXHandler>() != null)
+            FindObjectOfType<SoundFXHandler>().Play("SwordSwing4");
+        AttackAtRightTime(currentWeapon.attack3Damage, currentWeapon.attack3Range, 1f);
+    }
+
+    void SpearAttack5()
+    {
+        if (FindObjectOfType<SoundFXHandler>() != null)
+            FindObjectOfType<SoundFXHandler>().Play("SwordSwing3");
+        AttackAtRightTime(currentWeapon.attack3Damage, currentWeapon.attack3Range, 1f);
     }
 
     void BikeAttack1()

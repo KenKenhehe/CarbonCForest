@@ -16,7 +16,7 @@ public class MotoController : Interactable {
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        if(SceneManager.GetActiveScene().buildIndex == 3)
+        if(SceneManager.GetActiveScene().name == "Chapter2")
         {
             animator.SetTrigger("Run");
         }
@@ -29,7 +29,7 @@ public class MotoController : Interactable {
 
     private void FixedUpdate()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 2)
+        if (SceneManager.GetActiveScene().name != "Chapter1.5")
         {
             BikeInput();
         }

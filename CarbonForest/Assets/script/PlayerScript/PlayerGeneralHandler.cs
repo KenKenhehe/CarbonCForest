@@ -59,7 +59,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
         blockController = GetComponent<BlockController>();
         healthPoints = startHealth;
         blockPoints = startBlockPoint;
-        if(SceneManager.GetActiveScene().buildIndex == 1)
+        if(SceneManager.GetActiveScene().buildIndex == 2)
         {
             GetComponent<PlayerAttack>().enabled = false;
             GetComponent<PlayerHeavyAttack>().enabled = false;
@@ -230,6 +230,15 @@ public class PlayerGeneralHandler : MonoBehaviour {
         GetComponent<PlayerHeavyAttack>().enabled = false;
         GetComponent<PlayerMovement>().enabled = false;
         GetComponent<BlockController>().enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+
+    public void ReactivateControl()
+    {
+        GetComponent<PlayerAttack>().enabled = true;
+        GetComponent<PlayerHeavyAttack>().enabled = true;
+        GetComponent<PlayerMovement>().enabled = true;
+        GetComponent<BlockController>().enabled = true;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 

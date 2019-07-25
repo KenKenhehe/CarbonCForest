@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyCQC : Enemy {
-    private ShakeController shakeController;   
+    protected ShakeController shakeController;   
     public bool withinAttackRange = false;
     public int blockDamageMultiplyer = 6;
     public GameObject blockBlob;
@@ -16,7 +16,7 @@ public class EnemyCQC : Enemy {
 
     protected  bool canAttack = true;
 
-    private float randHoldTime;
+    protected float randHoldTime;
 
     public int damage;
     public float shockForce = .5f;
@@ -30,7 +30,7 @@ public class EnemyCQC : Enemy {
     public float stunnedDuration = 4f;
     protected int colorState;
 
-    private float randomPatrolDir;
+    protected float randomPatrolDir;
     // Use this for initialization
     void Start () {
         Initialize();
@@ -67,6 +67,7 @@ public class EnemyCQC : Enemy {
             blockBar.fillAmount = blockPoint / maxBlockPoint;
         }
         StartCoroutine(ChangePatrolDir());
+        ChangeBlockColorAtRandom();
     }
 
     public virtual void EnableBehaviour()
@@ -82,7 +83,7 @@ public class EnemyCQC : Enemy {
         }
     }
 
-    void MoveToPlayerWithRandomRate()
+    public void MoveToPlayerWithRandomRate()
     {
         if (randHoldTime <= 0 && canAttack == true && canMove == true)
         {
@@ -98,16 +99,17 @@ public class EnemyCQC : Enemy {
         }
     }
 
-    void AttackPlayerAtRate()
+    public void AttackPlayerAtRate()
     {
         if (attackRate <= 0)
         {
             AttackPlayer();
             attackRate = Random.Range(.3f, 1.5f);
-            if (blockColorRenderer.color.a > 0)
+            /*if (blockColorRenderer.color.a > 0)
             {
                 ChangeBlockColorAtRandom();
-            }
+            }*/
+
         }
         else
         {
@@ -152,7 +154,6 @@ public class EnemyCQC : Enemy {
             
                 if(blockPoint <= 0)
                 {
-                   
                     FindObjectOfType<SoundFXHandler>().Play("ParrySuccess");
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
                     shakeController.CamBigShake();
@@ -259,7 +260,7 @@ public class EnemyCQC : Enemy {
         }
     }
 
-    void ChangeBlockColorAtRandom()
+    public void ChangeBlockColorAtRandom()
     {
         if(colorState == 0)
         {
@@ -289,7 +290,7 @@ public class EnemyCQC : Enemy {
         //renderer.color = Color.white;
     }
 
-    IEnumerator TakeDamageForAWhile()
+    public IEnumerator TakeDamageForAWhile()
     {
         canAttack = false;
         yield return new WaitForSeconds(2);

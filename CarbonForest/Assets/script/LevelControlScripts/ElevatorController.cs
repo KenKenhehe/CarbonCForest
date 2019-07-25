@@ -10,7 +10,7 @@ public class ElevatorController : Interactable {
     public Color glassColor;
 
     Rigidbody2D rb2d;
-    Vector2 dir;
+    public Vector2 dir = new Vector2(0,-1);
     CameraControl cameraControl;
     SpriteRenderer glassRenderer;
     Animator animator;
@@ -18,7 +18,7 @@ public class ElevatorController : Interactable {
 	// Use this for initialization
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
-        dir = new Vector2(0, -1);
+        //dir = new Vector2(0, -1);
         cameraControl = FindObjectOfType<CameraControl>();
         animator = GetComponent<Animator>();
 	}
@@ -27,7 +27,8 @@ public class ElevatorController : Interactable {
 	void Update () {
         if(transform.position.y >= upY && isActive == false)
         {
-            FindObjectOfType<DoorController>().SetToCanOpen("DoorOpenAfterLiftReach");
+            if(FindObjectOfType<DoorController>() != null)
+                FindObjectOfType<DoorController>().SetToCanOpen("DoorOpenAfterLiftReach");
         }
 	}
 
@@ -78,7 +79,6 @@ public class ElevatorController : Interactable {
     {
         isActive = true;
         dir *= -1;
-        
     }
 
     public override void Interact()

@@ -7,7 +7,7 @@ public class PlayerData
 {
     public int currentLevel;
     public float currentHealth;
-    public int currentWeaponNum;
+    public int currentWeaponCount;
     public float[] position = new float[3];
 
     public PlayerData(PlayerGeneralHandler player)

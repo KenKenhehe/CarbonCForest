@@ -39,6 +39,7 @@ public class BulletController : MonoBehaviour {
         if(collision.gameObject.GetComponent<PlayerAttack>() != null)
         {
             GameObject player = collision.gameObject;
+            PlayerGeneralHandler playerGeneralHandler = player.GetComponent<PlayerGeneralHandler>();
             if (player.GetComponent<BlockController>().blocking == false && 
                 player.GetComponent<PlayerMovement>().dodging == false)
             {
@@ -48,7 +49,7 @@ public class BulletController : MonoBehaviour {
             else if(player.GetComponent<BlockController>().blocking == true)
             {
                 FindObjectOfType<SoundFXHandler>().Play("SwordCling1");
-                player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, 0, enemy);
+                player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, playerGeneralHandler.colorState, enemy);
                 rb2d.velocity = -moveDirection;
                 rb2d.velocity = new Vector2(rb2d.velocity.x * 1.5f, Random.Range(-10f, 10f));
             }
