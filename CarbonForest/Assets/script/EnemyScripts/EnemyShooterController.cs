@@ -117,7 +117,7 @@ public class EnemyShooterController : Enemy {
         
     }
 
-    void MoveTowardsPlayer()
+    public void MoveTowardsPlayer()
     {
         if (rb2d.velocity.y < 0)
         {

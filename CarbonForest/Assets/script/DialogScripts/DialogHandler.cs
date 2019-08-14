@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DialogHandler : MonoBehaviour {
     public Text dialogText;
-    public Text nameText;
+    public GameObject continueButton;
     private Queue<string> sentences;
     public float dialogFreq;
     public GameObject cinamicFX;
@@ -18,11 +18,12 @@ public class DialogHandler : MonoBehaviour {
 	void Start () {
         player = FindObjectOfType<PlayerGeneralHandler>();
         sentences = new Queue<string>();
+        continueButton.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetButtonDown("Interact"))
         {
             DisplayNextSentence();
         }
@@ -33,17 +34,17 @@ public class DialogHandler : MonoBehaviour {
         cinamicFX.GetComponent<Animator>().SetBool("IsOpen", true);
         animator.SetBool("IsOpen", true);
         sentences.Clear();
-        nameText.text = dialog.name;
         foreach (string sentence in dialog.sentences)
         {
             sentences.Enqueue(sentence);
         }
-        
         player.DeactivateControl();
         player.enabled = false;
         player.GetComponent<Animator>().SetBool("isWalking", false);
+        player.GetComponent<Animator>().SetBool("Defending", false);
+        player.GetComponent<Animator>().SetBool("DefendWalkForward", false);
+        player.GetComponent<Animator>().SetBool("DefendWalkBackward", false);
         DisplayNextSentence();
-        
     }
 
     public void DisplayNextSentence()
@@ -75,8 +76,20 @@ public class DialogHandler : MonoBehaviour {
         foreach(char c in s.ToCharArray())
         {
             dialogText.text += c;
-            FindObjectOfType<SoundFXHandler>().Play("Type");
-            yield return new WaitForSeconds(.03f);
+            if (dialogText.text.ToCharArray().Length %5 == 0)
+            {
+                print("Type Sound");
+                FindObjectOfType<SoundFXHandler>().Play("Type");
+            }
+            if(dialogText.text.ToCharArray().Length >= 5)
+            {
+                continueButton.SetActive(true);
+            }
+            else
+            {
+                continueButton.SetActive(false);
+            }
+            yield return new WaitForSeconds(.02f);
         }
     }
 
@@ -86,8 +99,7 @@ public class DialogHandler : MonoBehaviour {
         {
             DisplayNextSentence();
             
-            yield return new WaitForSeconds(dialogFreq);
-            
+            yield return new WaitForSeconds(dialogFreq);     
         }
         EndDialog();
     }

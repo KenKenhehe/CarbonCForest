@@ -59,11 +59,12 @@ public class TutorialManager : MonoBehaviour {
     {
         if(collision.gameObject.GetComponent<PlayerGeneralHandler>() != null)
         {
+            GameObject player = collision.gameObject;
             GetComponent<BoxCollider2D>().size = Vector2.zero;
             if (hasBlock == false)
             {
                 blockHint = 
-                    Instantiate(blockHint, collision.gameObject.transform.position, Quaternion.identity, collision.transform);
+                    Instantiate(blockHint, player.transform.position, Quaternion.identity, collision.transform);
                 hasBlock = true;
                 blockHint.gameObject.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
             }
@@ -71,7 +72,7 @@ public class TutorialManager : MonoBehaviour {
             else if(hasBlock == true && hasAttack == false)
             {
                 HeavyAttackHint =
-                    Instantiate(HeavyAttackHint, collision.gameObject.transform.position, Quaternion.identity, collision.transform);
+                    Instantiate(HeavyAttackHint, player.transform.position, Quaternion.identity, collision.transform);
                 
                 HeavyAttackHint.gameObject.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
 

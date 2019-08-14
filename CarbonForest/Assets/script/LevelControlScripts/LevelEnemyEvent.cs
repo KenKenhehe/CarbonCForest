@@ -9,6 +9,7 @@ public class LevelEnemyEvent : MonoBehaviour {
     public float spawnPositionMinX;
     public float spawnPositionMaxX;
     public float yPosition;
+    public float zOffset = -1;
     public float offset;
     PlayerGeneralHandler player;
 
@@ -38,7 +39,7 @@ public class LevelEnemyEvent : MonoBehaviour {
         {
             GameObject enemyObject = Instantiate(
                 enemyToSpawn, 
-                new Vector3(Random.Range(spawnPositionMinX, spawnPositionMaxX), yPosition, -1), 
+                new Vector3(Random.Range(spawnPositionMinX, spawnPositionMaxX), yPosition, zOffset), 
                 Quaternion.identity);
 
             yield return new WaitForSeconds(spawnRate);

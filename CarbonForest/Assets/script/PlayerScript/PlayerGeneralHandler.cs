@@ -42,6 +42,8 @@ public class PlayerGeneralHandler : MonoBehaviour {
     private Animator animator;
     private SpriteRenderer renderer;
 
+    private ShakeController shakeController;
+
     private GameStateSwitch gameSwitch;
     private CounterAttackController counterAttack;
     private Animator blockAnimator;
@@ -49,6 +51,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
     public int colorState = 0; //0: white, 1: blue
     // Use this for initialization
     void Start () {
+        shakeController = FindObjectOfType<ShakeController>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         animator = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
@@ -94,7 +97,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
             if (interactable != null)
             {
                 interactable.OnClose();
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetButtonDown("Interact"))
                 {
                     interactable.Interact();
                 }
@@ -198,6 +201,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
                 StartCoroutine(StunnedAndRecover());
                 blockController.DisableBlocking();
                 blockController.blocking = false;
+               
             }
         }
     }
@@ -253,7 +257,9 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     IEnumerator StunnedAndRecover()
     {
-        renderer.color = Color.red;
+        Time.timeScale = .01f;
+        FindObjectOfType<SoundFXHandler>().Play("EnemyParry");
+        //renderer.color = Color.red;
         GetComponent<PlayerMovement>().enabled = false;
         GetComponent<PlayerHeavyAttack>().enabled = false;
         GetComponent<Rigidbody2D>().velocity *= .1f;
@@ -262,7 +268,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
         canBlock = true;
         CheckIfInTutAndEnableAttack();
         GetComponent<PlayerMovement>().enabled = true;
-        renderer.color = OriginColor;
+        //renderer.color = OriginColor;
     }
 
     //if still in blocking tutorial, nothing can enable attack yet
@@ -317,7 +323,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     public void ShakeCamOnAni()
     {
-        FindObjectOfType<ShakeController>().CamShake();
+        shakeController.CamShake();
     }
 
     public float GetHelthPoint()

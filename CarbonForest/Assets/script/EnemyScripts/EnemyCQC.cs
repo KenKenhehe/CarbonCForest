@@ -129,7 +129,7 @@ public class EnemyCQC : Enemy {
     public virtual void ApplyDamage()
     {
         FindObjectOfType<SoundFXHandler>().Play("EnemySwordSwing");
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + (new Vector3(1,0,0) * (facingRight ? 1 : -1)), attackRange);
         foreach(Collider2D collider in colliders)
         {
             if(collider.GetComponent<PlayerGeneralHandler>() != null)

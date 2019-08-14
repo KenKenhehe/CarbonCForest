@@ -91,7 +91,6 @@ public class BossController : EnemyCQC {
         StartCoroutine(HoldAndMove());
     }
 
-    // Use this for initialization
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
@@ -124,6 +123,10 @@ public class BossController : EnemyCQC {
             intensionSwitchTime = 0;
             isRangeMode = Random.Range(0, 2) == 1 ? true : false;
             colorState = Random.Range(0, 2);
+            if (blockColorRenderer.color.a > 0)
+            {
+               ChangeBlockColorAtRandom();
+            }
         }
     }
     
