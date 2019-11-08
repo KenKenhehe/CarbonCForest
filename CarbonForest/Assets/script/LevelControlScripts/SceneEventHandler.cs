@@ -18,8 +18,9 @@ public class SceneEventHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (PauseMenu.GameIsPause == false)
+        if (PauseMenu.GameIsPause == false && TutorialManagerZero.InTutorial == false)
         {
+            print("reset");
             ResetTime();
         }
        // CountDown();

@@ -9,6 +9,7 @@ public class EnemyCQC : Enemy {
     public int blockDamageMultiplyer = 6;
     public GameObject blockBlob;
     public GameObject blockExplosionFX;
+    public GameObject parryBoomFX;
     public Color blockWhite;
     public Color blockBlue;
 
@@ -154,8 +155,13 @@ public class EnemyCQC : Enemy {
             
                 if(blockPoint <= 0)
                 {
+                    if(parryBoomFX != null)
+                    {
+                        GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
+                    }
                     FindObjectOfType<SoundFXHandler>().Play("ParrySuccess");
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
+
                     shakeController.CamBigShake();
                     Time.timeScale = .001f;
                     collider.GetComponent<PlayerGeneralHandler>().CallPowerUp();

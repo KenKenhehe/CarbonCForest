@@ -9,13 +9,13 @@ public class BulletController : MonoBehaviour {
     public EnemyShooterController enemy = new EnemyShooterController();
     public int damage = 10;
     Vector2 moveDirection;
-
+    bool hasBolcked = false;
 	// Use this for initialization
 	void Start () {
         target = FindObjectOfType<PlayerMovement>();
         rb2d = GetComponent<Rigidbody2D>();
         moveDirection = new Vector2(
-            (target.transform.position.x - transform.position.x > 0 ? 1 : -1) * speed * Time.deltaTime, 
+            (target.transform.position.x - transform.position.x > 0 ? 1 : -1), 
             0);
         rb2d.velocity = moveDirection;
         Destroy(gameObject, 3f);
@@ -24,7 +24,8 @@ public class BulletController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-       
+        if(hasBolcked == false)
+            rb2d.velocity = moveDirection * speed * Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -38,6 +39,7 @@ public class BulletController : MonoBehaviour {
     {
         if(collision.gameObject.GetComponent<PlayerAttack>() != null)
         {
+            hasBolcked = true;
             GameObject player = collision.gameObject;
             PlayerGeneralHandler playerGeneralHandler = player.GetComponent<PlayerGeneralHandler>();
             if (player.GetComponent<BlockController>().blocking == false && 
@@ -51,8 +53,17 @@ public class BulletController : MonoBehaviour {
                 FindObjectOfType<SoundFXHandler>().Play("SwordCling1");
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, playerGeneralHandler.colorState, enemy);
                 rb2d.velocity = -moveDirection;
-                rb2d.velocity = new Vector2(rb2d.velocity.x * 1.5f, Random.Range(-10f, 10f));
+                //rb2d.velocity = new Vector2(rb2d.velocity.x * 1.5f, Random.Range(-10f, 10f));
                 Destroy(gameObject, .2f);
+                if(GetComponent<Animator>() != null)
+                {
+                    GetComponent<Animator>().SetTrigger("blocked");
+                    GetComponent<Rigidbody2D>().gravityScale = 10;
+                }
+                else
+                {
+                    rb2d.velocity = new Vector2(rb2d.velocity.x * 1.5f, Random.Range(-10f, 10f));
+                }
             }
         }
     }

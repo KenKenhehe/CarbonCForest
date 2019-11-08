@@ -6,6 +6,9 @@ public class EnemyShooterController : Enemy {
     public GameObject bulletPref;
     public Vector2 deamageFXOffset = Vector2.zero;
 
+    public float minRespondRange = 3.5f;
+    public float maxRespondRange = 8;
+
     //set to random on instantiate.
     protected float respondRange;
     protected float fireRate;
@@ -30,7 +33,7 @@ public class EnemyShooterController : Enemy {
         fireRate = Random.Range(1.0f, 3.0f);
         health = Random.Range(minHealth, maxHealth);
         startHealth = health;
-        respondRange = Random.Range(3.5f, 8);
+        respondRange = Random.Range(minRespondRange, maxRespondRange);
         renderer = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
         shakeController = FindObjectOfType<ShakeController>();
