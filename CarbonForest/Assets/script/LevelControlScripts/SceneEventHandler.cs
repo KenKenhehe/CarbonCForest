@@ -20,7 +20,6 @@ public class SceneEventHandler : MonoBehaviour {
 	void Update () {
         if (PauseMenu.GameIsPause == false && TutorialManagerZero.InTutorial == false)
         {
-            print("reset");
             ResetTime();
         }
        // CountDown();
