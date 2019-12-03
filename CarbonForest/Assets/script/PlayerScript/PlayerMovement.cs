@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         rb2d.velocity = new Vector2(horizontalMovement * speed * Time.deltaTime, rb2d.velocity.y);
 
-        if (rb2d.velocity.y < 0)
+        if ((int)rb2d.velocity.y < 0)
         {
             rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
             animator.SetBool("IsFalling", true);
@@ -133,9 +133,9 @@ public class PlayerMovement : MonoBehaviour {
             }
             else
             {
-                dodgeTime -= Time.deltaTime;
+                dodgeTime -= Time.fixedDeltaTime;
                 rb2d.velocity = new Vector2(
-                facingRight == true ? (dodgeSpeed) * Time.deltaTime : -(dodgeSpeed) * Time.deltaTime,
+                facingRight == true ? (dodgeSpeed) * Time.fixedDeltaTime : -(dodgeSpeed) * Time.fixedDeltaTime,
                 rb2d.velocity.y
                 );
             }
@@ -239,12 +239,12 @@ public class PlayerMovement : MonoBehaviour {
         if (horizontalMovement == 0)
         {
             rb2d.velocity = new Vector2(
-                facingRight == true ? (dodgeSpeed) * Time.deltaTime : -(dodgeSpeed) * Time.deltaTime, 
+                facingRight == true ? (dodgeSpeed) * Time.fixedDeltaTime : -(dodgeSpeed) * Time.fixedDeltaTime, 
                 rb2d.velocity.y
                 );
         }
         else {
-            rb2d.velocity = new Vector2((dodgeSpeed ) * horizontalMovement * Time.deltaTime, rb2d.velocity.y);
+            rb2d.velocity = new Vector2((dodgeSpeed ) * horizontalMovement * Time.fixedDeltaTime, rb2d.velocity.y);
         }
         yield return new WaitForSeconds(1f);
         speed = walkSpeed;

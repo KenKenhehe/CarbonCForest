@@ -86,7 +86,7 @@ public class MotoController : Interactable {
     IEnumerator WaitAndMoveRight()
     {
         yield return new WaitForSeconds(4);
-        rb2d.velocity = Vector2.right * bikeSpeed * Time.deltaTime;
+        rb2d.velocity = Vector2.right * bikeSpeed * Time.fixedDeltaTime;
     }
 
     IEnumerator DamageEffect()

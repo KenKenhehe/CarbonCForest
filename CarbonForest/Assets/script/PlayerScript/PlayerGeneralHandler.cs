@@ -259,12 +259,15 @@ public class PlayerGeneralHandler : MonoBehaviour {
     {
         Time.timeScale = .01f;
         FindObjectOfType<SoundFXHandler>().Play("EnemyParry");
+        animator.SetTrigger("BlockFail");
+        animator.SetBool("BlockFailIdle", true);
         //renderer.color = Color.red;
-        GetComponent<PlayerMovement>().enabled = false;
         GetComponent<PlayerHeavyAttack>().enabled = false;
-        GetComponent<Rigidbody2D>().velocity *= .1f;
+        GetComponent<Rigidbody2D>().velocity *= 0;
+        GetComponent<PlayerMovement>().enabled = false;
         canBlock = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
+        animator.SetBool("BlockFailIdle", false);
         canBlock = true;
         CheckIfInTutAndEnableAttack();
         GetComponent<PlayerMovement>().enabled = true;

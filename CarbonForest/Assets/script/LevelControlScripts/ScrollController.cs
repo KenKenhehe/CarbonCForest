@@ -15,9 +15,10 @@ public class ScrollController : MonoBehaviour {
     public GameObject bgMusic;
 
     public GameObject mech;
+    private int levelIndex;
     // Use this for initialization
     void Start () {
-		
+        levelIndex = SceneManager.GetActiveScene().buildIndex;
 	}
 	
 	// Update is called once per frame
@@ -62,7 +63,7 @@ public class ScrollController : MonoBehaviour {
         yield return new WaitForSeconds(111);
         flashBlack.SetActive(true);
         yield return new WaitForSeconds(10);
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(levelIndex + 1);
     }
 
     IEnumerator WaitAndSpawnEnemy()

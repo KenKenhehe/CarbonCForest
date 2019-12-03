@@ -60,7 +60,6 @@ public class InteractableHolo : Interactable {
     public override void Interact()
     {
         //base.Interact();
-        print("HOLOGRAM");
         if(isInteracted == false)
         {
             isInteracted = true;

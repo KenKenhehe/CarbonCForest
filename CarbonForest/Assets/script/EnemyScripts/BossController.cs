@@ -23,7 +23,7 @@ public class BossController : EnemyCQC {
 
     public Slider healthBar;
     
-    private void Update()
+    private void FixedUpdate()
     {
         healthBar.value = health;
         SwitchAttackIntension();
@@ -46,9 +46,9 @@ public class BossController : EnemyCQC {
             }
             else
             {
-                dashTime -= Time.deltaTime;
+                dashTime -= Time.fixedDeltaTime;
                 rb2d.velocity = new Vector2(
-                facingRight == true ? (dashSpeed) * Time.deltaTime : -(dashSpeed) * Time.deltaTime,
+                facingRight == true ? (dashSpeed) * Time.fixedDeltaTime : -(dashSpeed) * Time.fixedDeltaTime,
                 rb2d.velocity.y
                 ); 
             }
@@ -179,16 +179,16 @@ public class BossController : EnemyCQC {
     {
         if (rb2d.velocity.y < 0)
         {
-            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
+            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.fixedDeltaTime;
         }
 
         if (playerToFocus.transform.position.x - respondRange > transform.position.x)
         {
-            rb2d.velocity = new Vector2(speed * Time.deltaTime, rb2d.velocity.y);
+            rb2d.velocity = new Vector2(speed * Time.fixedDeltaTime, rb2d.velocity.y);
         }
         else if (playerToFocus.transform.position.x + respondRange < transform.position.x)
         {
-            rb2d.velocity = new Vector2(-(speed * Time.deltaTime), rb2d.velocity.y);
+            rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y);
         }
         else
         {

@@ -92,9 +92,9 @@ public class EnemyCQC : Enemy {
         }
         else
         {
-            randHoldTime -= Time.deltaTime;
+            randHoldTime -= Time.fixedDeltaTime;
             if (canMove == true)
-                rb2d.velocity = new Vector2(speed * randomPatrolDir * Time.deltaTime, rb2d.velocity.y);
+                rb2d.velocity = new Vector2(speed * randomPatrolDir * Time.fixedDeltaTime, rb2d.velocity.y);
             else
                 rb2d.velocity = Vector2.zero;
         }
@@ -254,11 +254,11 @@ public class EnemyCQC : Enemy {
 
         if (playerToFocus.transform.position.x - respondRange > transform.position.x)
         {
-            rb2d.velocity = new Vector2(speed * Time.deltaTime, rb2d.velocity.y);
+            rb2d.velocity = new Vector2(speed * Time.fixedDeltaTime, rb2d.velocity.y);
         }
         else if (playerToFocus.transform.position.x + respondRange < transform.position.x)
         {
-            rb2d.velocity = new Vector2(-(speed * Time.deltaTime), rb2d.velocity.y); 
+            rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y); 
         }
         else
         {
