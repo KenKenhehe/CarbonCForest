@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 4e375bf6316da90488efcf0992cfe8f3
+guid: 3c6f509145fd93546b94937adc5a6999
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PlayerWalkWithSpear_0
-    21300002: PlayerWalkWithSpear_1
-    21300004: PlayerWalkWithSpear_2
-    21300006: PlayerWalkWithSpear_3
-    21300008: PlayerWalkWithSpear_4
-    21300010: PlayerWalkWithSpear_5
-    21300012: PlayerWalkWithSpear_6
-    21300014: PlayerWalkWithSpear_7
+    21300000: PlayerSpearCounterAttack_0
+    21300002: PlayerSpearCounterAttack_1
+    21300004: PlayerSpearCounterAttack_2
+    21300006: PlayerSpearCounterAttack_3
+    21300008: PlayerSpearCounterAttack_4
+    21300010: PlayerSpearCounterAttack_5
+    21300012: PlayerSpearCounterAttack_6
+    21300014: PlayerSpearCounterAttack_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -92,7 +92,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_0
+      name: PlayerSpearCounterAttack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -106,13 +106,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f173372739bc6e44b944869f6d2b9e23
+      spriteID: e05691fc546dbce409be895a1ad38e19
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_1
+      name: PlayerSpearCounterAttack_1
       rect:
         serializedVersion: 2
         x: 128
@@ -126,13 +126,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a95e89add434b4640ac34d22573e7ae3
+      spriteID: dba352af958d80c458190d90c909eb88
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_2
+      name: PlayerSpearCounterAttack_2
       rect:
         serializedVersion: 2
         x: 0
@@ -146,13 +146,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6567521a1d175644925f12818e980cb
+      spriteID: 2ddc3c18c2ca4a74dba9525b8ea4c9f0
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_3
+      name: PlayerSpearCounterAttack_3
       rect:
         serializedVersion: 2
         x: 128
@@ -166,13 +166,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef343a19b976f144aa19297c4b3e2765
+      spriteID: cab38577d61f3ca45a6b0a1deca9376a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_4
+      name: PlayerSpearCounterAttack_4
       rect:
         serializedVersion: 2
         x: 0
@@ -186,13 +186,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67a065b3f0f02b042a98a36376d7dc01
+      spriteID: 7cba3b4f086e67d48904f7bdc81115ea
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_5
+      name: PlayerSpearCounterAttack_5
       rect:
         serializedVersion: 2
         x: 128
@@ -206,13 +206,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24be3ad685710d34986c119709c622c9
+      spriteID: 58af2ecca02bf4d478aa9bf3637d6688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_6
+      name: PlayerSpearCounterAttack_6
       rect:
         serializedVersion: 2
         x: 0
@@ -226,13 +226,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fc23a1a7b5f8404693f92a41c3555ee
+      spriteID: 8838e2ae3684142468251a79e4b5a887
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_7
+      name: PlayerSpearCounterAttack_7
       rect:
         serializedVersion: 2
         x: 128
@@ -246,7 +246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1884ae4819b4c5346b7c84667bf0f886
+      spriteID: 5c30452249d1946478af4df22090d647
       vertices: []
       indices: 
       edges: []
@@ -254,7 +254,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: d9447d034af9ad648a0f1e8fa0932fb9
+    spriteID: b1017b002d4aeb742b8da504104c3a94
     vertices: []
     indices: 
     edges: []

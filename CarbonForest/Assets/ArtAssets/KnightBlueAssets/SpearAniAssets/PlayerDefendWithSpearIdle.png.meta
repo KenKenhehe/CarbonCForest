@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: a2acaf9941f8ccb4086063a8120338b9
+guid: 9a9aa8458874195428fa81a39c5cb903
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PlayerDefendWithSpear_0
-    21300002: PlayerDefendWithSpear_1
-    21300004: PlayerDefendWithSpear_2
-    21300006: PlayerDefendWithSpear_3
+    21300000: PlayerDefendWithSpearIdle_0
+    21300002: PlayerDefendWithSpearIdle_1
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -88,47 +86,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerDefendWithSpear_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 384
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.35, y: 0.2}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4e26107899558374cb64c442d588e859
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerDefendWithSpear_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 256
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.35, y: 0.2}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8a0d8b8e2adf27c43868ac971f9e41ce
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerDefendWithSpear_2
+      name: PlayerDefendWithSpearIdle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,13 +100,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1ddc8d1f855df34da152e7f711b7b2a
+      spriteID: 6599d234c10af7a41a8209a0f1793e46
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerDefendWithSpear_3
+      name: PlayerDefendWithSpearIdle_1
       rect:
         serializedVersion: 2
         x: 0
@@ -162,7 +120,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59fb4cc878f1bda46b35b9c285928f8c
+      spriteID: e283c7a2e7626e945ac67110f84d4dc6
       vertices: []
       indices: 
       edges: []
@@ -170,7 +128,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 4a1ea88eb1641d743b0d0f163eb1bb9e
+    spriteID: 8097804ec0780ee49937a79fe6e706fb
     vertices: []
     indices: 
     edges: []

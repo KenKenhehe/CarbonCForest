@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 4e375bf6316da90488efcf0992cfe8f3
+guid: 0806344204c017c4195d5f16f52bd39a
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PlayerWalkWithSpear_0
-    21300002: PlayerWalkWithSpear_1
-    21300004: PlayerWalkWithSpear_2
-    21300006: PlayerWalkWithSpear_3
-    21300008: PlayerWalkWithSpear_4
-    21300010: PlayerWalkWithSpear_5
-    21300012: PlayerWalkWithSpear_6
-    21300014: PlayerWalkWithSpear_7
+    21300000: PlayerWalkBlockWithSpearBack_0
+    21300002: PlayerWalkBlockWithSpearBack_1
+    21300004: PlayerWalkBlockWithSpearBack_2
+    21300006: PlayerWalkBlockWithSpearBack_3
+    21300008: PlayerWalkBlockWithSpearBack_4
+    21300010: PlayerWalkBlockWithSpearBack_5
+    21300012: PlayerWalkBlockWithSpearBack_6
+    21300014: PlayerWalkBlockWithSpearBack_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -92,7 +92,87 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_0
+      name: PlayerWalkBlockWithSpearBack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 896
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.35, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b821c11e9c71a64ea3d38c997a4ab03
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkBlockWithSpearBack_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.35, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1ad83a49daa1d04689fa0111ca0059a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkBlockWithSpearBack_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.35, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 883e5f467400a2644842b2c8a32dfb79
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkBlockWithSpearBack_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.35, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 842784d1d6613d34b94841b8c74ef68d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerWalkBlockWithSpearBack_4
       rect:
         serializedVersion: 2
         x: 0
@@ -106,33 +186,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f173372739bc6e44b944869f6d2b9e23
+      spriteID: 76057b16ff030af40b9487d06c3b9786
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_1
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 384
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.35, y: 0.2}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a95e89add434b4640ac34d22573e7ae3
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerWalkWithSpear_2
+      name: PlayerWalkBlockWithSpearBack_5
       rect:
         serializedVersion: 2
         x: 0
@@ -146,33 +206,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6567521a1d175644925f12818e980cb
+      spriteID: 42d26dc6bf4eead439d5193975535b99
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_3
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 256
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.35, y: 0.2}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ef343a19b976f144aa19297c4b3e2765
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerWalkWithSpear_4
+      name: PlayerWalkBlockWithSpearBack_6
       rect:
         serializedVersion: 2
         x: 0
@@ -186,33 +226,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67a065b3f0f02b042a98a36376d7dc01
+      spriteID: 1bb0ac0a8ad15de44b6bfae127777fe2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerWalkWithSpear_5
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.35, y: 0.2}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 24be3ad685710d34986c119709c622c9
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerWalkWithSpear_6
+      name: PlayerWalkBlockWithSpearBack_7
       rect:
         serializedVersion: 2
         x: 0
@@ -226,27 +246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fc23a1a7b5f8404693f92a41c3555ee
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerWalkWithSpear_7
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.35, y: 0.2}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1884ae4819b4c5346b7c84667bf0f886
+      spriteID: 06bbcb967f1bf3d419ddc1d09eeed0a2
       vertices: []
       indices: 
       edges: []
@@ -254,7 +254,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: d9447d034af9ad648a0f1e8fa0932fb9
+    spriteID: 6869f4ec8830a5c4ab7d215a1faf8b78
     vertices: []
     indices: 
     edges: []

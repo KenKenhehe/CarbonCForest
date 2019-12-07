@@ -257,7 +257,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     IEnumerator StunnedAndRecover()
     {
-        Time.timeScale = .01f;
+        Time.timeScale = .001f;
         FindObjectOfType<SoundFXHandler>().Play("EnemyParry");
         animator.SetTrigger("BlockFail");
         animator.SetBool("BlockFailIdle", true);
