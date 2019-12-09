@@ -53,4 +53,9 @@ public class AnimationFuntionWrapper : MonoBehaviour {
     {
         FindObjectOfType<SoundFXHandler>().Play("EnemyExplode");
     }
+
+    public void ShowImpact()
+    {
+        FindObjectOfType<SoundFXHandler>().Play("FloorImpact");
+    }
 }

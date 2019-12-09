@@ -22,6 +22,7 @@ public class BossController : EnemyCQC {
     public bool dashing = false;
 
     public Slider healthBar;
+    SoundFXHandler soundFXHandler;
     
     private void FixedUpdate()
     {
@@ -89,6 +90,7 @@ public class BossController : EnemyCQC {
         stunnedDuration = 2f;
         ChargeFX = GetComponentInChildren<ParticleSystem>();
         StartCoroutine(HoldAndMove());
+        soundFXHandler = FindObjectOfType<SoundFXHandler>();
     }
 
     public override void TakeDamage(int damage)
@@ -109,7 +111,7 @@ public class BossController : EnemyCQC {
 
     public override void PlayExplosionSound()
     {
-        FindObjectOfType<SoundFXHandler>().Play("EnemyExplode");
+        soundFXHandler.Play("EnemyExplode");
     }
 
     void SwitchAttackIntension()
@@ -218,6 +220,7 @@ public class BossController : EnemyCQC {
 
     public void InstantiateMissile()
     {
+        soundFXHandler.Play("MissileLaunch");
         missileCount += 1;
         Instantiate(missile,launchPoint.position, Quaternion.identity);
     }
@@ -278,4 +281,5 @@ public class BossController : EnemyCQC {
         yield return new WaitForSeconds(1.5f);
         FindObjectOfType<CameraControl>().player = playerToFocus.gameObject;
     }
+
 }

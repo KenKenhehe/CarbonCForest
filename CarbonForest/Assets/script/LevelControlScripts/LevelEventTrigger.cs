@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class LevelEventTrigger : MonoBehaviour {
     LevelEnemyEvent enemyEvent;
+    bool hasCameralocked;
+    public CameraControl camera;
 	// Use this for initialization
 	void Start () {
         enemyEvent = GetComponent<LevelEnemyEvent>();
+        camera = FindObjectOfType<CameraControl>();
 	}
 	
 	// Update is called once per frame
@@ -22,5 +25,6 @@ public class LevelEventTrigger : MonoBehaviour {
             enemyEvent.StartCoroutine(enemyEvent.SpawnEnemyAtRandomX());
             GetComponent<BoxCollider2D>().enabled = false;
         }
+
     }
 }
