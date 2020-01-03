@@ -51,7 +51,6 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {     
         MovementInput();
         //OnlyMoveBetween(LeftBound.transform.position.x, RightBound.transform.position.x);
-        
 	}
 
     private void FixedUpdate()
@@ -223,12 +222,15 @@ public class PlayerMovement : MonoBehaviour {
         {
             Destroy(sFX);
         }
-        Instantiate(
-            dodgeFXLeft, new Vector3(transform.position.x - (facingRight ? -1f : 1f),
-                transform.position.y,
-                transform.position.z),
-                Quaternion.Euler(new Vector3(0, 0, (facingRight ? 180 : 0)))
-                );
+        if (dodgeFXLeft != null)
+        {
+            Instantiate(
+                dodgeFXLeft, new Vector3(transform.position.x - (facingRight ? -1f : 1f),
+                    transform.position.y,
+                    transform.position.z),
+                    Quaternion.Euler(new Vector3(0, 0, (facingRight ? 180 : 0)))
+                    );
+        }
 
         animator.SetTrigger("Dodging");
     }

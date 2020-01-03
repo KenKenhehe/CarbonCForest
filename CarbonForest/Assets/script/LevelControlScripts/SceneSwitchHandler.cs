@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneSwitchHandler : Interactable {
+public class SceneSwitchHandler : Interactable
+{
     public bool canExit = false;
     public bool doorOpened = false;
     public bool bossDefeated = false;
     public GameObject defeatBossText;
     [Header("how many second after when want to switch scene")]
     public float secondPassToSwitchScene;
-	// Use this for initialization
-	void Start () {
-        
-	}
+    public GameObject exitAnimObj;
+    // Use this for initialization
+    void Start()
+    {
+        if (exitAnimObj != null)
+        {
+            exitAnimObj.GetComponent<InteractableHolo>().enabled = false;
+        }
+    }
 
     private void Update()
     {
-        if(FindObjectOfType<BossController>() == null)
+        if (FindObjectOfType<BossController>() == null)
         {
             bossDefeated = true;
         }
@@ -29,9 +35,13 @@ public class SceneSwitchHandler : Interactable {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(doorOpened == true)
+        if (doorOpened == true)
         {
             canExit = true;
+            if (exitAnimObj != null)
+            {
+                exitAnimObj.GetComponent<InteractableHolo>().enabled = true;
+            }
         }
     }
 
@@ -39,17 +49,22 @@ public class SceneSwitchHandler : Interactable {
     {
         base.Interact();
         if (canExit == true && bossDefeated == true)
-        {           
+        {
             StartCoroutine(switchToNextScene());
             if (FindObjectOfType<SoundManager>() != null)
             {
                 StartCoroutine(FindObjectOfType<SoundManager>().FadeOut(.05f));
             }
+            if (exitAnimObj != null && exitAnimObj.GetComponent<InteractableHolo>() != null)
+            {
+                exitAnimObj.GetComponent<InteractableHolo>().Interact();
+            }
         }
-        else if(bossDefeated == false)
+        else if (bossDefeated == false)
         {
             Instantiate(defeatBossText);
         }
+
     }
 
     IEnumerator switchToNextScene()

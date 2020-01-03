@@ -20,10 +20,10 @@ public class ArcherController : EnemyShooterController
     {
         if(playerToFocus != null)
         {
-            MoveTowardsPlayer();
             if (canWalk == true)
             {
                 FacePlayer();
+                MoveTowardsPlayer();
             }
             AttackPlayer();
            
@@ -32,11 +32,11 @@ public class ArcherController : EnemyShooterController
 
     public override void AttackPlayer()
     {
+        canWalk = false;
         fireTime += Time.deltaTime;
         if (fireTime >= fireRate && takingDamage == false)
         {
             animator.SetTrigger("Fire");
-            canWalk = false;
             fireTime = 0;
         }
     }
@@ -44,6 +44,7 @@ public class ArcherController : EnemyShooterController
     public void FireArrow()
     {
         arrow = Instantiate(bulletPref, transform.position + new Vector3(0, -.7f, 0), Quaternion.identity);
+        FindObjectOfType<ShakeController>().CamShake();
     }
 
     public void walkAgain()

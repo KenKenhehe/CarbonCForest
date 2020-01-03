@@ -23,21 +23,37 @@ public class TutorialTrigger : MonoBehaviour
         {
             if(gameObject.tag == "ArcherTutorial")
             {
-                
+                StartCoroutine(DisableMovementControlForAwhile(collision.gameObject));
                 tutorialManager.startBlockTutorial();
-                Destroy(gameObject, .1f);
-
+                GetComponent<BoxCollider2D>().enabled = false;
+                Destroy(gameObject, 5f);
+            }
+            else if(gameObject.tag == "TeachParry")
+            {
+                tutorialManager.StartParryTutorial();
+                Destroy(gameObject, 2);
             }
         }
     }
 
     public void DisableMovementControl(GameObject player)
     {
-
+        
     }
 
     public void DisableAttack(GameObject player)
     {
 
+    }
+
+    IEnumerator DisableMovementControlForAwhile(GameObject player)
+    {
+        player.GetComponent<PlayerGeneralHandler>().DeactivateControl();
+        player.GetComponent<Animator>().SetBool("isWalking", false);
+        player.GetComponent<Animator>().SetBool("Defending", false);
+        player.GetComponent<Animator>().SetBool("DefendWalkForward", false);
+        player.GetComponent<Animator>().SetBool("DefendWalkBackward", false);
+        yield return new WaitForSeconds(4);
+        player.GetComponent<PlayerGeneralHandler>().ReactivateControl();
     }
 }

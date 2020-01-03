@@ -29,7 +29,7 @@ public class LevelEnemyEvent : MonoBehaviour {
     {
         if(enemyAmount <= 0)
         {
-            Destroy(gameObject);    
+            Destroy(gameObject);
         }
     }
 

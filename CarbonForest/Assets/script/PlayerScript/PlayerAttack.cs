@@ -50,13 +50,11 @@ public class PlayerAttack : MonoBehaviour {
         animator = GetComponent<Animator>();
         currentWeapon = weapons[currentWeaponNum];
         animator.runtimeAnimatorController = currentWeapon.animatorController;
-        
         rb2d = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
         bx2d = GetComponent<BoxCollider2D>();
         shakeController = FindObjectOfType<ShakeController>();
         renderer = GetComponent<SpriteRenderer>();
-        
     }
 	
 	// Update is called once per frame

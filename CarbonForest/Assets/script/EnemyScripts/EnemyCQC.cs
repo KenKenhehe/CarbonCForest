@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyCQC : Enemy {
-    protected ShakeController shakeController;   
+    protected ShakeController shakeController;
+    protected SoundFXHandler soundFXHandler;
     public bool withinAttackRange = false;
     public int blockDamageMultiplyer = 6;
     public GameObject blockBlob;
@@ -49,6 +50,7 @@ public class EnemyCQC : Enemy {
         animator = GetComponent<Animator>() == null ? GetComponentInChildren<Animator>() : GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>() == null ? GetComponentInChildren<SpriteRenderer>() : GetComponent<SpriteRenderer>();
         shakeController = FindObjectOfType<ShakeController>();
+        soundFXHandler = FindObjectOfType<SoundFXHandler>();
         health = Random.Range(minHealth, maxHealth);
         startHealth = health;
         playerToFocus = FindObjectOfType<PlayerAttack>();
@@ -110,7 +112,6 @@ public class EnemyCQC : Enemy {
             {
                 ChangeBlockColorAtRandom();
             }*/
-
         }
         else
         {
@@ -150,7 +151,7 @@ public class EnemyCQC : Enemy {
                     {
                         blockBar.fillAmount = (float)blockPoint / maxBlockPoint;
                     }
-                    FindObjectOfType<SoundFXHandler>().Play("SwordCling1");
+                    soundFXHandler.Play("SwordCling1");
                 }
             
                 if(blockPoint <= 0)
@@ -159,7 +160,7 @@ public class EnemyCQC : Enemy {
                     {
                         GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
                     }
-                    FindObjectOfType<SoundFXHandler>().Play("ParrySuccess");
+                    soundFXHandler.Play("ParrySuccess");
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
 
                     shakeController.CamBigShake();

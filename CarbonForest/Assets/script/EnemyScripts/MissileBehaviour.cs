@@ -11,9 +11,11 @@ public class MissileBehaviour : MonoBehaviour {
     public int Damage = 10;
     public int colorState = 0;
     public GameObject explosionFX;
+    SoundFXHandler soundManager;
     //Enemy enemy;
 	// Use this for initialization
 	void Start () {
+        soundManager = FindObjectOfType<SoundFXHandler>();
         target = FindObjectOfType<PlayerGeneralHandler>().gameObject;
         rb = GetComponent<Rigidbody2D>();
         //enemy = new Enemy();
@@ -53,6 +55,7 @@ public class MissileBehaviour : MonoBehaviour {
                 if(player.GetComponent<BlockController>().blocking == true && 
                     player.GetComponent<PlayerMovement>().facingRight != FindObjectOfType<BossController>().facingRight)
                 {
+                    soundManager.Play("SwordCling1");
                     FindObjectOfType<ShakeController>().CamShake();
                     if (target != null)
                     {

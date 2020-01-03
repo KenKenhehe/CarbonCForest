@@ -16,6 +16,8 @@ public class TutorialManagerZero : MonoBehaviour
     public GameObject dodgueHint;
     public GameObject colorChangeHint;
 
+    public GameObject teachParryWindow;
+
     GameObject blockHintObj;
 
     bool hasAttack = false;
@@ -44,6 +46,7 @@ public class TutorialManagerZero : MonoBehaviour
     {
         camera = FindObjectOfType<CameraControl>();
         player = FindObjectOfType<PlayerGeneralHandler>().gameObject;
+        teachParryWindow.SetActive(false);
     }
 
     // Update is called once per frame
@@ -102,6 +105,13 @@ public class TutorialManagerZero : MonoBehaviour
         StartCoroutine(focusOnArcherAWhile()); 
     }
 
+    public void StartParryTutorial()
+    {
+        teachParryWindow.SetActive(true);
+        InTutorial = true;
+        Time.timeScale = 0;
+    }
+
     public void StartNextTutorial(Collider2D collision)
     {
         if (hasAttack == false)
@@ -120,6 +130,10 @@ public class TutorialManagerZero : MonoBehaviour
 
             normalAttackHint.gameObject.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
             hasAttack = true;
+        }
+        else
+        {
+
         }
     }
 }

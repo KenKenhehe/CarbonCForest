@@ -78,7 +78,6 @@ public class DialogHandler : MonoBehaviour {
             dialogText.text += c;
             if (dialogText.text.ToCharArray().Length %5 == 0)
             {
-                print("Type Sound");
                 FindObjectOfType<SoundFXHandler>().Play("Type");
             }
             if(dialogText.text.ToCharArray().Length >= 5)
