@@ -34,6 +34,12 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
 
     public override void TakeDamage(int damage)
     {   
+        if(parryCount >= 1)
+        {
+            StartCoroutine(PauseAfterAWhile());
+            parryCount -= 1;
+        }
+
         if(blockPoint > 0)
         {
             print("blocked");
@@ -42,7 +48,6 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
         else
         {
             base.TakeDamage(damage);
-
         }
     }
 
@@ -78,5 +83,11 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
         yield return new WaitForSeconds(3);
         canMove = true;
         canAttack = true;
+    }
+
+    IEnumerator PauseAfterAWhile()
+    {
+        yield return new WaitForSeconds(.2f);
+        Time.timeScale = 0.001f;
     }
 }

@@ -150,7 +150,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
             blockController.blocking == true)
         {
             blockController.DisableBlocking();
-            CheckIfInTutAndEnableAttack();
+            GetComponent<PlayerAttack>().enabled = true;
             ChangeEnemyAlpha(0); 
         }
         else
@@ -269,7 +269,8 @@ public class PlayerGeneralHandler : MonoBehaviour {
         yield return new WaitForSeconds(4f);
         animator.SetBool("BlockFailIdle", false);
         canBlock = true;
-        CheckIfInTutAndEnableAttack();
+        //CheckIfInTutAndEnableAttack();
+        GetComponent<PlayerAttack>().enabled = true;
         GetComponent<PlayerMovement>().enabled = true;
         //renderer.color = OriginColor;
     }
@@ -279,8 +280,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
     {
         if (AttackEnabledAfterTut == true)
         {
-            GetComponent<PlayerAttack>().enabled = true;
-            GetComponent<PlayerHeavyAttack>().enabled = true;
+            
         }
     }
 

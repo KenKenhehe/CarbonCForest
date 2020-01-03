@@ -17,22 +17,26 @@ public class TutorialManagerZero : MonoBehaviour
     public GameObject colorChangeHint;
 
     public GameObject teachParryWindow;
-
-    GameObject blockHintObj;
-
-    bool hasAttack = false;
     public bool hasBlock = false;
-    bool hasColor = false;
     public bool hasSpawnBlockHint;
     public int normalAttackCount = 5;
     public int heavyAttackCount = 5;
-    CameraControl camera;
-    GameObject player;
-
     public GameObject archerTutorial;
     public Transform archerTutorialSpawnTransform;
 
     public static TutorialManagerZero instance;
+
+    GameObject blockHintObj;
+
+    bool hasAttack = false;
+
+    // --for parry tutorial--
+    bool hasColor = false;
+    bool inParryTutorial = false;
+    bool inParryBlock = false;
+    CameraControl camera;
+    GameObject player;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -107,9 +111,10 @@ public class TutorialManagerZero : MonoBehaviour
 
     public void StartParryTutorial()
     {
-        teachParryWindow.SetActive(true);
-        InTutorial = true;
-        Time.timeScale = 0;
+        if (inParryTutorial)
+        {
+
+        }
     }
 
     public void StartNextTutorial(Collider2D collision)
