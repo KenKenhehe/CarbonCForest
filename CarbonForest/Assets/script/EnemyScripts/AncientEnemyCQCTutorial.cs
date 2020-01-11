@@ -42,7 +42,6 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
 
         if(blockPoint > 0)
         {
-            print("blocked");
             BlockPlayer();
         }
         else
@@ -89,5 +88,6 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
     {
         yield return new WaitForSeconds(.2f);
         Time.timeScale = 0.001f;
+        tutorialManager.isSlowMotion = true;
     }
 }

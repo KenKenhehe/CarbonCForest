@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialManagerZero : MonoBehaviour
 {
     public static bool InTutorial = false;
+    public bool isSlowMotion = false;
 
     public GameObject HeavyAttackHint;
     public GameObject normalAttackHint;
@@ -71,7 +72,18 @@ public class TutorialManagerZero : MonoBehaviour
             }
         }
         */
-        if(InTutorial == true && hasBlock == false && hasSpawnBlockHint == false)
+
+        if (isSlowMotion == true)
+        {
+            if (Time.timeScale >= 0.05)
+                Time.timeScale -= Time.deltaTime * 4f;
+            if (hasBlock == false)
+            {
+                isSlowMotion = false;
+            }
+        }
+
+        if (InTutorial == true && hasBlock == false && hasSpawnBlockHint == false)
         {
             blockHintObj = Instantiate(blockHint, player.transform.position, Quaternion.identity);
             hasSpawnBlockHint = true;
@@ -111,7 +123,7 @@ public class TutorialManagerZero : MonoBehaviour
 
     public void StartParryTutorial()
     {
-        if (inParryTutorial)
+        if (inParryTutorial == true)
         {
 
         }

@@ -1,0 +1,57 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu]
+public class Spear : Weapon
+{
+    public int attack4Range;
+    public int attack5Range;
+
+    public int attack4Damage;
+    public int attack5Damage;
+    public string[] spearAttackTriggerNames = new string[] { "Attack", "Attack2", "Attack3", "Attack4", "Attack5" };
+
+    public override void PlayAttackAnimationOnAttackNum(Animator animator)
+    {
+        base.PlayAttackAnimationOnAttackNum(animator);
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
+           || animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+        {
+            animator.SetTrigger(spearAttackTriggerNames[0]);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
+        {
+            animator.SetTrigger(spearAttackTriggerNames[1]);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2"))
+        {
+            animator.SetTrigger(spearAttackTriggerNames[2]);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3"))
+        {
+            animator.SetTrigger(spearAttackTriggerNames[3]);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack4"))
+        {
+            animator.SetTrigger(spearAttackTriggerNames[4]);
+        }
+    }
+
+    public override void PlayHeavyAttackAnimationOnAttackNum(Animator animator)
+    {
+        base.PlayHeavyAttackAnimationOnAttackNum(animator);
+    }
+    public override void resetTriggerNames(Animator animator)
+    {
+        foreach (string attackTriggerName in spearAttackTriggerNames)
+        {
+            if (attackTriggerName != "Attack")
+            {
+                animator.ResetTrigger(attackTriggerName);
+            }
+        }
+
+        
+    }
+}
