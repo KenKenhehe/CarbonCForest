@@ -1,12 +1,18 @@
 fileFormatVersion: 2
 guid: 695365e5fe4445a40b4ed8fc24300138
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: BikeEnemyAttack_0
-    21300002: BikeEnemyAttack_1
-    21300004: BikeEnemyAttack_2
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: BikeEnemyAttack_0
+  - first:
+      213: 21300002
+    second: BikeEnemyAttack_1
+  - first:
+      213: 21300004
+    second: BikeEnemyAttack_2
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -61,7 +67,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -72,7 +78,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -83,6 +90,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -102,6 +110,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4957c84c700891d46a8cf920cfdb8af3
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -122,6 +131,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bab7a42cff305dd46b308dd00e88da49
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -142,6 +152,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d5de2ef983c6ea143a480d9f5d94de7b
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -150,10 +161,12 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5bd86622dd6ec4b42a052b2c2634783e
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

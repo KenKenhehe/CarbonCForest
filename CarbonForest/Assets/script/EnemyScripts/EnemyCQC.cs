@@ -151,7 +151,7 @@ public class EnemyCQC : Enemy {
                     {
                         blockBar.fillAmount = (float)blockPoint / maxBlockPoint;
                     }
-                    soundFXHandler.Play("SwordCling1");
+                    soundFXHandler.Play("SwordCling" + Random.Range(1, 4));
                 }
             
                 if(blockPoint <= 0)

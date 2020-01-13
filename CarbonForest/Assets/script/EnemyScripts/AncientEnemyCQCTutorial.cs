@@ -9,15 +9,11 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
     int parryCount = 1;
     public float FXOffset = 1;
     public GameObject counterAttackFX;
-    //ShakeController shakeController;
-    //SoundFXHandler soundFXHandler;
     void Start()
     {
-        //SoundFXHandler = FindObjectOfType<SoundFXHandler>();
         shakeController = FindObjectOfType<ShakeController>();
         tutorialManager = TutorialManagerZero.instance;
         Initialize();
-        print(blockPoint);
     }
 
     // Update is called once per frame
@@ -34,11 +30,11 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
 
     public override void TakeDamage(int damage)
     {   
-        if(parryCount >= 1)
+        /*if(parryCount >= 1)
         {
             StartCoroutine(PauseAfterAWhile());
             parryCount -= 1;
-        }
+        }*/
 
         if(blockPoint > 0)
         {
@@ -52,10 +48,9 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
 
     void BlockPlayer()
     {
-        //canAttack = false;
         animator.SetTrigger("Block" + Random.Range(1, 3).ToString());
         shakeController.CamShake();
-        soundFXHandler.Play("SwordCling1");
+        soundFXHandler.Play("SwordCling" + Random.Range(1,4));
         FacePlayer();
         StartCoroutine(BlockForAWhileAndResumeAttack());
         Instantiate(counterAttackFX,
@@ -87,7 +82,7 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
     IEnumerator PauseAfterAWhile()
     {
         yield return new WaitForSeconds(.2f);
-        Time.timeScale = 0.001f;
-        tutorialManager.isSlowMotion = true;
+        tutorialManager.StartParryTutorial();
+        TutorialManagerZero.InTutorial = false;
     }
 }

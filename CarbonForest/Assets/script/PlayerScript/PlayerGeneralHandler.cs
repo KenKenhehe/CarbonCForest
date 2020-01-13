@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 
 public class PlayerGeneralHandler : MonoBehaviour {
+    public static PlayerGeneralHandler instance;
+
     public Color OriginColor;
     public Color DamagedColor;
     
@@ -51,6 +53,11 @@ public class PlayerGeneralHandler : MonoBehaviour {
     public int colorState = 0; //0: white, 1: blue
     // Use this for initialization
     void Start () {
+        if(instance == null)
+        {
+            instance = this;
+        }
+
         shakeController = FindObjectOfType<ShakeController>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         animator = GetComponent<Animator>();
@@ -62,12 +69,12 @@ public class PlayerGeneralHandler : MonoBehaviour {
         blockController = GetComponent<BlockController>();
         healthPoints = startHealth;
         blockPoints = startBlockPoint;
-        if(SceneManager.GetActiveScene().buildIndex == 2)
+        /*if(SceneManager.GetActiveScene().buildIndex == 2)
         {
             GetComponent<PlayerAttack>().enabled = false;
             GetComponent<PlayerHeavyAttack>().enabled = false;
             AttackEnabledAfterTut = false;
-        }
+        }*/
 
         //--------
         //For actual game save
@@ -231,7 +238,10 @@ public class PlayerGeneralHandler : MonoBehaviour {
     public void DeactivateControl()
     {
         GetComponent<PlayerAttack>().enabled = false;
-        GetComponent<PlayerHeavyAttack>().enabled = false;
+        if (GetComponent<PlayerHeavyAttack>() != null)
+        {
+            GetComponent<PlayerHeavyAttack>().enabled = false;
+        }
         GetComponent<PlayerMovement>().enabled = false;
         GetComponent<BlockController>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -240,7 +250,10 @@ public class PlayerGeneralHandler : MonoBehaviour {
     public void ReactivateControl()
     {
         GetComponent<PlayerAttack>().enabled = true;
-        GetComponent<PlayerHeavyAttack>().enabled = true;
+        if (GetComponent<PlayerHeavyAttack>() != null)
+        {
+            GetComponent<PlayerHeavyAttack>().enabled = true;
+        }
         GetComponent<PlayerMovement>().enabled = true;
         GetComponent<BlockController>().enabled = true;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -261,18 +274,18 @@ public class PlayerGeneralHandler : MonoBehaviour {
         FindObjectOfType<SoundFXHandler>().Play("EnemyParry");
         animator.SetTrigger("BlockFail");
         animator.SetBool("BlockFailIdle", true);
-        //renderer.color = Color.red;
-        GetComponent<PlayerHeavyAttack>().enabled = false;
+        if (GetComponent<PlayerHeavyAttack>() != null)
+        {
+            GetComponent<PlayerHeavyAttack>().enabled = false;
+        }
         GetComponent<Rigidbody2D>().velocity *= 0;
         GetComponent<PlayerMovement>().enabled = false;
         canBlock = false;
         yield return new WaitForSeconds(4f);
         animator.SetBool("BlockFailIdle", false);
         canBlock = true;
-        //CheckIfInTutAndEnableAttack();
         GetComponent<PlayerAttack>().enabled = true;
         GetComponent<PlayerMovement>().enabled = true;
-        //renderer.color = OriginColor;
     }
 
     //if still in blocking tutorial, nothing can enable attack yet

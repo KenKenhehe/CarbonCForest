@@ -1,30 +1,66 @@
 fileFormatVersion: 2
 guid: 3a560636f1d36574597422b2b65e4736
-timeCreated: 1538049018
-licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: KnightHeavyAttack_0
-    21300002: KnightHeavyAttack_1
-    21300004: KnightHeavyAttack_2
-    21300006: KnightHeavyAttack_3
-    21300008: KnightHeavyAttack_4
-    21300010: KnightHeavyAttack_5
-    21300012: KnightHeavyAttack_6
-    21300014: KnightHeavyAttack_7
-    21300016: KnightHeavyAttack_8
-    21300018: KnightHeavyAttack_9
-    21300020: KnightHeavyAttack_10
-    21300022: KnightHeavyAttack_11
-    21300024: KnightHeavyAttack_12
-    21300026: KnightHeavyAttack_13
-    21300028: KnightHeavyAttack_14
-    21300030: KnightHeavyAttack_15
-    21300032: KnightHeavyAttack_16
-    21300034: KnightHeavyAttack_17
-    21300036: KnightHeavyAttack_18
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: KnightHeavyAttack_0
+  - first:
+      213: 21300002
+    second: KnightHeavyAttack_1
+  - first:
+      213: 21300004
+    second: KnightHeavyAttack_2
+  - first:
+      213: 21300006
+    second: KnightHeavyAttack_3
+  - first:
+      213: 21300008
+    second: KnightHeavyAttack_4
+  - first:
+      213: 21300010
+    second: KnightHeavyAttack_5
+  - first:
+      213: 21300012
+    second: KnightHeavyAttack_6
+  - first:
+      213: 21300014
+    second: KnightHeavyAttack_7
+  - first:
+      213: 21300016
+    second: KnightHeavyAttack_8
+  - first:
+      213: 21300018
+    second: KnightHeavyAttack_9
+  - first:
+      213: 21300020
+    second: KnightHeavyAttack_10
+  - first:
+      213: 21300022
+    second: KnightHeavyAttack_11
+  - first:
+      213: 21300024
+    second: KnightHeavyAttack_12
+  - first:
+      213: 21300026
+    second: KnightHeavyAttack_13
+  - first:
+      213: 21300028
+    second: KnightHeavyAttack_14
+  - first:
+      213: 21300030
+    second: KnightHeavyAttack_15
+  - first:
+      213: 21300032
+    second: KnightHeavyAttack_16
+  - first:
+      213: 21300034
+    second: KnightHeavyAttack_17
+  - first:
+      213: 21300036
+    second: KnightHeavyAttack_18
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -42,6 +78,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -52,7 +90,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -64,18 +102,21 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -84,7 +125,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -93,6 +137,8 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -110,6 +156,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 02305410000000000800000000000000
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_1
       rect:
@@ -124,6 +177,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 22305410000000000800000000000000
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_2
       rect:
@@ -138,6 +198,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 42305410000000000800000000000000
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_3
       rect:
@@ -152,6 +219,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 62305410000000000800000000000000
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_4
       rect:
@@ -166,6 +240,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 82305410000000000800000000000000
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_5
       rect:
@@ -180,6 +261,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a2305410000000000800000000000000
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_6
       rect:
@@ -194,6 +282,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c2305410000000000800000000000000
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_7
       rect:
@@ -208,6 +303,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e2305410000000000800000000000000
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_8
       rect:
@@ -222,6 +324,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 03305410000000000800000000000000
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_9
       rect:
@@ -236,6 +345,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 23305410000000000800000000000000
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_10
       rect:
@@ -250,6 +366,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 43305410000000000800000000000000
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_11
       rect:
@@ -264,6 +387,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 63305410000000000800000000000000
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_12
       rect:
@@ -278,6 +408,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 83305410000000000800000000000000
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_13
       rect:
@@ -292,6 +429,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a3305410000000000800000000000000
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_14
       rect:
@@ -306,6 +450,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c3305410000000000800000000000000
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_15
       rect:
@@ -320,6 +471,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e3305410000000000800000000000000
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_16
       rect:
@@ -334,6 +492,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 04305410000000000800000000000000
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_17
       rect:
@@ -348,6 +513,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 24305410000000000800000000000000
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: KnightHeavyAttack_18
       rect:
@@ -362,9 +534,26 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 44305410000000000800000000000000
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

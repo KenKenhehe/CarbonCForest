@@ -50,7 +50,7 @@ public class BulletController : MonoBehaviour {
             }
             else if(player.GetComponent<BlockController>().blocking == true)
             {
-                FindObjectOfType<SoundFXHandler>().Play("SwordCling1");
+                FindObjectOfType<SoundFXHandler>().Play("SwordCling" + Random.Range(1,4).ToString());
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, playerGeneralHandler.colorState, enemy);
                 rb2d.velocity = -moveDirection;
                 //rb2d.velocity = new Vector2(rb2d.velocity.x * 1.5f, Random.Range(-10f, 10f));
