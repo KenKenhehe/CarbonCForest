@@ -286,6 +286,10 @@ public class PlayerGeneralHandler : MonoBehaviour {
         canBlock = true;
         GetComponent<PlayerAttack>().enabled = true;
         GetComponent<PlayerMovement>().enabled = true;
+        if (GetComponent<PlayerHeavyAttack>() != null)
+        {
+            GetComponent<PlayerHeavyAttack>().enabled = true;
+        }
     }
 
     //if still in blocking tutorial, nothing can enable attack yet
