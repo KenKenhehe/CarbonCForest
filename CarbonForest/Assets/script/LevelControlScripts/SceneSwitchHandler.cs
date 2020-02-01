@@ -12,9 +12,11 @@ public class SceneSwitchHandler : Interactable
     [Header("how many second after when want to switch scene")]
     public float secondPassToSwitchScene;
     public GameObject exitAnimObj;
+    PlayerGeneralHandler player;
     // Use this for initialization
     void Start()
     {
+        player = PlayerGeneralHandler.instance;
         if (exitAnimObj != null)
         {
             exitAnimObj.GetComponent<InteractableHolo>().enabled = false;
@@ -51,6 +53,7 @@ public class SceneSwitchHandler : Interactable
         if (canExit == true && bossDefeated == true)
         {
             StartCoroutine(switchToNextScene());
+            player.DeactivateControl();
             if (FindObjectOfType<SoundManager>() != null)
             {
                 StartCoroutine(FindObjectOfType<SoundManager>().FadeOut(.05f));

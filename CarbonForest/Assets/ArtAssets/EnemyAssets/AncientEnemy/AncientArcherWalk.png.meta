@@ -8,6 +8,8 @@ TextureImporter:
     21300006: AncientArcherWalk_3
     21300008: AncientArcherWalk_4
     21300010: AncientArcherWalk_5
+    21300012: AncientArcherWalk_6
+    21300014: AncientArcherWalk_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -94,6 +96,46 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02f86170e4a00e3429c48c54e5fc6558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AncientArcherWalk_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4efaffa39dd19964db421d4687241d69
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AncientArcherWalk_2
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 640
         width: 128
         height: 128
@@ -104,13 +146,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0be00d38b7d8a6d41ab86f227ce04de1
+      spriteID: 60e514dcec2a1d54a8c6621cd4125b7c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientArcherWalk_1
+      name: AncientArcherWalk_3
       rect:
         serializedVersion: 2
         x: 0
@@ -124,13 +166,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 069b2a7aab291ab4293f095fba185e9a
+      spriteID: 8c811ff780add2d48b34cbe7b0204d40
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientArcherWalk_2
+      name: AncientArcherWalk_4
       rect:
         serializedVersion: 2
         x: 0
@@ -144,13 +186,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41d2a1bb07f0b0f44a9adeec3bc521b4
+      spriteID: 69ee7e47802cc4d4fadc75b742f1b57d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientArcherWalk_3
+      name: AncientArcherWalk_5
       rect:
         serializedVersion: 2
         x: 0
@@ -164,13 +206,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e7dd6d23af0e3842ae734899c418a48
+      spriteID: 45de14e5ae1b8d24d9b80f94da3665bc
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientArcherWalk_4
+      name: AncientArcherWalk_6
       rect:
         serializedVersion: 2
         x: 0
@@ -184,13 +226,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e078dcb5db46d844bd7036826ac4499
+      spriteID: ed09ce9cd866ad54aa85c0ec931fb93d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientArcherWalk_5
+      name: AncientArcherWalk_7
       rect:
         serializedVersion: 2
         x: 0
@@ -204,7 +246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f274c98c83c13c3498daaed2c94b173b
+      spriteID: ae1d026a9b168eb40a73dfa97d8271b1
       vertices: []
       indices: 
       edges: []

@@ -151,7 +151,7 @@ public class EnemyCQC : Enemy {
                     {
                         blockBar.fillAmount = (float)blockPoint / maxBlockPoint;
                     }
-                    soundFXHandler.Play("SwordCling" + Random.Range(1, 4));
+                    soundFXHandler.Play("SwordCling" + Random.Range(1, 5));
                 }
             
                 if(blockPoint <= 0)
@@ -160,7 +160,7 @@ public class EnemyCQC : Enemy {
                     {
                         GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
                     }
-                    soundFXHandler.Play("ParrySuccess");
+                    soundFXHandler.Play("ParrySuccess" + Random.Range(1,4));
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
 
                     shakeController.CamBigShake();

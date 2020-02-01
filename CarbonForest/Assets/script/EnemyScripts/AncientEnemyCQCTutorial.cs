@@ -39,6 +39,7 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
         if(blockPoint > 0)
         {
             BlockPlayer();
+            health -= 1;
         }
         else
         {
