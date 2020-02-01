@@ -5,9 +5,12 @@ using UnityEngine;
 public class TutorialManagerZero : MonoBehaviour
 {
     public static bool InTutorial = false;
+    public bool isSlowMotion = false;
 
     public GameObject HeavyAttackHint;
     public GameObject normalAttackHint;
+    private GameObject DodgeHintObj;
+    private GameObject normalAttackHintObj;
 
     public Transform normalAttackHintTransform;
     public Transform heavyAttackHintTransform;
@@ -17,6 +20,8 @@ public class TutorialManagerZero : MonoBehaviour
     public GameObject colorChangeHint;
 
     public GameObject teachParryWindow;
+    public GameObject teachBlockWindow;
+
     public bool hasBlock = false;
     public bool hasSpawnBlockHint;
     public int normalAttackCount = 5;
@@ -71,19 +76,56 @@ public class TutorialManagerZero : MonoBehaviour
             }
         }
         */
-        if(InTutorial == true && hasBlock == false && hasSpawnBlockHint == false)
+        CheckSlowMotion();
+        BlockParryTutorial();
+        BlockRangeTutorial();
+
+    }
+    void BlockRangeTutorial()
+    {
+        if (InTutorial == true && hasBlock == false && hasSpawnBlockHint == false)
         {
             blockHintObj = Instantiate(blockHint, player.transform.position, Quaternion.identity);
             hasSpawnBlockHint = true;
         }
-        else if(InTutorial == true && hasBlock == false)
+        else if (InTutorial == true && hasBlock == false)
         {
             if (Input.GetKey(KeyCode.Space))
             {
                 InTutorial = false;
                 hasBlock = true;
-                
+
                 blockHintObj.GetComponent<Animator>().SetTrigger("FadeOut");
+            }
+        }
+    }
+
+    void BlockParryTutorial()
+    {
+        if (inParryBlock == true)
+        { 
+            if (player.GetComponent<BlockController>().blocking)
+            {
+                teachBlockWindow.SetActive(false);
+                teachParryWindow.SetActive(true);
+            }
+            else
+            {
+                teachBlockWindow.SetActive(true);
+                teachParryWindow.SetActive(false);
+            }
+        }
+    }
+
+    void CheckSlowMotion()
+    {
+        if (isSlowMotion == true)
+        {
+            if (Time.timeScale >= 0.05)
+                Time.timeScale -= Time.deltaTime * 4f;
+            if (hasBlock == false)
+            {
+                isSlowMotion = false;
             }
         }
     }
@@ -96,7 +138,7 @@ public class TutorialManagerZero : MonoBehaviour
         }
     }
 
-    IEnumerator focusOnArcherAWhile()
+    IEnumerator FocusOnArcherAWhile()
     {
         camera.player = archerTutorial;
         yield return new WaitForSeconds(2f);
@@ -106,15 +148,15 @@ public class TutorialManagerZero : MonoBehaviour
     public void startBlockTutorial()
     {
         Instantiate(archerTutorial, archerTutorialSpawnTransform.position, Quaternion.identity);
-        StartCoroutine(focusOnArcherAWhile()); 
+        StartCoroutine(FocusOnArcherAWhile());
+        
     }
 
     public void StartParryTutorial()
     {
-        if (inParryTutorial)
-        {
-
-        }
+        inParryBlock = true;
+        Destroy(normalAttackHintObj);
+        Destroy(DodgeHintObj);
     }
 
     public void StartNextTutorial(Collider2D collision)
@@ -123,12 +165,12 @@ public class TutorialManagerZero : MonoBehaviour
         {
             GameObject player = collision.gameObject;
 
-            HeavyAttackHint =
+            DodgeHintObj =
                         Instantiate(HeavyAttackHint, heavyAttackHintTransform.position, Quaternion.identity, collision.transform);
 
             HeavyAttackHint.gameObject.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
 
-            normalAttackHint =
+            normalAttackHintObj =
                 Instantiate(normalAttackHint,
                 normalAttackHintTransform.position,
                 Quaternion.identity, collision.transform);

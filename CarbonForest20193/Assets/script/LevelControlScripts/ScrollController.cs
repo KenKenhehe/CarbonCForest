@@ -16,6 +16,7 @@ public class ScrollController : MonoBehaviour {
 
     public GameObject mech;
     private int levelIndex;
+    public GameObject darkBluryImage;
     // Use this for initialization
     void Start () {
         levelIndex = SceneManager.GetActiveScene().buildIndex;
@@ -56,6 +57,7 @@ public class ScrollController : MonoBehaviour {
         FindObjectOfType<CameraControl>().camDepth = -4;
         FindObjectOfType<MotoController>().leftBound = 50;
         FindObjectOfType<MotoController>().rightBound = 75;
+        Destroy(darkBluryImage);
     }
 
     IEnumerator FlashBlackWhenFinish()

@@ -52,6 +52,11 @@ public class ArcherControllerTutorial : EnemyShooterController
         }
     }
 
+    private void FixedUpdate()
+    {
+        
+    }
+
     public override void AttackPlayer()
     {
         fireTime += Time.deltaTime;

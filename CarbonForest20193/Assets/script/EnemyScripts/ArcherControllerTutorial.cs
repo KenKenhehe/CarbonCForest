@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ArcherControllerTutorial : EnemyShooterController
 {
-    public bool inTutorial;
-    public bool isSlowMotion;
     public float contactDistance = 7;
     public Vector3 arrowOffset; 
 
@@ -19,7 +17,7 @@ public class ArcherControllerTutorial : EnemyShooterController
     {
         arrowOffset = new Vector3(0, -.7f, 0);
         Initialize();
-        tutorial = FindObjectOfType<TutorialManagerZero>();
+        tutorial = TutorialManagerZero.instance;
     }
 
     // Update is called once per frame
@@ -37,19 +35,22 @@ public class ArcherControllerTutorial : EnemyShooterController
             {
                 if (arrowCount <= 1 && Vector2.Distance(arrow.transform.position, playerToFocus.transform.position) < contactDistance)
                 {
-                    isSlowMotion = true;
+                    tutorial.isSlowMotion = true;
                     TutorialManagerZero.InTutorial = true;
                 }
             }
+        }
+    }
 
-            if (isSlowMotion == true)
+    private void FixedUpdate()
+    {
+        if (tutorial.isSlowMotion == true)
+        {
+            if (Time.timeScale >= 0.01)
+                Time.timeScale -= Time.fixedDeltaTime * 4f;
+            if (tutorial.hasBlock == false)
             {
-                if (Time.timeScale >= 0.05)
-                    Time.timeScale -= Time.deltaTime * 4f;
-                if (tutorial.hasBlock == false)
-                {
-                    isSlowMotion = false;
-                }
+                tutorial.isSlowMotion = false;
             }
         }
     }
