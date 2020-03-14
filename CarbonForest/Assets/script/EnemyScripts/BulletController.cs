@@ -6,7 +6,7 @@ public class BulletController : MonoBehaviour {
     public PlayerMovement target;
     public float speed;
     Rigidbody2D rb2d;
-    public EnemyShooterController enemy = new EnemyShooterController();
+    [HideInInspector]public Enemy enemy;
     public int damage = 10;
     Vector2 moveDirection;
     bool hasBolcked = false;
@@ -45,11 +45,13 @@ public class BulletController : MonoBehaviour {
             if (player.GetComponent<BlockController>().blocking == false && 
                 player.GetComponent<PlayerMovement>().dodging == false)
             {
+                print("In not blocking");
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, 0, enemy);
                 Destroy(gameObject);
             }
             else if(player.GetComponent<BlockController>().blocking == true)
             {
+                print("In blocking");
                 FindObjectOfType<SoundFXHandler>().Play("SwordClingSmall");
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, playerGeneralHandler.colorState, enemy);
                 rb2d.velocity = -moveDirection;
@@ -57,7 +59,6 @@ public class BulletController : MonoBehaviour {
                 Destroy(gameObject, .2f);
                 if(GetComponent<Animator>() != null)
                 {
-                    GetComponent<Animator>().SetTrigger("blocked");
                     GetComponent<Rigidbody2D>().gravityScale = 10;
                 }
                 else

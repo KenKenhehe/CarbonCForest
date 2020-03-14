@@ -14,6 +14,13 @@ public class Enemy : MonoBehaviour {
     protected PlayerAttack playerToFocus;
     protected float health;
     protected float startHealth;
+    protected float SightRange;
+    protected bool PlayerSeen = false;
+
+    public float maxSightRange;
+    public float minSightRange;
+
+    
 
     public Image healthBar;
 
@@ -27,7 +34,7 @@ public class Enemy : MonoBehaviour {
 
     public SpriteRenderer blockColorRenderer;
 
-    WaitForSeconds hitDuration = new WaitForSeconds(0.05f);
+    protected WaitForSeconds hitDuration;
 
     public float xSize = 2;
 

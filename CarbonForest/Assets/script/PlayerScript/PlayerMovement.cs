@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 
     public bool facingRight = true;
-    public bool canJump = true;
+    //public bool canJump = true;
     Rigidbody2D rb2d;
     public float screenMinX = -10;
     public float screenMaxX = 13;
@@ -50,13 +50,11 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {     
         MovementInput();
-        //OnlyMoveBetween(LeftBound.transform.position.x, RightBound.transform.position.x);
 	}
 
     private void FixedUpdate()
     {
         rb2d.velocity = new Vector2(horizontalMovement * speed * Time.deltaTime, rb2d.velocity.y);
-
         if ((int)rb2d.velocity.y < 0)
         {
             rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;

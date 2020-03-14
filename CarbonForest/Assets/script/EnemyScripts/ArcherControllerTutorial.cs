@@ -75,6 +75,7 @@ public class ArcherControllerTutorial : EnemyShooterController
     public void FireArrow()
     {
         arrow = Instantiate(bulletPref, transform.position + arrowOffset, Quaternion.identity);
+        arrow.GetComponent<BulletController>().enemy = this;
         arrowCount += 1;
     }
 

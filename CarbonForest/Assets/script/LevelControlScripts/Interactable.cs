@@ -5,10 +5,7 @@ using UnityEngine;
 public class Interactable : MonoBehaviour {
     public float interactionRange = 2;
     public Vector3 Range;
-
     public bool isActive;
-    Transform player;
-
 
     public virtual void Interact()
     {

@@ -11,11 +11,6 @@ public class TutorialTrigger : MonoBehaviour
         tutorialManager = TutorialManagerZero.instance;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -23,7 +18,6 @@ public class TutorialTrigger : MonoBehaviour
         {
             if(gameObject.tag == "ArcherTutorial")
             {
-                StartCoroutine(DisableMovementControlForAwhile(collision.gameObject));
                 tutorialManager.startBlockTutorial();
                 GetComponent<BoxCollider2D>().enabled = false;
                 Destroy(gameObject, 5f);
@@ -33,27 +27,27 @@ public class TutorialTrigger : MonoBehaviour
                 tutorialManager.StartParryTutorial();
                 Destroy(gameObject, 2);
             }
+            else if(gameObject.tag == "ArrowFall")
+            {
+                tutorialManager.ArrowFall();
+                Destroy(gameObject);
+            }
+            else if(gameObject.tag == "Dodge")
+            {
+                tutorialManager.StartDodgeTutorial(collision);
+                Destroy(gameObject);
+            }
+            else if(gameObject.tag == "StopArrowFall")
+            {
+                tutorialManager.ToggleArrowFall(false);
+                Destroy(gameObject);
+            }
+            else if(gameObject.tag == "ResumeArrowFall")
+            {
+                tutorialManager.ResumeArrowFall();
+                Destroy(gameObject);
+            }
         }
     }
 
-    public void DisableMovementControl(GameObject player)
-    {
-        
-    }
-
-    public void DisableAttack(GameObject player)
-    {
-
-    }
-
-    IEnumerator DisableMovementControlForAwhile(GameObject player)
-    {
-        player.GetComponent<PlayerGeneralHandler>().DeactivateControl();
-        player.GetComponent<Animator>().SetBool("isWalking", false);
-        player.GetComponent<Animator>().SetBool("Defending", false);
-        player.GetComponent<Animator>().SetBool("DefendWalkForward", false);
-        player.GetComponent<Animator>().SetBool("DefendWalkBackward", false);
-        yield return new WaitForSeconds(4);
-        player.GetComponent<PlayerGeneralHandler>().ReactivateControl();
-    }
 }

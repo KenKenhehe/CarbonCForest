@@ -52,11 +52,16 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     public int colorState = 0; //0: white, 1: blue
     // Use this for initialization
-    void Start () {
-        if(instance == null)
+    private void Awake()
+    {
+        if (instance == null)
         {
             instance = this;
         }
+    }
+
+    void Start () {
+        
 
         shakeController = FindObjectOfType<ShakeController>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
@@ -188,7 +193,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     public void TakeEnemyDamage(int damage, int EnemyColorState, Enemy enemy)
     {
-        if (blockController.blocking == false || 
+        if (enemy == null || blockController.blocking == false || 
             enemy.facingRight == GetComponent<PlayerMovement>().facingRight)
         {
             healthPoints -= damage;
@@ -241,7 +246,8 @@ public class PlayerGeneralHandler : MonoBehaviour {
         if (GetComponent<PlayerHeavyAttack>() != null)
         {
             GetComponent<PlayerHeavyAttack>().enabled = false;
-        }
+        } 
+        GetComponent<PlayerMovement>().dodging = false;
         GetComponent<PlayerMovement>().enabled = false;
         GetComponent<BlockController>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -339,6 +345,10 @@ public class PlayerGeneralHandler : MonoBehaviour {
                 alpha);
             }
         }
+    }
+
+    public void SetToDefaultState()
+    {
     }
 
     public void ShakeCamOnAni()

@@ -17,20 +17,20 @@ public class BulletController : MonoBehaviour {
         moveDirection = new Vector2(
             (target.transform.position.x - transform.position.x > 0 ? 1 : -1), 
             0);
-        rb2d.velocity = moveDirection;
+        rb2d.velocity = moveDirection * speed;
         Destroy(gameObject, 3f);
         enemy.facingRight = rb2d.velocity.x > 0 ? true : false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        
+        if (hasBolcked == false)
+            rb2d.velocity = moveDirection * speed * Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
-        if (hasBolcked == false)
-            rb2d.velocity = moveDirection * speed * Time.deltaTime;
+        
         if (target != null)
         {
             DetactMissHit();

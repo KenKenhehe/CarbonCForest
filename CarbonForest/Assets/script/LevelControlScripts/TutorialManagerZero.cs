@@ -7,16 +7,30 @@ public class TutorialManagerZero : MonoBehaviour
     public static bool InTutorial = false;
     public bool isSlowMotion = false;
 
-    public GameObject HeavyAttackHint;
+    public GameObject arrowLauncher;
+    GameObject arrowLauncherObj;
+
+    public GameObject MoveHint;
+    public GameObject DodgeHint;
     public GameObject normalAttackHint;
+
+    public GameObject IndoorDarkener;
+
+    private GameObject MoveHintObj;
     private GameObject DodgeHintObj;
     private GameObject normalAttackHintObj;
+    private GameObject ArcherTutObj;
+    private GameObject swordsManTutObj;
 
+    public Transform dodgeHintTransform;
     public Transform normalAttackHintTransform;
     public Transform heavyAttackHintTransform;
+    public Transform movementHintTransform;
+
+    public Transform arrowLauncherTransform;
+    public GameObject arrowLauncherFocus;
 
     public GameObject blockHint;
-    public GameObject dodgueHint;
     public GameObject colorChangeHint;
 
     public GameObject teachParryWindow;
@@ -27,13 +41,17 @@ public class TutorialManagerZero : MonoBehaviour
     public int normalAttackCount = 5;
     public int heavyAttackCount = 5;
     public GameObject archerTutorial;
+    public GameObject swordsManTutorial;
     public Transform archerTutorialSpawnTransform;
+    public Transform swordsmanTutorialTransform;
+    public Vector3 archertextOffset;
+
 
     public static TutorialManagerZero instance;
-
     GameObject blockHintObj;
 
     bool hasAttack = false;
+    bool canBlock = false;
 
     // --for parry tutorial--
     bool hasColor = false;
@@ -56,6 +74,8 @@ public class TutorialManagerZero : MonoBehaviour
         camera = FindObjectOfType<CameraControl>();
         player = FindObjectOfType<PlayerGeneralHandler>().gameObject;
         teachParryWindow.SetActive(false);
+        StartMovementTutorial();
+        player.GetComponent<PlayerGeneralHandler>().canBlock = false;
     }
 
     // Update is called once per frame
@@ -85,7 +105,7 @@ public class TutorialManagerZero : MonoBehaviour
     {
         if (InTutorial == true && hasBlock == false && hasSpawnBlockHint == false)
         {
-            blockHintObj = Instantiate(blockHint, player.transform.position, Quaternion.identity);
+            blockHintObj = Instantiate(blockHint, player.transform.position + archertextOffset, Quaternion.identity);
             hasSpawnBlockHint = true;
         }
         else if (InTutorial == true && hasBlock == false)
@@ -103,7 +123,7 @@ public class TutorialManagerZero : MonoBehaviour
     void BlockParryTutorial()
     {
         if (inParryBlock == true)
-        { 
+        {
             if (player.GetComponent<BlockController>().blocking)
             {
                 teachBlockWindow.SetActive(false);
@@ -116,6 +136,7 @@ public class TutorialManagerZero : MonoBehaviour
             }
         }
     }
+
 
     void CheckSlowMotion()
     {
@@ -138,25 +159,76 @@ public class TutorialManagerZero : MonoBehaviour
         }
     }
 
-    IEnumerator FocusOnArcherAWhile()
+
+
+    public void StartMovementTutorial()
     {
-        camera.player = archerTutorial;
-        yield return new WaitForSeconds(2f);
-        camera.player = FindObjectOfType<PlayerGeneralHandler>().gameObject;
+        MoveHintObj = Instantiate(MoveHint, movementHintTransform.position,
+            Quaternion.identity, player.gameObject.transform);
     }
 
+    //zero
+    public void ArrowFall()
+    {
+        arrowLauncherObj = Instantiate(arrowLauncher, arrowLauncherTransform.position, Quaternion.identity);
+        Destroy(MoveHintObj);
+        StartCoroutine(DisableMovementControlForAwhile(player, 3));
+        camera.FocusOnGameObjectForAwhile(arrowLauncherFocus, 2);
+    }
+
+    public void ToggleArrowFall(bool enable)
+    {
+        print(enable ? "Start Arrow fall" : "Stop arrow fall");
+        arrowLauncherObj.SetActive(enable);
+    }
+
+    //first
+    public void StartDodgeTutorial(Collider2D collision)
+    {
+        DodgeHintObj = Instantiate(DodgeHint, dodgeHintTransform.position,
+            Quaternion.identity, collision.transform);
+        DodgeHintObj.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
+        DodgeHintObj.gameObject.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
+    }
+
+    //second
     public void startBlockTutorial()
     {
-        Instantiate(archerTutorial, archerTutorialSpawnTransform.position, Quaternion.identity);
-        StartCoroutine(FocusOnArcherAWhile());
-        
+        player.GetComponent<PlayerGeneralHandler>().canBlock = true;
+        Destroy(DodgeHintObj);
+        ArcherTutObj = Instantiate(archerTutorial, archerTutorialSpawnTransform.position, Quaternion.identity);
+        //StartCoroutine(FocusOnGameObjectAWhile(ArcherTutObj, 2));
+        camera.FocusOnGameObjectForAwhile(ArcherTutObj, 2);
+        StartCoroutine(DisableMovementControlForAwhile(player, 3));
     }
 
+    //third
     public void StartParryTutorial()
     {
         inParryBlock = true;
         Destroy(normalAttackHintObj);
         Destroy(DodgeHintObj);
+        swordsManTutObj = Instantiate(swordsManTutorial, swordsmanTutorialTransform.position, Quaternion.identity);
+        //StartCoroutine(FocusOnGameObjectAWhile(swordsManTutObj, 1.5f));
+        camera.FocusOnGameObjectForAwhile(swordsManTutObj, 1.5f);
+        StartCoroutine(DisableMovementControlForAwhile(player, 3));
+    }
+
+    public void ResumeArrowFall()
+    {
+        ToggleArrowFall(true);
+        RangedArrowLauncher launcher = arrowLauncherObj.GetComponent<RangedArrowLauncher>();
+        launcher.ArrowRotationSpeed = 160;
+        launcher.maxArrowLaunchCount = 5;
+        launcher.minArrowLaunchCount = 1;
+        launcher.minLaunchInterval = 1;
+        launcher.maxLaunchInterval = 1.5f;
+
+    }
+
+    public void TriggerEndPointEvent()
+    {
+        camera.camDepth = 0;
     }
 
     public void StartNextTutorial(Collider2D collision)
@@ -164,11 +236,6 @@ public class TutorialManagerZero : MonoBehaviour
         if (hasAttack == false)
         {
             GameObject player = collision.gameObject;
-
-            DodgeHintObj =
-                        Instantiate(HeavyAttackHint, heavyAttackHintTransform.position, Quaternion.identity, collision.transform);
-
-            HeavyAttackHint.gameObject.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
 
             normalAttackHintObj =
                 Instantiate(normalAttackHint,
@@ -178,9 +245,27 @@ public class TutorialManagerZero : MonoBehaviour
             normalAttackHint.gameObject.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
             hasAttack = true;
         }
-        else
-        {
-
-        }
     }
+
+    IEnumerator DisableMovementControlForAwhile(GameObject player, float second = 4f)
+    {
+        player.GetComponent<PlayerGeneralHandler>().DeactivateControl();
+        player.GetComponent<Animator>().SetBool("isWalking", false);
+        player.GetComponent<Animator>().SetBool("Defending", false);
+        player.GetComponent<Animator>().SetBool("DefendWalkForward", false);
+        player.GetComponent<Animator>().SetBool("DefendWalkBackward", false);
+        yield return new WaitForSeconds(second);
+        player.GetComponent<PlayerGeneralHandler>().ReactivateControl();
+    }
+
+    //IEnumerator FocusOnGameObjectAWhile(GameObject gameObject, float focusDuration)
+    //{
+    //    camera.player = gameObject;
+    //    camera.ToggleCollider(false);
+    //    yield return new WaitForSeconds(focusDuration);
+    //    camera.player = player;
+    //    yield return new WaitForSeconds(.5f);
+    //    camera.ToggleCollider(true);
+    //}
+
 }

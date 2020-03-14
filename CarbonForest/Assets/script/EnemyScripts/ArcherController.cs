@@ -12,7 +12,6 @@ public class ArcherController : EnemyShooterController
     void Start()
     {
         Initialize();
-        
     }
 
     // Update is called once per frame
@@ -32,7 +31,6 @@ public class ArcherController : EnemyShooterController
 
     public override void AttackPlayer()
     {
-        canWalk = false;
         fireTime += Time.deltaTime;
         if (fireTime >= fireRate && takingDamage == false)
         {
@@ -44,11 +42,16 @@ public class ArcherController : EnemyShooterController
     public void FireArrow()
     {
         arrow = Instantiate(bulletPref, transform.position + new Vector3(0, -.7f, 0), Quaternion.identity);
-        FindObjectOfType<ShakeController>().CamShake();
+        arrow.GetComponent<BulletController>().enemy = this;
     }
 
     public void walkAgain()
     {
         canWalk = true;
+    }
+
+    public void DisableWalk()
+    {
+        canWalk = false;
     }
 }

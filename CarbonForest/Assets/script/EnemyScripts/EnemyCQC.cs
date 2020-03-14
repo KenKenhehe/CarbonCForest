@@ -46,6 +46,7 @@ public class EnemyCQC : Enemy {
 
     public virtual void Initialize()
     {
+        hitDuration = new WaitForSeconds(0.05f);
         randomPatrolDir = Random.Range(-1f, 1f);
         animator = GetComponent<Animator>() == null ? GetComponentInChildren<Animator>() : GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>() == null ? GetComponentInChildren<SpriteRenderer>() : GetComponent<SpriteRenderer>();
@@ -55,6 +56,7 @@ public class EnemyCQC : Enemy {
         startHealth = health;
         playerToFocus = FindObjectOfType<PlayerAttack>();
         respondRange = Random.Range(1f, 1.5f);
+        SightRange = Random.Range(minSightRange, maxSightRange);
         rb2d = GetComponent<Rigidbody2D>();
         randHoldTime = Random.Range(.1f, 3f);
         attackRate = Random.Range(.3f, 1.5f);
@@ -108,10 +110,6 @@ public class EnemyCQC : Enemy {
         {
             AttackPlayer();
             attackRate = Random.Range(.3f, 1.5f);
-            /*if (blockColorRenderer.color.a > 0)
-            {
-                ChangeBlockColorAtRandom();
-            }*/
         }
         else
         {
@@ -123,6 +121,10 @@ public class EnemyCQC : Enemy {
     {
         while (true)
         {
+            if (PlayerSeen)
+            {
+
+            }
             randomPatrolDir = Random.Range(0, 2) == 0 ? -1 : 1;
             yield return new WaitForSeconds(.5f);
         }
@@ -160,12 +162,12 @@ public class EnemyCQC : Enemy {
                     {
                         GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
                     }
-                    soundFXHandler.Play("ParrySuccess" + Random.Range(1,4));
+                    soundFXHandler.Play("ParrySuccess1");
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
 
                     shakeController.CamBigShake();
                     Time.timeScale = .001f;
-                    collider.GetComponent<PlayerGeneralHandler>().CallPowerUp();
+                    //collider.GetComponent<PlayerGeneralHandler>().CallPowerUp();
                     health -= damage * blockDamageMultiplyer;
                     animator.SetTrigger("Stunned");
                     if (healthBar != null)
@@ -316,5 +318,10 @@ public class EnemyCQC : Enemy {
     public override float GetHealth()
     {
         return base.GetHealth();
+    }
+
+    public void Patrol()
+    {
+
     }
 }

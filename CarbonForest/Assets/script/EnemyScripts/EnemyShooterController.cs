@@ -18,7 +18,7 @@ public class EnemyShooterController : Enemy {
     ShakeController shakeController;
     SpriteRenderer renderer;
     protected Rigidbody2D rb2d;
-    WaitForSeconds hitDuration = new WaitForSeconds(0.05f);
+    WaitForSeconds hitDuration;
     SceneEventHandler sceneEventHandler;
     // Use this for initialization
 
@@ -28,6 +28,7 @@ public class EnemyShooterController : Enemy {
 
     public void Initialize()
     {
+        hitDuration = new WaitForSeconds(0.05f);
         sceneEventHandler = FindObjectOfType<SceneEventHandler>();
         playerToFocus = FindObjectOfType<PlayerAttack>();
         fireRate = Random.Range(1.0f, 3.0f);
@@ -76,7 +77,8 @@ public class EnemyShooterController : Enemy {
         fireTime += Time.deltaTime;
         if (fireTime >= fireRate && takingDamage == false)
         {
-            Instantiate(bulletPref, transform.position, Quaternion.identity);
+            GameObject bullet = Instantiate(bulletPref, transform.position, Quaternion.identity);
+            bullet.GetComponent<BulletController>().enemy = this;
             FindObjectOfType<SoundFXHandler>().Play("LaunchBullet");
             fireTime = 0;
         }

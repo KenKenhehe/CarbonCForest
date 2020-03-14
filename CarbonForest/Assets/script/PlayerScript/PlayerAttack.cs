@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour {
+    [Tooltip("How many weapons do player have")]
     public int currentWeaponNum = 0;
+
+    [Tooltip("Which weapon player is choosing")]
     public int currentWeaponCount = 1;
 
     public float friction = 600;
@@ -27,8 +30,8 @@ public class PlayerAttack : MonoBehaviour {
 
     public int HeavyAttackDamage = 6;
 
-    float startComboTime;
-    float resetTimer = 1f;
+    //float startComboTime;
+    //float resetTimer = 1f;
 
     float timesBetweenAttack;
     WaitForSeconds attackAfterSecond = new WaitForSeconds(0.05f);
