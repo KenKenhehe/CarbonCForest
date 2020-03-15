@@ -61,8 +61,6 @@ public class PlayerGeneralHandler : MonoBehaviour {
     }
 
     void Start () {
-        
-
         shakeController = FindObjectOfType<ShakeController>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         animator = GetComponent<Animator>();
@@ -287,7 +285,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
         GetComponent<Rigidbody2D>().velocity *= 0;
         GetComponent<PlayerMovement>().enabled = false;
         canBlock = false;
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         animator.SetBool("BlockFailIdle", false);
         canBlock = true;
         GetComponent<PlayerAttack>().enabled = true;
@@ -295,15 +293,6 @@ public class PlayerGeneralHandler : MonoBehaviour {
         if (GetComponent<PlayerHeavyAttack>() != null)
         {
             GetComponent<PlayerHeavyAttack>().enabled = true;
-        }
-    }
-
-    //if still in blocking tutorial, nothing can enable attack yet
-    void CheckIfInTutAndEnableAttack()
-    {
-        if (AttackEnabledAfterTut == true)
-        {
-            
         }
     }
 

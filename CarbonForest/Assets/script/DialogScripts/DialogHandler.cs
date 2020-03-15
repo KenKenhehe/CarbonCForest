@@ -13,9 +13,10 @@ public class DialogHandler : MonoBehaviour {
 
 
     PlayerGeneralHandler player;
-
-	// Use this for initialization
-	void Start () {
+    bool typing = false;
+    string currentSentence = "";
+    // Use this for initialization
+    void Start () {
         player = FindObjectOfType<PlayerGeneralHandler>();
         sentences = new Queue<string>();
         continueButton.SetActive(false);
@@ -25,7 +26,7 @@ public class DialogHandler : MonoBehaviour {
 	void Update () {
         if (Input.GetButtonDown("Interact"))
         {
-            DisplayNextSentence();
+            DisplayNextSentence(typing);
         }
 	}
 
@@ -44,21 +45,32 @@ public class DialogHandler : MonoBehaviour {
         player.GetComponent<Animator>().SetBool("Defending", false);
         player.GetComponent<Animator>().SetBool("DefendWalkForward", false);
         player.GetComponent<Animator>().SetBool("DefendWalkBackward", false);
-        DisplayNextSentence();
+        DisplayNextSentence(typing);
     }
 
-    public void DisplayNextSentence()
+    public void DisplayNextSentence(bool isTyping)
     {
-        if(sentences.Count == 0)
+        typing = false;
+        if(sentences.Count == 0 && isTyping == false)
         {
             EndDialog();
             StopAllCoroutines();
             return;
         }
-        string sentence = sentences.Dequeue();
-        dialogText.text = sentence;
+        else
+        {
+            dialogText.text = currentSentence;
+        }
+        
         StopAllCoroutines();
-        StartCoroutine(typeSentence(sentence));
+        if (isTyping == false)
+        {
+            currentSentence = sentences.Dequeue();
+            StartCoroutine(typeSentence(currentSentence));
+        }else
+        {
+            dialogText.text = currentSentence;
+        }
     }
 
     void EndDialog()
@@ -72,6 +84,7 @@ public class DialogHandler : MonoBehaviour {
 
     IEnumerator typeSentence(string s)
     {
+        typing = true;
         dialogText.text = "";
         foreach(char c in s.ToCharArray())
         {
@@ -88,15 +101,17 @@ public class DialogHandler : MonoBehaviour {
             {
                 continueButton.SetActive(false);
             }
-            yield return new WaitForSeconds(.02f);
+            yield return new WaitForSeconds(.01f);
         }
+        print("finish");
+        typing = false;
     }
 
     public IEnumerator nextSentence()
     {
         while(sentences.Count != 0)
         {
-            DisplayNextSentence();
+            DisplayNextSentence(typing);
             
             yield return new WaitForSeconds(dialogFreq);     
         }

@@ -56,14 +56,16 @@ public class BulletController : MonoBehaviour {
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, playerGeneralHandler.colorState, enemy);
                 rb2d.velocity = -moveDirection;
                 //rb2d.velocity = new Vector2(rb2d.velocity.x * 1.5f, Random.Range(-10f, 10f));
-                Destroy(gameObject, .2f);
+                
                 if(GetComponent<Animator>() != null)
                 {
                     GetComponent<Rigidbody2D>().gravityScale = 10;
+                    Destroy(gameObject, .2f);
                 }
                 else
                 {
-                    rb2d.velocity = new Vector2(rb2d.velocity.x * 1.5f, Random.Range(-10f, 10f));
+                    rb2d.velocity = new Vector2(rb2d.velocity.x * 15f, Random.Range(-10f, 10f));
+                    Destroy(gameObject, 3);
                 }
             }
         }
