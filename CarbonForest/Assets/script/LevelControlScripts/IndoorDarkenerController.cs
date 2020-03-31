@@ -5,7 +5,9 @@ using UnityEngine;
 public class IndoorDarkenerController : MonoBehaviour
 {
     Animator animator;
+    Animator buildingAnimator;
     IndoorDarkenerController instance;
+    public GameObject buildingToEnter;
     public Transform entry;
     public Transform exit;
     GameObject player;
@@ -19,6 +21,7 @@ public class IndoorDarkenerController : MonoBehaviour
         }
         player = FindObjectOfType<PlayerGeneralHandler>().gameObject;
         animator = GetComponent<Animator>();
+        buildingAnimator = buildingToEnter.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -36,5 +39,6 @@ public class IndoorDarkenerController : MonoBehaviour
     public void SetIsIndoor(bool isIndoor)
     {
         animator.SetBool("IsInside", isIndoor);
+        buildingAnimator.SetBool("IsInside", isIndoor);
     }
 }

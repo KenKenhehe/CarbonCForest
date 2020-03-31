@@ -7,7 +7,8 @@ public class DialogTrigger : MonoBehaviour {
     DialogHandler dialogHandler;
     private void Start()
     {
-        dialogHandler = FindObjectOfType<DialogHandler>();
+        if(FindObjectOfType<DialogHandler>() != null)
+            dialogHandler = FindObjectOfType<DialogHandler>();
     }
     public void TriggerDialogue()
     {

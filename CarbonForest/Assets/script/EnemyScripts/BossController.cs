@@ -90,7 +90,15 @@ public class BossController : EnemyCQC {
         stunnedDuration = 2f;
         ChargeFX = GetComponentInChildren<ParticleSystem>();
         StartCoroutine(HoldAndMove());
-        soundFXHandler = FindObjectOfType<SoundFXHandler>();
+        soundFXHandler = SoundFXHandler.instance;
+        blockBlob.SetActive(false);
+        StartCoroutine(showBlobAfterAWhile());
+    }
+
+    IEnumerator showBlobAfterAWhile()
+    {
+        yield return new WaitForSeconds(1.5f);
+        blockBlob.SetActive(true);
     }
 
     public override void TakeDamage(int damage)
@@ -277,7 +285,6 @@ public class BossController : EnemyCQC {
     IEnumerator FocusBoss()
     {
         FindObjectOfType<CameraControl>().player = gameObject;
-        //print(FindObjectOfType<CameraControl>().player);
         yield return new WaitForSeconds(1.5f);
         FindObjectOfType<CameraControl>().player = playerToFocus.gameObject;
     }

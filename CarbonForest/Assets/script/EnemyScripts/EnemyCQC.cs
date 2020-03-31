@@ -14,6 +14,9 @@ public class EnemyCQC : Enemy {
     public Color blockWhite;
     public Color blockBlue;
 
+    public float minAttackRate = .3f;
+    public float maxAttackRate = 1.5f;
+
     public Image blockBar;
 
     protected  bool canAttack = true;
@@ -59,7 +62,7 @@ public class EnemyCQC : Enemy {
         SightRange = Random.Range(minSightRange, maxSightRange);
         rb2d = GetComponent<Rigidbody2D>();
         randHoldTime = Random.Range(.1f, 3f);
-        attackRate = Random.Range(.3f, 1.5f);
+        attackRate = Random.Range(minAttackRate, maxAttackRate);
         colorState = Random.Range(0, 2);
         blockColorRenderer = blockBlob.GetComponent<SpriteRenderer>();
 
@@ -109,7 +112,7 @@ public class EnemyCQC : Enemy {
         if (attackRate <= 0)
         {
             AttackPlayer();
-            attackRate = Random.Range(.3f, 1.5f);
+            attackRate = Random.Range(minAttackRate, maxAttackRate);
         }
         else
         {

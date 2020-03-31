@@ -48,6 +48,7 @@ public class ScrollController : MonoBehaviour {
             StartCoroutine(FlashBlackWhenFinish());
             StartCoroutine(WaitAndSpawnEnemy());
             StartCoroutine(WaitAndSpawnMech());
+            StartCoroutine(WaitAndFireFinishBeam());
         }
     }
 
@@ -77,5 +78,10 @@ public class ScrollController : MonoBehaviour {
     {
         yield return new WaitForSeconds(mechMusicTiming);
         Instantiate(mech);
+    }
+    IEnumerator WaitAndFireFinishBeam()
+    {
+        yield return new WaitForSeconds(mechMusicTiming + 29);
+        LevelTwoMechController.hasEnd = true;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,13 +12,27 @@ public class DialogHandler : MonoBehaviour {
     public GameObject cinamicFX;
     public Animator animator;
 
+    public delegate void OnDialogueEnd();
+    public OnDialogueEnd onDialogueEnd = DefalutDialogueEndBehaviour;
+
+    private static void DefalutDialogueEndBehaviour()
+    {
+        print("dialogueEnd");
+    }
 
     PlayerGeneralHandler player;
     bool typing = false;
     string currentSentence = "";
+
+    public static DialogHandler instance;
+
     // Use this for initialization
     void Start () {
-        player = FindObjectOfType<PlayerGeneralHandler>();
+        if(instance == null)
+        {
+            instance = this;
+        }
+        player = PlayerGeneralHandler.instance;
         sentences = new Queue<string>();
         continueButton.SetActive(false);
 	}
@@ -54,6 +69,7 @@ public class DialogHandler : MonoBehaviour {
         if(sentences.Count == 0 && isTyping == false)
         {
             EndDialog();
+            onDialogueEnd();
             StopAllCoroutines();
             return;
         }
@@ -101,7 +117,7 @@ public class DialogHandler : MonoBehaviour {
             {
                 continueButton.SetActive(false);
             }
-            yield return new WaitForSeconds(.01f);
+            yield return new WaitForSeconds(.02f);
         }
         print("finish");
         typing = false;

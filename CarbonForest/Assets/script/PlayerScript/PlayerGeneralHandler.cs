@@ -17,6 +17,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
     public int currentLevel;
 
     public GameObject powerUpFX;
+    public GameObject parryFailFX;
 
     public float startHealth;
     private float healthPoints;
@@ -161,7 +162,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
         {
             blockController.DisableBlocking();
             GetComponent<PlayerAttack>().enabled = true;
-            ChangeEnemyAlpha(0); 
+            ChangeEnemyAlpha(0);
         }
         else
         {
@@ -209,6 +210,8 @@ public class PlayerGeneralHandler : MonoBehaviour {
             if(EnemyColorState != colorState)
             {
                 StartCoroutine(StunnedAndRecover());
+                GetComponent<PlayerMovement>().parryStunned = true;
+                healthPoints -= (damage * 2);
                 blockController.DisableBlocking();
                 blockController.blocking = false;
                
@@ -244,9 +247,9 @@ public class PlayerGeneralHandler : MonoBehaviour {
         if (GetComponent<PlayerHeavyAttack>() != null)
         {
             GetComponent<PlayerHeavyAttack>().enabled = false;
-        } 
-        GetComponent<PlayerMovement>().dodging = false;
-        GetComponent<PlayerMovement>().enabled = false;
+        }
+        //GetComponent<PlayerMovement>(). = false;
+        PlayerMovement.Instance.SetMovement(false);
         GetComponent<BlockController>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
@@ -258,7 +261,8 @@ public class PlayerGeneralHandler : MonoBehaviour {
         {
             GetComponent<PlayerHeavyAttack>().enabled = true;
         }
-        GetComponent<PlayerMovement>().enabled = true;
+        //GetComponent<PlayerMovement>().enabled = true;
+        PlayerMovement.Instance.SetMovement(true);
         GetComponent<BlockController>().enabled = true;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
@@ -274,8 +278,10 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     IEnumerator StunnedAndRecover()
     {
-        Time.timeScale = .001f;
-        FindObjectOfType<SoundFXHandler>().Play("EnemyParry");
+        Time.timeScale = .002f;
+        float FXRotation = GetComponent<PlayerMovement>().facingRight ? 90 : -90;
+        Instantiate(parryFailFX, transform.position, Quaternion.Euler(0, 0, FXRotation));
+        SoundFXHandler.instance.Play("EnemyParry");
         animator.SetTrigger("BlockFail");
         animator.SetBool("BlockFailIdle", true);
         if (GetComponent<PlayerHeavyAttack>() != null)
@@ -283,13 +289,13 @@ public class PlayerGeneralHandler : MonoBehaviour {
             GetComponent<PlayerHeavyAttack>().enabled = false;
         }
         GetComponent<Rigidbody2D>().velocity *= 0;
-        GetComponent<PlayerMovement>().enabled = false;
+        PlayerMovement.Instance.canMove = false;
         canBlock = false;
         yield return new WaitForSeconds(2f);
+        PlayerMovement.Instance.canMove = true;
         animator.SetBool("BlockFailIdle", false);
         canBlock = true;
         GetComponent<PlayerAttack>().enabled = true;
-        GetComponent<PlayerMovement>().enabled = true;
         if (GetComponent<PlayerHeavyAttack>() != null)
         {
             GetComponent<PlayerHeavyAttack>().enabled = true;

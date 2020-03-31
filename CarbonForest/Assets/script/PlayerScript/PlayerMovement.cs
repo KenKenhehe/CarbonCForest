@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
-
+public class PlayerMovement : MonoBehaviour
+{
     public GameObject dodgeFXLeft;
     public GameObject dodgeSparkFX;
 
+    public static PlayerMovement Instance;
+    [HideInInspector]public bool canMove = true;
     public float speed;
     public float dodgeSpeed;
     public float walkSpeed;
@@ -13,8 +15,9 @@ public class PlayerMovement : MonoBehaviour {
     public float horizontalMovement;
     public float fallMultiplier = 1.5f;
     public bool onGround = true;
-    
+
     public bool dodging = false;
+    [HideInInspector]public bool parryStunned = false;
     Animator animator;
     SpriteRenderer spriteRenderer;
 
@@ -31,11 +34,22 @@ public class PlayerMovement : MonoBehaviour {
     private float dodgeTime;
     public float startDodgeTime;
 
+    private float parryStunTime;
+    public float startParryStunTime;
+
     private GameObject LeftBound;
     private GameObject RightBound;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
+    void Start()
+    {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -43,14 +57,21 @@ public class PlayerMovement : MonoBehaviour {
         blockController = GetComponent<BlockController>();
         counterAttack = GetComponent<CounterAttackController>();
         dodgeTime = startDodgeTime;
+        parryStunTime = startParryStunTime;
         LeftBound = GameObject.FindGameObjectWithTag("LeftBound");
         RightBound = GameObject.FindGameObjectWithTag("RightBound");
-	}
-	
-	// Update is called once per frame
-	void Update () {     
-        MovementInput();
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(canMove == true)
+            MovementInput();
+        else
+        {
+            horizontalMovement = 0;
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -66,7 +87,11 @@ public class PlayerMovement : MonoBehaviour {
         }
         OnlyMoveBetween(LeftBound.transform.position.x, RightBound.transform.position.x);
 
-        HandleDodge();
+        if (canMove)
+        {
+            HandleDodge();
+        }
+        HandleParryStun();
     }
 
     void OnlyMoveBetween(float minX, float maxX)
@@ -84,41 +109,38 @@ public class PlayerMovement : MonoBehaviour {
 
     void MovementInput()
     {
-        if (onGround == true)
+        if (onGround == true )
         {
-            horizontalMovement = Input.GetAxisRaw("Horizontal");
+            if (canMove)
+                horizontalMovement = Input.GetAxisRaw("Horizontal");
+            else
+                horizontalMovement = 0;
         }
         
-        //rb2d.velocity = new Vector2(horizontalMovement * speed * Time.deltaTime, rb2d.velocity.y);
 
         if (GetComponent<BlockController>().blocking == false)
         {
             NormalMovement();
         }
-        else if(blockController.blocking == true)
+        else if (blockController.blocking == true)
         {
             animator.SetBool("isWalking", false);
             BlockingMovement();
         }
 
-        /*if(rb2d.velocity.y < 0)
-        {
-            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
-        }*/
-
-        //HandleDodge();
     }
 
-    void HandleDodge(){
+    void HandleDodge()
+    {
         if (dodging == false)
         {
-           if (Input.GetButtonDown("Fire2")
-           && playerAttack.attacking == false
-           && GetComponent<BlockController>().blocking == false)
-           {
+            if (Input.GetButtonDown("Fire2")
+            && playerAttack.attacking == false
+            && GetComponent<BlockController>().blocking == false)
+            {
                 DodgeFX();
                 dodging = true;
-           }
+            }
         }
         else
         {
@@ -136,8 +158,35 @@ public class PlayerMovement : MonoBehaviour {
                 rb2d.velocity.y
                 );
             }
-        }  
-}
+        }
+    }
+
+    public void SetMovement(bool enable)
+    {
+        canMove = enable;
+        dodgeTime = 0;
+    }
+
+    void HandleParryStun()
+    {
+        if (parryStunned)
+        {
+            if(parryStunTime <= 0)
+            {
+                parryStunned = false;
+                parryStunTime = startParryStunTime;
+                rb2d.velocity = Vector2.zero;
+            }
+            else
+            {
+                parryStunTime -= Time.fixedDeltaTime;
+                rb2d.velocity = new Vector2(
+                facingRight == true ? -(dodgeSpeed) * Time.fixedDeltaTime : (dodgeSpeed) * Time.fixedDeltaTime,
+                rb2d.velocity.y
+                );
+            }
+        }
+    }
 
     void NormalMovement()
     {
@@ -201,7 +250,7 @@ public class PlayerMovement : MonoBehaviour {
                 animator.SetBool("DefendWalkBackward", false);
             }
         }
-        else if(counterAttack.countering)
+        else if (counterAttack.countering)
         {
             animator.SetBool("DefendWalkForward", false);
             animator.SetBool("DefendWalkBackward", false);
@@ -212,11 +261,11 @@ public class PlayerMovement : MonoBehaviour {
     void DodgeFX()
     {
         GameObject sFX = Instantiate(
-            dodgeSparkFX, 
+            dodgeSparkFX,
             new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
             Quaternion.Euler(new Vector3(-15, facingRight ? -90 : 90, 0)), transform
             );
-        if(rb2d.velocity.y < 0)
+        if (rb2d.velocity.y < 0)
         {
             Destroy(sFX);
         }
@@ -233,27 +282,4 @@ public class PlayerMovement : MonoBehaviour {
         animator.SetTrigger("Dodging");
     }
 
-    IEnumerator DoudgeEffect()
-    {
-        dodging = true;
-        if (horizontalMovement == 0)
-        {
-            rb2d.velocity = new Vector2(
-                facingRight == true ? (dodgeSpeed) * Time.fixedDeltaTime : -(dodgeSpeed) * Time.fixedDeltaTime, 
-                rb2d.velocity.y
-                );
-        }
-        else {
-            rb2d.velocity = new Vector2((dodgeSpeed ) * horizontalMovement * Time.fixedDeltaTime, rb2d.velocity.y);
-        }
-        yield return new WaitForSeconds(1f);
-        speed = walkSpeed;
-        dodging = false;
-    }
-
-    
-    void AdjustBlockFacing()
-    {
-        spriteRenderer.flipX = !(spriteRenderer.flipX);
-    }
 }

@@ -59,6 +59,7 @@ public class RangedArrowBehaviour : MonoBehaviour
             rb.freezeRotation = true;
             target = null;
             ArrowExplode();
+            SoundFXHandler.instance.Play("ArrowHitFire");
         }
     }
 

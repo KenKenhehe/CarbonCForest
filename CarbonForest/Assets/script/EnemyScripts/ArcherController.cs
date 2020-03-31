@@ -43,6 +43,7 @@ public class ArcherController : EnemyShooterController
     {
         arrow = Instantiate(bulletPref, transform.position + new Vector3(0, -.7f, 0), Quaternion.identity);
         arrow.GetComponent<BulletController>().enemy = this;
+        SoundFXHandler.instance.Play("ArrowShot");
     }
 
     public void walkAgain()
@@ -53,5 +54,10 @@ public class ArcherController : EnemyShooterController
     public void DisableWalk()
     {
         canWalk = false;
+    }
+
+    public void DrawArrow()
+    {
+        SoundFXHandler.instance.Play("ArrowLoad");
     }
 }

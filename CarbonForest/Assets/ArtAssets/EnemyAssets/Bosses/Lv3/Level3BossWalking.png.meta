@@ -8,8 +8,10 @@ TextureImporter:
     21300006: Level3BossWalking_3
     21300008: Level3BossWalking_4
     21300010: Level3BossWalking_5
+    21300012: Level3BossWalking_6
+    21300014: Level3BossWalking_7
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -94,6 +96,46 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe5dce180c5a48a44a5b83d6dfbcb4c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Level3BossWalking_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d83ed355c147b654b85137f7e9e55ebe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Level3BossWalking_2
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 640
         width: 128
         height: 128
@@ -104,13 +146,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d875d217aff28b42960b119972c4503
+      spriteID: 6d7947850566b52419ed6200b3e05682
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level3BossWalking_1
+      name: Level3BossWalking_3
       rect:
         serializedVersion: 2
         x: 0
@@ -124,13 +166,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 526303511fd78804abf02ba8fcfeb1f9
+      spriteID: dbb8a0e0e0344644bafcbdf324a0a52b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level3BossWalking_2
+      name: Level3BossWalking_4
       rect:
         serializedVersion: 2
         x: 0
@@ -144,13 +186,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f55ef7dd84f927a4a9632d5ed4d24728
+      spriteID: a04d4f0d2d2d14f4b828b72fff8ed66f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level3BossWalking_3
+      name: Level3BossWalking_5
       rect:
         serializedVersion: 2
         x: 0
@@ -164,13 +206,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 565d38dfa337efa46b720c214e3f5eff
+      spriteID: 0efcd8edc62259a4db98c8262572ebe7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level3BossWalking_4
+      name: Level3BossWalking_6
       rect:
         serializedVersion: 2
         x: 0
@@ -184,13 +226,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df487214756b6c647809b580e79310a9
+      spriteID: f75ec5c48264a334caa2fa2859ff409d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level3BossWalking_5
+      name: Level3BossWalking_7
       rect:
         serializedVersion: 2
         x: 0
@@ -204,7 +246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c8a5d0b0ed59c54faae2290df1648bd
+      spriteID: 21c2e581579b5294aa8bcb5975099ca5
       vertices: []
       indices: 
       edges: []

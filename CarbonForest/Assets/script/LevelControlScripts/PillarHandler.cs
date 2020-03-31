@@ -28,7 +28,10 @@ public class PillarHandler : MonoBehaviour {
                 soundFXHandler.Play("PillarDown");
                 Destroy(gameObject);
             }
-            collision.gameObject.GetComponent<BossController>().stunnedAfterHitPliiar();
+            BossController boss = collision.gameObject.GetComponent<BossController>();
+            boss.dashing = false;
+            boss.canMove = false;
+            boss.stunnedAfterHitPliiar();
         }
     }
 }

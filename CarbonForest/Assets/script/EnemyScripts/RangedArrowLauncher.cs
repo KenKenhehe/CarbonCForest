@@ -45,6 +45,7 @@ public class RangedArrowLauncher : MonoBehaviour
                     transform.position + spawnOffset + new Vector3(Random.Range(1f, 4f), 0, 0),
                     Quaternion.Euler(0, 0, Random.Range(0f, 10f)));
                 arrowObj.GetComponent<RangedArrowBehaviour>().rotateSpeed = ArrowRotationSpeed;
+                SoundFXHandler.instance.Play("RangedArrowShot");
                 yield return new WaitForSeconds(.2f);
             }
 

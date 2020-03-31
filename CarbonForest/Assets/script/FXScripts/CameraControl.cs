@@ -15,9 +15,16 @@ public class CameraControl : MonoBehaviour {
     [SerializeField] GameObject leftCollider;
     [SerializeField] GameObject rightCollider;
     public bool followTarget = true;
+
+    public static CameraControl instance;
+
     // Use this for initialization
     private void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
         mainPlayer = PlayerGeneralHandler.instance.gameObject;
     }
 	
