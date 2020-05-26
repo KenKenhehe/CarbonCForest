@@ -6,6 +6,9 @@ public class Interactable : MonoBehaviour {
     public float interactionRange = 2;
     public Vector3 Range;
     public bool isActive;
+    protected bool isClose = false;
+    public GameObject OnCloseFX;
+    public Vector2 onCloseScale;
 
     public virtual void Interact()
     {
@@ -17,6 +20,26 @@ public class Interactable : MonoBehaviour {
         Range = transform.localScale;
     }
 
+    public void EnableBehaviour()
+    {
+        if (OnCloseFX != null)
+        {
+            if (isClose == true)
+            {
+                OnCloseFX.transform.localScale =
+                   Vector3.Lerp(OnCloseFX.transform.localScale, onCloseScale, Time.deltaTime * 10);
+                if (OnCloseFX.transform.localScale.x >= onCloseScale.x - .2f)
+                {
+                    isClose = false;
+                }
+            }
+            else
+            {
+                OnCloseFX.transform.localScale =
+                    Vector3.Lerp(OnCloseFX.transform.localScale, Vector3.zero, Time.deltaTime * 10);
+            }
+        }
+    }
 
     private void OnDrawGizmosSelected()
     {
@@ -34,6 +57,8 @@ public class Interactable : MonoBehaviour {
                 
             }
         }
+        isClose = true;
+       
     }
 
 }

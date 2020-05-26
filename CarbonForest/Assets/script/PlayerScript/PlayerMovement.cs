@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     CounterAttackController counterAttack;
 
     private float dodgeTime;
-    public float startDodgeTime;
+    public float startDodgeTime = 0.2f;
 
     private float parryStunTime;
     public float startParryStunTime;
@@ -50,6 +50,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -140,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 DodgeFX();
                 dodging = true;
+                dodgeTime = startDodgeTime;
             }
         }
         else

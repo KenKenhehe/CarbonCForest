@@ -9,7 +9,10 @@ public class LevelFader: MonoBehaviour {
     Animator animator;
     bool canSetScene;
     bool sceneLoading = false;
+
     private int levelIndex;
+    public GameObject objectiveScene;
+
 	// Use this for initialization
 	void Start () {
         levelIndex = SceneManager.GetActiveScene().buildIndex;

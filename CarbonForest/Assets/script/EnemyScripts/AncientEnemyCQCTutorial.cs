@@ -69,7 +69,7 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
     {
         canAttack = false;
         canMove = false;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         canMove = true;
         canAttack = true;
     }

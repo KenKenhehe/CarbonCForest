@@ -60,6 +60,8 @@ public class TutorialManagerZero : MonoBehaviour
     CameraControl camera;
     GameObject player;
 
+    SoundFXHandler soundFX;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -67,6 +69,7 @@ public class TutorialManagerZero : MonoBehaviour
         {
             instance = this;
         }
+        soundFX = SoundFXHandler.instance;
     }
 
     void Start()
@@ -76,6 +79,7 @@ public class TutorialManagerZero : MonoBehaviour
         teachParryWindow.SetActive(false);
         StartMovementTutorial();
         player.GetComponent<PlayerGeneralHandler>().canBlock = false;
+        soundFX = SoundFXHandler.instance;
     }
 
     // Update is called once per frame
@@ -178,7 +182,6 @@ public class TutorialManagerZero : MonoBehaviour
 
     public void ToggleArrowFall(bool enable)
     {
-        print(enable ? "Start Arrow fall" : "Stop arrow fall");
         arrowLauncherObj.SetActive(enable);
     }
 
@@ -200,6 +203,7 @@ public class TutorialManagerZero : MonoBehaviour
         //StartCoroutine(FocusOnGameObjectAWhile(ArcherTutObj, 2));
         camera.FocusOnGameObjectForAwhile(ArcherTutObj, 2);
         StartCoroutine(DisableMovementControlForAwhile(player, 3));
+        //FindObjectOfType<SoundFXHandler>().Play("ChiBa");
     }
 
     //third
@@ -223,7 +227,7 @@ public class TutorialManagerZero : MonoBehaviour
         launcher.minArrowLaunchCount = 1;
         launcher.minLaunchInterval = 1;
         launcher.maxLaunchInterval = 1.5f;
-
+        //soundFX.PlayFadeIn("Cello");
     }
 
     public void TriggerEndPointEvent()

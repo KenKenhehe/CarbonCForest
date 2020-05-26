@@ -16,7 +16,10 @@ public class MissileBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         soundManager = SoundFXHandler.instance;
-        target = FindObjectOfType<PlayerGeneralHandler>().gameObject;
+        if (FindObjectOfType<PlayerGeneralHandler>() != null)
+        {
+            target = FindObjectOfType<PlayerGeneralHandler>().gameObject;
+        }
         rb = GetComponent<Rigidbody2D>();
         //enemy = new Enemy();
         Destroy(gameObject, 10);

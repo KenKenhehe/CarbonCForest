@@ -8,6 +8,8 @@ TextureImporter:
     21300006: AncientCQC1Walk_3
     21300008: AncientCQC1Walk_4
     21300010: AncientCQC1Walk_5
+    21300012: AncientCQC1Walk_6
+    21300014: AncientCQC1Walk_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -94,6 +96,46 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb8d3f1bbd39e8a4580edd66cad981f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AncientCQC1Walk_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74717b88e782a98438ce69ce2d21cf75
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AncientCQC1Walk_2
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 640
         width: 128
         height: 128
@@ -104,13 +146,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d2f6d0b5ab404a4d9bd00ab3c4cfa22
+      spriteID: c0dc5805891ffba4a8b6a4df60e609fd
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientCQC1Walk_1
+      name: AncientCQC1Walk_3
       rect:
         serializedVersion: 2
         x: 0
@@ -124,13 +166,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85d93d10dcead7d49bf5fd2f91515180
+      spriteID: 141631827e761b143b98aa5f8940d6e1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientCQC1Walk_2
+      name: AncientCQC1Walk_4
       rect:
         serializedVersion: 2
         x: 0
@@ -144,13 +186,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 417e098a061bb7c4fa405882ca53e5e2
+      spriteID: 684853f9021695444a49ba9fb57106c3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientCQC1Walk_3
+      name: AncientCQC1Walk_5
       rect:
         serializedVersion: 2
         x: 0
@@ -164,13 +206,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b54620e6dbff3884ea3523122ef4eca4
+      spriteID: 9f472acf42ccf594bb2be7da83342922
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientCQC1Walk_4
+      name: AncientCQC1Walk_6
       rect:
         serializedVersion: 2
         x: 0
@@ -184,13 +226,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 629fb448e6fe3414090a6bfc557ef77d
+      spriteID: 3ff7cf4fc4dc6684ba1174ef82c7907d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AncientCQC1Walk_5
+      name: AncientCQC1Walk_7
       rect:
         serializedVersion: 2
         x: 0
@@ -204,7 +246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5548b0ec5e6c4684da4709977185e651
+      spriteID: d25ef9b81850a574c82c8bd3cdd9e221
       vertices: []
       indices: 
       edges: []

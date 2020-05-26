@@ -9,8 +9,16 @@ public class LevelTwoMechController : Enemy
     public Transform spawnPoint;
     public float smoothness = 3;
     public Transform scrollTrasnform;
+
+    public Transform BeamNormalShootTransform;
+    public GameObject BeamNormalShootFX;
+   
+    public Transform BeamFinalShootTransform;
+    public GameObject BeamFinalShootFX;
+
     public GameObject beamTarget;
     public GameObject beamExplosionFX;
+
     public float minShootBeamDuration;
     public float maxShootBeamDuration;
     private float shootBeamDuration;
@@ -75,6 +83,11 @@ public class LevelTwoMechController : Enemy
         yield return new WaitForSeconds(shootBeamDuration);
         while (hasEnd == false)
         {
+            GameObject beamNormalShootFX = 
+                Instantiate(BeamNormalShootFX, BeamNormalShootTransform.position, Quaternion.Euler(0, 0, 180));
+
+            yield return new WaitForSeconds(Random.Range(.2f, .5f));
+            
             GameObject beamTargetObj =
                 Instantiate(beamTarget, player.transform.position,
                 Quaternion.identity);

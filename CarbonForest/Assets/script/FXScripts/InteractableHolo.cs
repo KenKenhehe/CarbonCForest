@@ -18,8 +18,6 @@ public class InteractableHolo : Interactable {
 
     float smoothness = 10;
     public bool isInteracted = false;
-    bool isClose = false;
-
 
 	// Use this for initialization
 	void Start () {
@@ -38,21 +36,25 @@ public class InteractableHolo : Interactable {
             HologramSprite.transform.localScale = 
                 Vector3.Lerp(HologramSprite.transform.localScale, maxScale, Time.deltaTime * 10);
         }
-        else if(isClose == true)
-        {
-            HologramSprite.transform.localScale =
-               Vector3.Lerp(HologramSprite.transform.localScale, middScale, Time.deltaTime * 10);
-            if(HologramSprite.transform.localScale.x >= middScale.x - .2f)
-            {
-                isClose = false;
-            }
-        }
-        
         else
         {
-            HologramSprite.transform.localScale = 
-                Vector3.Lerp(HologramSprite.transform.localScale, Vector3.zero, Time.deltaTime * 10);
+            EnableBehaviour();
         }
+        //else if(isClose == true)
+        //{
+        //    HologramSprite.transform.localScale =
+        //       Vector3.Lerp(HologramSprite.transform.localScale, middScale, Time.deltaTime * 10);
+        //    if(HologramSprite.transform.localScale.x >= middScale.x - .2f)
+        //    {
+        //        isClose = false;
+        //    }
+        //}
+        
+        //else
+        //{
+        //    HologramSprite.transform.localScale = 
+        //        Vector3.Lerp(HologramSprite.transform.localScale, Vector3.zero, Time.deltaTime * 10);
+        //}
 
        
 	}

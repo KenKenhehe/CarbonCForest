@@ -59,12 +59,13 @@ public class PlayerGeneralHandler : MonoBehaviour {
         {
             instance = this;
         }
+        animator = GetComponent<Animator>();
     }
 
     void Start () {
         shakeController = FindObjectOfType<ShakeController>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
-        animator = GetComponent<Animator>();
+        
         renderer = GetComponent<SpriteRenderer>();
         sceneEventHandler = FindObjectOfType<SceneEventHandler>();
         gameSwitch = FindObjectOfType<GameStateSwitch>();
@@ -73,12 +74,6 @@ public class PlayerGeneralHandler : MonoBehaviour {
         blockController = GetComponent<BlockController>();
         healthPoints = startHealth;
         blockPoints = startBlockPoint;
-        /*if(SceneManager.GetActiveScene().buildIndex == 2)
-        {
-            GetComponent<PlayerAttack>().enabled = false;
-            GetComponent<PlayerHeavyAttack>().enabled = false;
-            AttackEnabledAfterTut = false;
-        }*/
 
         //--------
         //For actual game save
@@ -111,6 +106,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
                 if (Input.GetButtonDown("Interact"))
                 {
                     interactable.Interact();
+                    print("Inrer");
                 }
             }
         }
@@ -252,16 +248,17 @@ public class PlayerGeneralHandler : MonoBehaviour {
         PlayerMovement.Instance.SetMovement(false);
         GetComponent<BlockController>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        animator.SetBool("isWalking", false);
     }
 
     public void ReactivateControl()
     {
+        print("RRR");
         GetComponent<PlayerAttack>().enabled = true;
         if (GetComponent<PlayerHeavyAttack>() != null)
         {
             GetComponent<PlayerHeavyAttack>().enabled = true;
         }
-        //GetComponent<PlayerMovement>().enabled = true;
         PlayerMovement.Instance.SetMovement(true);
         GetComponent<BlockController>().enabled = true;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;

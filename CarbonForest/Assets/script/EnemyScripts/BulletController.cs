@@ -45,13 +45,11 @@ public class BulletController : MonoBehaviour {
             if (player.GetComponent<BlockController>().blocking == false && 
                 player.GetComponent<PlayerMovement>().dodging == false)
             {
-                print("In not blocking");
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, 0, enemy);
                 Destroy(gameObject);
             }
             else if(player.GetComponent<BlockController>().blocking == true)
             {
-                print("In blocking");
                 FindObjectOfType<SoundFXHandler>().Play("SwordClingSmall");
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, playerGeneralHandler.colorState, enemy);
                 rb2d.velocity = -moveDirection;

@@ -9,12 +9,13 @@ public class InteractableDoor : Interactable
     bool isClose = false;
     bool interacted = false;
     [SerializeField]GameObject interactHint;
+    MusicDirector musicDirector;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
-
+        musicDirector = MusicDirector.instance;
     }
 
     // Update is called once per frame
@@ -36,6 +37,9 @@ public class InteractableDoor : Interactable
         animator.SetTrigger("Open");
         boxCollider2D.enabled = false;
         interacted = true;
+        musicDirector.StopAllMusicFadeOut(
+            new string[] { "Cello", "Pad", "GuzhengFX", "XiaoDa", "ChiBa", "Chapter0" }
+            );
     }
 
     public override void OnClose()

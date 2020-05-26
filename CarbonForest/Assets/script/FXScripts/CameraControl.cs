@@ -25,7 +25,10 @@ public class CameraControl : MonoBehaviour {
         {
             instance = this;
         }
-        mainPlayer = PlayerGeneralHandler.instance.gameObject;
+        if (PlayerGeneralHandler.instance.gameObject != null)
+        {
+            mainPlayer = PlayerGeneralHandler.instance.gameObject;
+        }
     }
 	
 	// Update is called once per frame

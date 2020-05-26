@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyCQC : Enemy {
+public class EnemyCQC : Enemy
+{
     protected ShakeController shakeController;
     protected SoundFXHandler soundFXHandler;
     public bool withinAttackRange = false;
@@ -19,7 +20,7 @@ public class EnemyCQC : Enemy {
 
     public Image blockBar;
 
-    protected  bool canAttack = true;
+    protected bool canAttack = true;
 
     protected float randHoldTime;
 
@@ -37,12 +38,13 @@ public class EnemyCQC : Enemy {
 
     protected float randomPatrolDir;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         Initialize();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         EnableBehaviour();
     }
@@ -70,7 +72,7 @@ public class EnemyCQC : Enemy {
             blockColorRenderer.color.g, blockColorRenderer.color.b,
             0);
 
-        if(blockBar != null)
+        if (blockBar != null)
         {
             blockBar.fillAmount = blockPoint / maxBlockPoint;
         }
@@ -100,10 +102,7 @@ public class EnemyCQC : Enemy {
         else
         {
             randHoldTime -= Time.fixedDeltaTime;
-            if (canMove == true)
-                rb2d.velocity = new Vector2(speed * randomPatrolDir * Time.fixedDeltaTime, rb2d.velocity.y);
-            else
-                rb2d.velocity = Vector2.zero;
+            rb2d.velocity = Vector2.zero;
         }
     }
 
@@ -136,19 +135,19 @@ public class EnemyCQC : Enemy {
     public virtual void ApplyDamage()
     {
         FindObjectOfType<SoundFXHandler>().Play("EnemySwordSwing");
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + (new Vector3(1,0,0) * (facingRight ? 1 : -1)), attackRange);
-        foreach(Collider2D collider in colliders)
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + (new Vector3(1, 0, 0) * (facingRight ? 1 : -1)), attackRange);
+        foreach (Collider2D collider in colliders)
         {
-            if(collider.GetComponent<PlayerGeneralHandler>() != null)
+            if (collider.GetComponent<PlayerGeneralHandler>() != null)
             {
-                collider.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage,colorState, this);
+                collider.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, colorState, this);
                 collider.transform.position = new Vector3(
                 (facingRight == true ? collider.transform.position.x + shockForce : collider.transform.position.x - shockForce),
                 collider.transform.position.y,
                 collider.transform.position.z);
                 shakeController.CamShake();
                 if (colorState == collider.GetComponent<PlayerGeneralHandler>().colorState &&
-                    collider.GetComponent<BlockController>().blocking == true && 
+                    collider.GetComponent<BlockController>().blocking == true &&
                     collider.GetComponent<PlayerMovement>().facingRight != facingRight)
                 {
                     blockPoint -= 1;
@@ -158,10 +157,10 @@ public class EnemyCQC : Enemy {
                     }
                     soundFXHandler.Play("SwordCling" + Random.Range(1, 5));
                 }
-            
-                if(blockPoint <= 0)
+
+                if (blockPoint <= 0)
                 {
-                    if(parryBoomFX != null)
+                    if (parryBoomFX != null)
                     {
                         GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
                     }
@@ -177,14 +176,14 @@ public class EnemyCQC : Enemy {
                     {
                         healthBar.fillAmount = (float)health / startHealth;
                     }
-                    if (maxHealth < 20 ) // drones max health must be less than 20
+                    if (maxHealth < 20) // drones max health must be less than 20
                     {
-                        rb2d.AddForce(facingRight == true ? 
-                            new Vector2(-9000, Random.Range(10000, 12000)): 
+                        rb2d.AddForce(facingRight == true ?
+                            new Vector2(-9000, Random.Range(10000, 12000)) :
                             new Vector2(9000, Random.Range(10000, 12000)));
                         rb2d.gravityScale = 70;
                     }
-                    else if(maxHealth > 200)
+                    else if (maxHealth > 200)
                     {
                         Instantiate(blockExplosionFX, transform.position, Quaternion.identity);
                     }
@@ -212,7 +211,7 @@ public class EnemyCQC : Enemy {
         TakeDamage(10);
     }
 
-   public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
         FindObjectOfType<SoundFXHandler>().Play("DamageSmall");
         animator.SetTrigger("Damaged");
@@ -252,7 +251,8 @@ public class EnemyCQC : Enemy {
     }
 
     public virtual void MoveToPlayer()
-    {        
+    {
+
         if (rb2d.velocity.y < 0)
         {
             rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
@@ -264,7 +264,7 @@ public class EnemyCQC : Enemy {
         }
         else if (playerToFocus.transform.position.x + respondRange < transform.position.x)
         {
-            rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y); 
+            rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y);
         }
         else
         {
@@ -274,11 +274,11 @@ public class EnemyCQC : Enemy {
 
     public void ChangeBlockColorAtRandom()
     {
-        if(colorState == 0)
+        if (colorState == 0)
         {
             blockColorRenderer.color = blockWhite;
         }
-        else if(colorState == 1)
+        else if (colorState == 1)
         {
             blockColorRenderer.color = blockBlue;
         }
@@ -311,9 +311,9 @@ public class EnemyCQC : Enemy {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.GetComponent<EnemyCQC>() != null)
+        if (collision.gameObject.GetComponent<EnemyCQC>() != null)
         {
-            collision.gameObject.GetComponent<EnemyCQC>().rb2d.velocity  = 
+            collision.gameObject.GetComponent<EnemyCQC>().rb2d.velocity =
                 new Vector2(speed * Time.deltaTime * Random.Range(0, 2), rb2d.velocity.y);
         }
     }

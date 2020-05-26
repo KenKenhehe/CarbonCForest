@@ -11,13 +11,13 @@ public class DialogHandler : MonoBehaviour {
     public float dialogFreq;
     public GameObject cinamicFX;
     public Animator animator;
-
+    bool inDialogue = false;
     public delegate void OnDialogueEnd();
     public OnDialogueEnd onDialogueEnd = DefalutDialogueEndBehaviour;
 
     private static void DefalutDialogueEndBehaviour()
     {
-        print("dialogueEnd");
+
     }
 
     PlayerGeneralHandler player;
@@ -39,7 +39,7 @@ public class DialogHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown("Interact"))
+        if (Input.GetButtonDown("Interact") && inDialogue == true)
         {
             DisplayNextSentence(typing);
         }
@@ -47,6 +47,7 @@ public class DialogHandler : MonoBehaviour {
 
     public void startDialogue(Dialog dialog)
     {
+        inDialogue = true;
         cinamicFX.GetComponent<Animator>().SetBool("IsOpen", true);
         animator.SetBool("IsOpen", true);
         sentences.Clear();
@@ -96,6 +97,7 @@ public class DialogHandler : MonoBehaviour {
         animator.SetBool("IsOpen", false);
         player.enabled = true;
         player.ReactivateControl();
+        inDialogue = false;
     }
 
     IEnumerator typeSentence(string s)
@@ -119,7 +121,6 @@ public class DialogHandler : MonoBehaviour {
             }
             yield return new WaitForSeconds(.02f);
         }
-        print("finish");
         typing = false;
     }
 
