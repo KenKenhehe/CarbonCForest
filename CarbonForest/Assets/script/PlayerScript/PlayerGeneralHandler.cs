@@ -51,6 +51,8 @@ public class PlayerGeneralHandler : MonoBehaviour {
     private CounterAttackController counterAttack;
     private Animator blockAnimator;
 
+    private Color originalColor;
+
     public int colorState = 0; //0: white, 1: blue
     // Use this for initialization
     private void Awake()
@@ -63,6 +65,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
     }
 
     void Start () {
+        originalColor = GetComponent<SpriteRenderer>().color;
         shakeController = FindObjectOfType<ShakeController>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         
@@ -151,18 +154,18 @@ public class PlayerGeneralHandler : MonoBehaviour {
                 EnableBlock();
             }
             blockPoints -= Time.deltaTime * blockLossRate;
-            ChangeEnemyAlpha(.2f);
+            ChangeEnemyAlphaAndBlockBar(.2f);
         }
         else if ((Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire4") < 1) && 
             blockController.blocking == true)
         {
             blockController.DisableBlocking();
             GetComponent<PlayerAttack>().enabled = true;
-            ChangeEnemyAlpha(0);
+            ChangeEnemyAlphaAndBlockBar(0);
         }
         else
         {
-            ChangeEnemyAlpha(0);
+            ChangeEnemyAlphaAndBlockBar(0);
             blockController.blocking = false;
         }
         if(blockPoints <= 0)
@@ -223,11 +226,11 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     IEnumerator DamageEffect()
     {
-        renderer.color = DamagedColor;
+        GetComponentInChildren<SpriteRenderer>().color = new Color(1, 1, 1, 0.1f);
 
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(0.2f);
 
-        renderer.color = OriginColor;
+        GetComponentInChildren<SpriteRenderer>().color = originalColor;
     }
 
     void EnableBlock()
@@ -244,7 +247,6 @@ public class PlayerGeneralHandler : MonoBehaviour {
         {
             GetComponent<PlayerHeavyAttack>().enabled = false;
         }
-        //GetComponent<PlayerMovement>(). = false;
         PlayerMovement.Instance.SetMovement(false);
         GetComponent<BlockController>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -324,7 +326,7 @@ public class PlayerGeneralHandler : MonoBehaviour {
         }
     }
 
-    void ChangeEnemyAlpha(float alpha)
+    void ChangeEnemyAlphaAndBlockBar(float alpha)
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (Enemy enemy in enemies)

@@ -22,7 +22,8 @@ public class ArcherController : EnemyShooterController
             if (canWalk == true)
             {
                 FacePlayer();
-                MoveTowardsPlayer();
+                MoveToPlayer();
+                PlayDynamicAnimation();
             }
             AttackPlayer();
            

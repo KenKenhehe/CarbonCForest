@@ -27,8 +27,9 @@ public class ArcherControllerTutorial : EnemyShooterController
         {
             if (canWalk == true)
             {
-                MoveTowardsPlayer();
+                MoveToPlayer();
                 FacePlayer();
+                PlayDynamicAnimation();
             }
             AttackPlayer();
             if (arrow != null && tutorial.hasBlock == false)

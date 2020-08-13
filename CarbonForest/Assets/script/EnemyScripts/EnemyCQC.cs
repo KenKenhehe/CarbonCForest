@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class EnemyCQC : Enemy
 {
     protected ShakeController shakeController;
-    protected SoundFXHandler soundFXHandler;
     public bool withinAttackRange = false;
     public int blockDamageMultiplyer = 6;
     public GameObject blockBlob;
@@ -27,8 +26,6 @@ public class EnemyCQC : Enemy
     public int damage;
     public float shockForce = .5f;
 
-    protected Rigidbody2D rb2d;
-    protected float respondRange = 0;
     protected float attackRate;
     protected Animator animator;
     protected SpriteRenderer renderer;
@@ -51,7 +48,7 @@ public class EnemyCQC : Enemy
 
     public virtual void Initialize()
     {
-        hitDuration = new WaitForSeconds(0.05f);
+        hitDuration = new WaitForSeconds(0.2f);
         randomPatrolDir = Random.Range(-1f, 1f);
         animator = GetComponent<Animator>() == null ? GetComponentInChildren<Animator>() : GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>() == null ? GetComponentInChildren<SpriteRenderer>() : GetComponent<SpriteRenderer>();
@@ -134,7 +131,7 @@ public class EnemyCQC : Enemy
 
     public virtual void ApplyDamage()
     {
-        FindObjectOfType<SoundFXHandler>().Play("EnemySwordSwing");
+        PlaySlashSound();
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + (new Vector3(1, 0, 0) * (facingRight ? 1 : -1)), attackRange);
         foreach (Collider2D collider in colliders)
         {
@@ -150,6 +147,7 @@ public class EnemyCQC : Enemy
                     collider.GetComponent<BlockController>().blocking == true &&
                     collider.GetComponent<PlayerMovement>().facingRight != facingRight)
                 {
+                    AddiBlockEvent();
                     blockPoint -= 1;
                     if (blockBar != null)
                     {
@@ -165,6 +163,7 @@ public class EnemyCQC : Enemy
                         GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
                     }
                     soundFXHandler.Play("ParrySuccess1");
+                    ParriedBehaviour();
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
 
                     shakeController.CamBigShake();
@@ -185,11 +184,17 @@ public class EnemyCQC : Enemy
                     }
                     else if (maxHealth > 200)
                     {
-                        Instantiate(blockExplosionFX, transform.position, Quaternion.identity);
+                        float FXRotation = facingRight ? 90 : -90;
+                        Instantiate(blockExplosionFX, transform.position - new Vector3(0, 1, 0), Quaternion.Euler(0, 0, FXRotation));
                     }
                 }
             }
         }
+    }
+
+    public virtual void AddiBlockEvent()
+    {
+
     }
 
     public override void AttackPlayer()
@@ -213,14 +218,21 @@ public class EnemyCQC : Enemy
 
     public override void TakeDamage(int damage)
     {
-        FindObjectOfType<SoundFXHandler>().Play("DamageSmall");
-        animator.SetTrigger("Damaged");
+        PlayTakeDamageSound();
+        
         base.TakeDamage(damage);
         GameObject bloodfX = Instantiate<GameObject>(bloodFX, transform);
         bloodfX.transform.Rotate(0, facingRight ? 0 : 180, 0);
-        attackRate = Random.Range(1f, 2f);
+        
         StartCoroutine(TakeDamageForAWhile());
-        if (damage < 3)
+        StartCoroutine(DamagedEffect());
+        animator.SetTrigger("Damaged");
+        if(damage < 2)
+        {
+            shakeController.CamShake();
+            Time.timeScale = Random.Range(0.3f, 0.6f);
+        }
+        else if (damage < 3)
         {
             shakeController.CamShake();
             Time.timeScale = Random.Range(0.15f, 0.3f);
@@ -236,6 +248,7 @@ public class EnemyCQC : Enemy
             DeathBehaviour();
             PlayExplosionSound();
         }
+        
     }
 
     public override void DeathBehaviour()
@@ -250,27 +263,7 @@ public class EnemyCQC : Enemy
         Destroy(gameObject);
     }
 
-    public virtual void MoveToPlayer()
-    {
 
-        if (rb2d.velocity.y < 0)
-        {
-            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
-        }
-
-        if (playerToFocus.transform.position.x - respondRange > transform.position.x)
-        {
-            rb2d.velocity = new Vector2(speed * Time.fixedDeltaTime, rb2d.velocity.y);
-        }
-        else if (playerToFocus.transform.position.x + respondRange < transform.position.x)
-        {
-            rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y);
-        }
-        else
-        {
-            rb2d.velocity = Vector2.zero;
-        }
-    }
 
     public void ChangeBlockColorAtRandom()
     {
@@ -287,9 +280,11 @@ public class EnemyCQC : Enemy
     public IEnumerator DisableAttackForAWhile(float duration)
     {
         //renderer.color = new Color(1, 0.5f, 0.5f, 1);
+        
         animator.SetBool("StunnedIdle", true);
         canAttack = false;
         canMove = false;
+
         yield return new WaitForSeconds(duration);
         canAttack = true;
         canMove = true;
@@ -304,9 +299,14 @@ public class EnemyCQC : Enemy
 
     public IEnumerator TakeDamageForAWhile()
     {
-        canAttack = false;
-        yield return new WaitForSeconds(2);
-        canAttack = true;
+        // For all boss or ellite enemy, attack continues
+        if (maxHealth < 100)
+        {
+            attackRate = Random.Range(1f, 2f);
+            canAttack = false;
+            yield return new WaitForSeconds(2);
+            canAttack = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -324,6 +324,11 @@ public class EnemyCQC : Enemy
     }
 
     public void Patrol()
+    {
+
+    }
+
+    public virtual void ParriedBehaviour()
     {
 
     }

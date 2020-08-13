@@ -29,6 +29,7 @@ public class BossController : EnemyCQC {
         healthBar.value = health;
         SwitchAttackIntension();
         EnableBehaviour();
+        PlayDynamicAnimation();
         ChangeBlockColorAtRandom();
         if(missileCount >= 5)
         {
@@ -82,10 +83,6 @@ public class BossController : EnemyCQC {
     public override void Initialize()
     {
         StartCoroutine(FocusBoss());
-        healthBar = FindObjectOfType<Slider>();
-        healthBar.GetComponent<Animator>().SetTrigger("Show");
-        healthBar.gameObject.SetActive(true);
-        healthBar.maxValue = maxHealth;
         base.Initialize();
         stunnedDuration = 2f;
         ChargeFX = GetComponentInChildren<ParticleSystem>();
@@ -109,7 +106,6 @@ public class BossController : EnemyCQC {
 
     public override void DeathBehaviour()
     {
-        //base.DeathBehaviour();
         animator.SetTrigger("Dead");
         Destroy(gameObject, 1);
         canMove = false;
@@ -185,33 +181,6 @@ public class BossController : EnemyCQC {
         }
     }
 
-    public override void MoveToPlayer()
-    {
-        if (rb2d.velocity.y < 0)
-        {
-            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.fixedDeltaTime;
-        }
-
-        if (playerToFocus.transform.position.x - respondRange > transform.position.x)
-        {
-            rb2d.velocity = new Vector2(speed * Time.fixedDeltaTime, rb2d.velocity.y);
-        }
-        else if (playerToFocus.transform.position.x + respondRange < transform.position.x)
-        {
-            rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y);
-        }
-        else
-        {
-            rb2d.velocity = Vector2.zero;
-            animator.SetBool("IsWalking", false);
-        }
-
-        if (rb2d.velocity != Vector2.zero)
-        {
-            animator.SetBool("IsWalking", true);
-        }
-    }
-
     public void Dash()
     {
         FacePlayer();
@@ -265,7 +234,7 @@ public class BossController : EnemyCQC {
 
     private void OnDestroy()
     {
-        healthBar.gameObject.SetActive(false);
+        shakeController.CamShake();
         Instantiate(deathFX, transform.position, Quaternion.identity);
     }
 

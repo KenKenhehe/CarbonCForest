@@ -5,8 +5,9 @@ using UnityEngine;
 public class NoticeBoardController : Interactable
 {
     public GameObject[] notices;
-    bool hasShowNotice = false;
+    bool isContentShow = false;
     PlayerGeneralHandler player;
+    public GameObject boardContent;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,20 +23,22 @@ public class NoticeBoardController : Interactable
     public override void Interact()
     {
         base.Interact();
-        hasShowNotice = !hasShowNotice;
-        if(hasShowNotice == true)
+        isContentShow = !isContentShow;
+        if(isContentShow == true)
         {
             player.DeactivateControl();
+            ShowBoard(true);
         }
         else
         {
             player.ReactivateControl();
+            ShowBoard(false);
         }
     }
 
-    void ShowBoard()
+    void ShowBoard(bool isShow)
     {
-        print("Show board");
+        boardContent.SetActive(isShow);
     }
 
     public override void OnClose()

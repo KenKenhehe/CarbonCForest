@@ -17,7 +17,7 @@ public class AncientEnemyCQC : EnemyCQC
         PlayDynamicAnimation();
     }
 
-    public void PlayDynamicAnimation()
+    public override void PlayDynamicAnimation()
     {
         if (facingRight == false)
         {

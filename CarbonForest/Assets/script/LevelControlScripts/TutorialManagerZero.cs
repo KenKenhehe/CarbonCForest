@@ -203,7 +203,7 @@ public class TutorialManagerZero : MonoBehaviour
         //StartCoroutine(FocusOnGameObjectAWhile(ArcherTutObj, 2));
         camera.FocusOnGameObjectForAwhile(ArcherTutObj, 2);
         StartCoroutine(DisableMovementControlForAwhile(player, 3));
-        //FindObjectOfType<SoundFXHandler>().Play("ChiBa");
+        FindObjectOfType<SoundFXHandler>().Play("ChiBa");
     }
 
     //third
@@ -227,7 +227,7 @@ public class TutorialManagerZero : MonoBehaviour
         launcher.minArrowLaunchCount = 1;
         launcher.minLaunchInterval = 1;
         launcher.maxLaunchInterval = 1.5f;
-        //soundFX.PlayFadeIn("Cello");
+        soundFX.PlayFadeIn("Cello");
     }
 
     public void TriggerEndPointEvent()

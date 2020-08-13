@@ -10,7 +10,7 @@ public class CounterAttackController : MonoBehaviour {
 
     public bool countering = false;
     public float FXOffset = 1;
-    public GameObject counterAttackFX;
+    public GameObject[] counterAttackFX;
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
@@ -31,12 +31,12 @@ public class CounterAttackController : MonoBehaviour {
         }
         countering = true;
         animator.SetTrigger(actionNames[Random.Range(0, actionNames.Length)]);
-        Instantiate(counterAttackFX, 
+        Instantiate(counterAttackFX[Random.Range(0, 2)], 
             new Vector3(
                 (movement.facingRight == true ? transform.position.x + FXOffset : transform.position.x - FXOffset),
                 transform.position.y,
                 transform.position.z), 
-            Quaternion.identity);
+            Quaternion.Euler(transform.rotation.x, transform.rotation.y, Random.Range(0, 360f)));
     }
 
     void DisableCounter()

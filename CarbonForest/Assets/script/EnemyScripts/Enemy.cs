@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour {
     public float maxSightRange;
     public float minSightRange;
 
-    
+    protected float respondRange = 0;
 
     public Image healthBar;
 
@@ -44,6 +44,11 @@ public class Enemy : MonoBehaviour {
 
     public Color damagedColor;
     public Color originColor;
+
+    public Animator animator;
+    protected Rigidbody2D rb2d;
+
+    protected SoundFXHandler soundFXHandler;
 
     public virtual void TakeDamage(int damage)
     {
@@ -74,9 +79,30 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public virtual void MoveToPlayer()
+    {
+        if (rb2d.velocity.y < 0)
+        {
+            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
+        }
+
+        if (playerToFocus.transform.position.x - respondRange > transform.position.x)
+        {
+            rb2d.velocity = new Vector2(speed * Time.fixedDeltaTime, rb2d.velocity.y);
+        }
+        else if (playerToFocus.transform.position.x + respondRange < transform.position.x)
+        {
+            rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y);
+        }
+        else
+        {
+            rb2d.velocity = Vector2.zero;
+        }
+    }
+
     public IEnumerator DamagedEffect()
     {
-        GetComponentInChildren<SpriteRenderer>().color = damagedColor;
+        GetComponentInChildren<SpriteRenderer>().color = new Color(1,1,1,0.1f);
 
         yield return hitDuration;
 
@@ -99,11 +125,34 @@ public class Enemy : MonoBehaviour {
 
     public virtual void PlayExplosionSound()
     {
-        FindObjectOfType<SoundFXHandler>().Play("Explode");
+        soundFXHandler.Play("Explode");
+    }
+
+    public virtual void PlaySlashSound()
+    {
+        soundFXHandler.Play("EnemySwordSwing");
+    }
+
+    public virtual void PlayTakeDamageSound()
+    {
+        soundFXHandler.Play("DamageSmall");
     }
 
     public virtual void DeathBehaviour()
     {
 
     }
+
+    public virtual void PlayDynamicAnimation() 
+    {
+        if (rb2d.velocity == Vector2.zero)
+        {
+            animator.SetBool("IsWalking", false);
+        }
+        else
+        {
+            animator.SetBool("IsWalking", true);
+        }
+    }
+    
 }

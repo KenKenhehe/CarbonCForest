@@ -32,7 +32,7 @@ public class LevelTwoMechController : Enemy
         {
             player = FindObjectOfType<MotoController>().gameObject;
         }
-
+        hitDuration = new WaitForSeconds(.3f);
         shootBeamDuration = Random.Range(minShootBeamDuration, maxShootBeamDuration);
         StartCoroutine(ShootBeamsAtRandom());
     }

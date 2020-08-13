@@ -10,14 +10,11 @@ public class EnemyShooterController : Enemy {
     public float maxRespondRange = 8;
 
     //set to random on instantiate.
-    protected float respondRange;
     protected float fireRate;
 
     protected float fireTime = 0;
-    protected Animator animator;
     ShakeController shakeController;
     SpriteRenderer renderer;
-    protected Rigidbody2D rb2d;
     WaitForSeconds hitDuration;
     SceneEventHandler sceneEventHandler;
     // Use this for initialization
@@ -40,6 +37,7 @@ public class EnemyShooterController : Enemy {
         shakeController = FindObjectOfType<ShakeController>();
         facingRight = false;
         animator = GetComponent<Animator>();
+        soundFXHandler = SoundFXHandler.instance;
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
@@ -51,25 +49,12 @@ public class EnemyShooterController : Enemy {
     void Update () {
         if (playerToFocus != null)
         {
-            MoveTowardsPlayer();
+            MoveToPlayer();
             FacePlayer();
             AttackPlayer();
+            PlayDynamicAnimation();
         }
 	}
-
-    void OnlyMoveBetween(float minX, float maxX)
-    {
-        if (transform.position.x >= maxX)
-        {
-            transform.position = new Vector3(maxX, transform.position.y, transform.position.z);
-        }
-
-        if (transform.position.x < minX)
-        {
-            transform.position = new Vector3(minX, transform.position.y, transform.position.z);
-        }
-
-    }
 
     public override void AttackPlayer()
     {
@@ -120,35 +105,6 @@ public class EnemyShooterController : Enemy {
             }
         }
         
-    }
-
-    public void MoveTowardsPlayer()
-    {
-        if (rb2d.velocity.y < 0)
-        {
-            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
-        }
-
-        if (playerToFocus.transform.position.x - respondRange > transform.position.x)
-        {
-            rb2d.velocity = new Vector2(speed * Time.deltaTime, rb2d.velocity.y);
-
-        }
-        else if(playerToFocus.transform.position.x + respondRange < transform.position.x)
-        {
-            rb2d.velocity = new Vector2(-(speed * Time.deltaTime), rb2d.velocity.y);
-        }
-        else
-        {
-            rb2d.velocity = Vector2.zero;
-            animator.SetBool("IsWalking", false);
-        }
-
-        if(rb2d.velocity != Vector2.zero)
-        {
-            animator.SetBool("IsWalking", true);
-        }
-
     }
 
     public void setHealth(int health)
