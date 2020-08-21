@@ -43,6 +43,7 @@ public class LevelThreeBossController : EnemyCQC
         respondRange = Random.Range(3f, 6f);
         randHoldTime = Random.Range(.1f, 3f);
         camera = FindObjectOfType<CameraControl>();
+        print(colorState);
     }
 
     // Update is called once per frame
@@ -50,6 +51,7 @@ public class LevelThreeBossController : EnemyCQC
     {
         EnableBehaviour();
         PlayDynamicAnimation();
+        print(colorState);
     }
 
     private void FixedUpdate()
