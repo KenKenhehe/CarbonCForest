@@ -260,6 +260,9 @@ public class LevelThreeBossController : EnemyCQC
         GameObject groundFX =
             Instantiate(GroundBreakFX, transform.position - new Vector3(0, 1f, 0), transform.rotation);
         soundFX.Play("PillarHit");
+
+        //impact ground
+        CollapsableController.instance.TakeDamage();
     }
 
     public void PlaySlashRiseSound()

@@ -53,7 +53,18 @@ Shader "Custom/BlinkShader"
 
 					IN.color.a = (IN.color.a - _BlinkLimit) / (1.0 - _BlinkLimit);
 
-					fixed4 c = texel * IN.color * showTexel + _BlinkColor * (1.0 - showTexel) * sign(texel.a);
+					//Only turns white when alpha is greater that 0.1,
+					//otherwise ignore
+					float aAfter = 0;
+
+					if (texel.a > 0.2) {
+						aAfter = 1;
+					}
+					else {
+						aAfter = 0;
+					}
+
+					fixed4 c = texel * IN.color * showTexel + _BlinkColor * (1.0 - showTexel) * sign(aAfter);
 
 					c.rgb *= c.a;
 					return c;
