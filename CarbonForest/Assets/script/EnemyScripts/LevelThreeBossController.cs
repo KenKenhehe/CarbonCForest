@@ -35,6 +35,9 @@ public class LevelThreeBossController : EnemyCQC
     public GameObject GroundBreakFX;
     CameraControl camera;
     SoundFXHandler soundFX;
+    public bool inCombat = false;
+    public static LevelThreeBossController instance;
+    public Dialog dialog;
 
     // Start is called before the first frame update
     void Start()
@@ -43,15 +46,22 @@ public class LevelThreeBossController : EnemyCQC
         respondRange = Random.Range(3f, 6f);
         randHoldTime = Random.Range(.1f, 3f);
         camera = FindObjectOfType<CameraControl>();
+        blockBar.gameObject.transform.parent.gameObject.SetActive(false);
+        if(instance == null)
+        {
+            instance = this;
+        }
         print(colorState);
     }
 
     // Update is called once per frame
     void Update()
     {
-        EnableBehaviour();
-        PlayDynamicAnimation();
-        print(colorState);
+        if (inCombat == true)
+        {
+            EnableBehaviour();
+            PlayDynamicAnimation();
+        }
     }
 
     private void FixedUpdate()
@@ -74,6 +84,20 @@ public class LevelThreeBossController : EnemyCQC
         {
             parriedCurrentDuration = 0;
         }
+    }
+
+    public void ToCombatMode()
+    {
+        //TODO: Start intro dialogue
+        DialogHandler.instance.startDialogue(dialog);
+        DialogHandler.instance.onDialogueEnd = DialogueEndEvent;
+    }
+
+    void DialogueEndEvent()
+    {
+        GetComponent<BossHealthBarComponent>().SetupForCombat();
+        inCombat = true;
+        animator.SetTrigger("ToCombat");
     }
 
     public override void Initialize()

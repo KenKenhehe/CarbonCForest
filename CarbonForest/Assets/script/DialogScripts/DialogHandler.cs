@@ -15,6 +15,8 @@ public class DialogHandler : MonoBehaviour {
     public delegate void OnDialogueEnd();
     public OnDialogueEnd onDialogueEnd = DefalutDialogueEndBehaviour;
 
+    bool dialogueComplete = false;
+
     private static void DefalutDialogueEndBehaviour()
     {
 

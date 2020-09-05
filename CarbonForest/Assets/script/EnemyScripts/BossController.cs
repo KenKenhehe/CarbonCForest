@@ -90,6 +90,7 @@ public class BossController : EnemyCQC {
         soundFXHandler = SoundFXHandler.instance;
         blockBlob.SetActive(false);
         StartCoroutine(showBlobAfterAWhile());
+        GetComponent<BossHealthBarComponent>().SetupForCombat();
     }
 
     IEnumerator showBlobAfterAWhile()

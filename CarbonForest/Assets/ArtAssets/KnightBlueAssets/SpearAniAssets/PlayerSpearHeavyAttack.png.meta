@@ -1,0 +1,645 @@
+fileFormatVersion: 2
+guid: f6b71228037a9e347b84424f609b628c
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: PlayerSpearHeavyAttack_0
+    21300002: PlayerSpearHeavyAttack_1
+    21300004: PlayerSpearHeavyAttack_2
+    21300006: PlayerSpearHeavyAttack_3
+    21300008: PlayerSpearHeavyAttack_4
+    21300010: PlayerSpearHeavyAttack_5
+    21300012: PlayerSpearHeavyAttack_6
+    21300014: PlayerSpearHeavyAttack_7
+    21300016: PlayerSpearHeavyAttack_8
+    21300018: PlayerSpearHeavyAttack_9
+    21300020: PlayerSpearHeavyAttack_10
+    21300022: PlayerSpearHeavyAttack_11
+    21300024: PlayerSpearHeavyAttack_12
+    21300026: PlayerSpearHeavyAttack_13
+    21300028: PlayerSpearHeavyAttack_14
+    21300030: PlayerSpearHeavyAttack_15
+    21300032: PlayerSpearHeavyAttack_16
+    21300034: PlayerSpearHeavyAttack_17
+    21300036: PlayerSpearHeavyAttack_18
+    21300038: PlayerSpearHeavyAttack_19
+    21300040: PlayerSpearHeavyAttack_20
+    21300042: PlayerSpearHeavyAttack_21
+    21300044: PlayerSpearHeavyAttack_22
+    21300046: PlayerSpearHeavyAttack_23
+    21300048: PlayerSpearHeavyAttack_24
+    21300050: PlayerSpearHeavyAttack_25
+  externalObjects: {}
+  serializedVersion: 9
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 739e09a5a6a7b8048a166a88b5d3cc28
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_1
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 768
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb3e9d855c910cd44989328cf01105c4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_2
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 768
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9dca33bb1999054d8ffe50d766bd39d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_3
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 768
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdbffff876e5d7f4db22411b24316e8b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e5a6e18a2d562a4b8c0304ee4598a8e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_5
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 640
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50170128d18a98441bbdd67fad5119d2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_6
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 640
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59535dc41849b824c9b78c7343448489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_7
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 640
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 650f1d393621aa44f9d3003619ecff9c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96b3cb315761f7e41bc590e3b8711758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_9
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 512
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac6adf1a6b1740b44963b0281a87e8bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_10
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 512
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f85772d68434a04b8686f035a8edc9c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_11
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 512
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4259068d87529f743aa524934d7abdf7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cdc640ecade5fb49b74ae968901622e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_13
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 384
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb8f99938600cc345a7f6e27bae81ecd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_14
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 384
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a48823149156b45a548fd12f4999d2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_15
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 384
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a251150f1f0577a4ba9a0b519587efaa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53cc3ecf507f7914fa1d07dd7f818570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_17
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 256
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75f538b3d89facc4191c46a0f34c1c0d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_18
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 256
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b7b07c055bb1d74fa75c54450b64d91
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_19
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 256
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4ec3a32aa67bf941b81ed1ad5599270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1619261f824c2e4fa1cf16edbb41d80
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_21
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 128
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4261386ac4ce5dd4abaad992f6cd4076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_22
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 128
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0db2c0820e712f48a85b29334189301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_23
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 128
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d8a1a61d08e7074d80b8268a6345619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f322d219a37f1374995d35fb38d31159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerSpearHeavyAttack_25
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 0
+        width: 220
+        height: 128
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d7643f4a7e9fe344a38492b6c58f7a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 1fcebdc8a2e0e7c43b3b2f2b000da3d8
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

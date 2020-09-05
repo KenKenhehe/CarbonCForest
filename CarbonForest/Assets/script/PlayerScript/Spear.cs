@@ -10,7 +10,12 @@ public class Spear : Weapon
 
     public int attack4Damage;
     public int attack5Damage;
+
+    public int heavyAttackRange;
+    public int heavyAttackDamage;
+
     public string[] spearAttackTriggerNames = new string[] { "Attack", "Attack2", "Attack3", "Attack4", "Attack5" };
+    public string[] HeavyAttackTriggerNames = new string[] { "HeavyAttack1", "HeavyAttack2", "HeavyAttack3", "HeavyAttack4", "HeavyAttack5"};
 
     public override void PlayAttackAnimationOnAttackNum(Animator animator)
     {
@@ -40,7 +45,27 @@ public class Spear : Weapon
 
     public override void PlayHeavyAttackAnimationOnAttackNum(Animator animator)
     {
-        base.PlayHeavyAttackAnimationOnAttackNum(animator);
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
+           || animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+        {
+            animator.SetTrigger(HeavyAttackTriggerNames[0]);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("HeavyAttack1"))
+        {
+            animator.SetTrigger(HeavyAttackTriggerNames[1]);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("HeavyAttack2"))
+        {
+            animator.SetTrigger(HeavyAttackTriggerNames[2]);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("HeavyAttack3"))
+        {
+            animator.SetTrigger(HeavyAttackTriggerNames[3]);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("HeavyAttack4"))
+        {
+            animator.SetTrigger(HeavyAttackTriggerNames[4]);
+        }
     }
     public override void resetTriggerNames(Animator animator)
     {
@@ -52,6 +77,13 @@ public class Spear : Weapon
             }
         }
 
-        
+        foreach (string HeavyAttackName in HeavyAttackTriggerNames)
+        {
+            if (HeavyAttackName != "HeavyAttack1")
+            {
+                animator.ResetTrigger(HeavyAttackName);
+            }
+        }
+
     }
 }

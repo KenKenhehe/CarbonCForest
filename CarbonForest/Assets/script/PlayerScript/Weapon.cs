@@ -13,6 +13,8 @@ public class Weapon : ScriptableObject
     public int attack2Damage;
     public int attack3Damage;
 
+
+
     public string Name;
     // Start is called before the first frame update
     void Start()

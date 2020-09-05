@@ -30,7 +30,7 @@ public class PlayerHeavyAttack : MonoBehaviour {
 
     void HeavyAttack1()
     {
-        FindObjectOfType<SoundFXHandler>().Play("SwordSwingHeavy");
+        FindObjectOfType<SoundFXHandler>().Play("SwordPluseHeavy");
         playerAttack.AttackAtRightTime(2, HeavyAttackRange, .6f);
     }
 
