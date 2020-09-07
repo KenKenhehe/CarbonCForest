@@ -37,7 +37,7 @@ public class LevelThreeBossController : EnemyCQC
     SoundFXHandler soundFX;
     public bool inCombat = false;
     public static LevelThreeBossController instance;
-    public Dialog dialog;
+    public Dialog introDialog;
 
     // Start is called before the first frame update
     void Start()
@@ -88,8 +88,7 @@ public class LevelThreeBossController : EnemyCQC
 
     public void ToCombatMode()
     {
-        //TODO: Start intro dialogue
-        DialogHandler.instance.startDialogue(dialog);
+        DialogHandler.instance.startDialogue(introDialog);
         DialogHandler.instance.onDialogueEnd = DialogueEndEvent;
     }
 
@@ -98,6 +97,7 @@ public class LevelThreeBossController : EnemyCQC
         GetComponent<BossHealthBarComponent>().SetupForCombat();
         inCombat = true;
         animator.SetTrigger("ToCombat");
+        blockBar.gameObject.transform.parent.gameObject.SetActive(true);
     }
 
     public override void Initialize()

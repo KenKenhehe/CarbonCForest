@@ -7,6 +7,8 @@ public class SunLeeController : EnemyCQC
     bool inBikeMode = true;
     public static SunLeeController instance;
     [SerializeField] GameObject smokeObj;
+
+    public Dialog introDialog;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +42,12 @@ public class SunLeeController : EnemyCQC
 
     public void ToCombatMode()
     {
-        //TODO: Start intro dialogue
+        DialogHandler.instance.startDialogue(introDialog);
+        DialogHandler.instance.onDialogueEnd = OnDialogFinished;
+    }
+
+    public void OnDialogFinished()
+    {
         Destroy(smokeObj);
         animator.SetTrigger("ToCombat");
     }

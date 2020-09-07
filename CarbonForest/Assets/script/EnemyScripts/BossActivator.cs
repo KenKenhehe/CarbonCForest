@@ -13,12 +13,12 @@ public class BossActivator : MonoBehaviour
             if(bossNo == 4)
             {
                 SunLeeController.instance.ToCombatMode();
-                Destroy(gameObject);
             }
             else if(bossNo == 3)
             {
                 LevelThreeBossController.instance.ToCombatMode();
             }
+
             Destroy(gameObject);
         }
     }
