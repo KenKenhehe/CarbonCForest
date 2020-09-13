@@ -37,7 +37,8 @@ public class PedastrainHandler : MonoBehaviour
                 Quaternion.identity
                 );
             spawnedPed.GetComponent<Pedstrain>().moveDir = -dir;
-            yield return new WaitForSeconds(3);
+            spawnedPed.transform.localScale = new Vector3(dir * 1.1f, 1.1f, 1);
+            yield return new WaitForSeconds(Random.Range(2.0f, 4.0f));
         }
     }
 }
