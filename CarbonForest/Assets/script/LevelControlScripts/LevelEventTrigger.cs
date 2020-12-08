@@ -24,6 +24,17 @@ public class LevelEventTrigger : MonoBehaviour {
         {
             enemyEvent.StartCoroutine(enemyEvent.SpawnEnemyAtRandomX());
             GetComponent<BoxCollider2D>().enabled = false;
+            if(FindObjectsOfType<Pedstrain>().Length > 0)
+            {
+                foreach(Pedstrain ped in FindObjectsOfType<Pedstrain>())
+                {
+                    ped.isStardlled = true;
+                }
+            }
+            if (FindObjectOfType<PedastrainHandler>() != null)
+            {
+                Destroy(FindObjectOfType<PedastrainHandler>().gameObject);
+            }
         }
 
     }

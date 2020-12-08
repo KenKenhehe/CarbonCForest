@@ -123,15 +123,28 @@ public class PlayerAttack : MonoBehaviour
         foreach (Collider2D obj in hitObjects)
         {
             Enemy enemy = obj.GetComponent<Enemy>();
+
             enemy.TakeDamage(damage);
+
+            float ranfomPushbackRange = Random.Range(.5f, 1f);
+
+            //Instantiate(currentWeapon.slahsFX, 
+            //    transform.position + (Vector3.right * (playerMovement.facingRight ? range : -range) * ranfomPushbackRange), 
+            //    Quaternion.Euler(0, 0, Random.Range(0, 360)));
+
             enemy.transform.position = new Vector3(
                 (playerMovement.facingRight ==
                 true ?
-                obj.transform.position.x + (shockForce * enemy.unstableness)
+                obj.transform.position.x + (shockForce * enemy.unstableness * ranfomPushbackRange)
                 :
-                obj.transform.position.x - (shockForce * enemy.unstableness)),
+                obj.transform.position.x - (shockForce * enemy.unstableness * ranfomPushbackRange)),
                 obj.transform.position.y,
-                obj.transform.position.z);
+                obj.transform.position.z) ;
+
+            Instantiate(currentWeapon.slahsFX,
+               enemy.transform.position + new Vector3(Random.Range(-.2f, .2f), Random.Range(-.3f, .2f), 0) + 
+               (Vector3)enemy.GetComponent<BoxCollider2D>().offset,
+               Quaternion.Euler(0, 0, Random.Range(0, 360))) ;
         }
     }
 

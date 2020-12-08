@@ -27,7 +27,7 @@ public class EnemyCQC : Enemy
     public float shockForce = .5f;
 
     protected float attackRate;
-    protected Animator animator;
+    //protected Animator animator;
     protected SpriteRenderer renderer;
     public float attackRange = 1.5f;
     public float stunnedDuration = 4f;
@@ -53,7 +53,7 @@ public class EnemyCQC : Enemy
         animator = GetComponent<Animator>() == null ? GetComponentInChildren<Animator>() : GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>() == null ? GetComponentInChildren<SpriteRenderer>() : GetComponent<SpriteRenderer>();
         shakeController = FindObjectOfType<ShakeController>();
-        soundFXHandler = FindObjectOfType<SoundFXHandler>();
+        soundFXHandler = SoundFXHandler.instance;
         health = Random.Range(minHealth, maxHealth);
         startHealth = health;
         playerToFocus = FindObjectOfType<PlayerAttack>();
@@ -221,7 +221,7 @@ public class EnemyCQC : Enemy
         PlayTakeDamageSound();
         
         base.TakeDamage(damage);
-        GameObject bloodfX = Instantiate<GameObject>(bloodFX, transform);
+        GameObject bloodfX = Instantiate(bloodFX, transform);
         bloodfX.transform.Rotate(0, facingRight ? 0 : 180, 0);
         
         StartCoroutine(TakeDamageForAWhile());
@@ -229,12 +229,12 @@ public class EnemyCQC : Enemy
         animator.SetTrigger("Damaged");
         if(damage < 2)
         {
-            shakeController.CamShake();
+            //shakeController.CamShake();
             Time.timeScale = Random.Range(0.3f, 0.6f);
         }
         else if (damage < 3)
         {
-            shakeController.CamShake();
+            //shakeController.CamShake();
             Time.timeScale = Random.Range(0.15f, 0.3f);
         }
         else if (damage >= 3)

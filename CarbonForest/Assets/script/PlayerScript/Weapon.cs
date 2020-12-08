@@ -13,6 +13,7 @@ public class Weapon : ScriptableObject
     public int attack2Damage;
     public int attack3Damage;
 
+    public GameObject slahsFX;
 
 
     public string Name;

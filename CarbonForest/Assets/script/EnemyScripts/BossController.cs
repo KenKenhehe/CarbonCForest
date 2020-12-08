@@ -259,4 +259,5 @@ public class BossController : EnemyCQC {
         FindObjectOfType<CameraControl>().player = playerToFocus.gameObject;
     }
 
+    
 }
