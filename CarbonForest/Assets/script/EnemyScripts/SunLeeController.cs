@@ -9,6 +9,7 @@ public class SunLeeController : EnemyCQC
     [SerializeField] GameObject smokeObj;
 
     public Dialog introDialog;
+    public bool bikeDestroied;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,6 @@ public class SunLeeController : EnemyCQC
         if(instance == null)
         {
             instance = this;
-            print("instance attached");
         }
         //Initialize();
     }
@@ -38,6 +38,18 @@ public class SunLeeController : EnemyCQC
     void BikeBehaviour()
     {
         //animator.SetTrigger()
+        if(transform.position.x > playerToFocus.transform.position.x)
+        {
+            //Dash left
+        }
+        else if(transform.position.x > playerToFocus.transform.position.x)
+        {
+            //Dash Right
+        }
+        else
+        {
+            //Dash Random place 
+        }
     }
 
     public void ToCombatMode()

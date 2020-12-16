@@ -62,13 +62,15 @@ public class ThugBombController : MonoBehaviour
 
     IEnumerator StartCountDown()
     {
-        while (initialCount > 0)
+        while (initialCount > 0.0001)
         {
             flashFX.SetActive(true);
+            SoundFXHandler.instance.Play("BombBeep");
             yield return new WaitForSeconds(initialCount);
             flashFX.SetActive(false);
             yield return new WaitForSeconds(0.1f);
-            initialCount -= 0.05f;
+            float secondToReduce = initialCount / 2;
+            initialCount -= secondToReduce;
         }
         print("Explode");
         explode();

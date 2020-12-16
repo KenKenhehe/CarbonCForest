@@ -229,12 +229,12 @@ public class EnemyCQC : Enemy
         animator.SetTrigger("Damaged");
         if(damage < 2)
         {
-            //shakeController.CamShake();
+            shakeController.CamShake();
             Time.timeScale = Random.Range(0.3f, 0.6f);
         }
         else if (damage < 3)
         {
-            //shakeController.CamShake();
+            shakeController.CamShake();
             Time.timeScale = Random.Range(0.15f, 0.3f);
         }
         else if (damage >= 3)
