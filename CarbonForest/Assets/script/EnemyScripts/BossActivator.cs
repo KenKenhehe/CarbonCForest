@@ -12,7 +12,7 @@ public class BossActivator : MonoBehaviour
         {
             if(bossNo == 4)
             {
-                SunLeeController.instance.ToCombatMode();
+                SunLeeBikeController.instance.ToCombatMode();
             }
             else if(bossNo == 3)
             {

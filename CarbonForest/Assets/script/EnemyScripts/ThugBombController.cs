@@ -16,13 +16,14 @@ public class ThugBombController : MonoBehaviour
     public GameObject explosionFX;
     public Vector3 offset;
     public GameObject flashFX;
+    public float launchSpeed = 1;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerGeneralHandler.instance.gameObject.transform;
         rb2D = GetComponent<Rigidbody2D>();
         collider2D = GetComponent<BoxCollider2D>();
-        rb2D.velocity = CalculateLaunch();
+        rb2D.velocity = CalculateLaunch() * launchSpeed;
     }
 
 

@@ -2,65 +2,97 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SunLeeController : EnemyCQC
+public class SunleeController : EnemyCQC
 {
-    bool inBikeMode = true;
-    public static SunLeeController instance;
-    [SerializeField] GameObject smokeObj;
+    bool isOnBike = true;
+    bool bikeMode = true;
+    public RuntimeAnimatorController sunleeAnimator;
+    public static SunleeController instance;
+    SunLeeBikeController bikeController;
+    [HideInInspector]
+    public int fallDir = 1;
 
-    public Dialog introDialog;
-    public bool bikeDestroied;
-    // Start is called before the first frame update
-    void Start()
+    bool falling;
+    float currentFallingTime;
+    public float FallTime;
+    public float fallSpeed;
+
+    private void Awake()
     {
-        animator = GetComponent<Animator>();
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
-        //Initialize();
+        currentFallingTime = FallTime;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        bikeController = SunLeeBikeController.instance;
+        gameObject.SetActive(false);
+        Initialize();
+        animator.runtimeAnimatorController = sunleeAnimator;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(inBikeMode)
+        //TODO: if sunlee is 
+        if(bikeMode == false)
         {
-            BikeBehaviour();
+            //walk to bike
+
         }
         else
         {
-            EnableBehaviour();
+            //EnableBehaviour();
         }
     }
 
-   
-    void BikeBehaviour()
+    void Fall()
     {
-        //animator.SetTrigger()
-        if(transform.position.x > playerToFocus.transform.position.x)
+        if (falling == true)
         {
-            //Dash left
-        }
-        else if(transform.position.x > playerToFocus.transform.position.x)
-        {
-            //Dash Right
-        }
-        else
-        {
-            //Dash Random place 
+            print("In fall");
+            if (currentFallingTime <= 0)
+            {
+                falling = false;
+                currentFallingTime = FallTime;
+                rb2d.velocity = Vector2.zero;
+            }
+            else
+            {
+                print("Falling");
+                currentFallingTime -= Time.fixedDeltaTime;
+                rb2d.velocity = new Vector2(fallSpeed * -bikeController.currentDir * Time.fixedDeltaTime, rb2d.velocity.y);
+            }
         }
     }
 
-    public void ToCombatMode()
+    private void FixedUpdate()
     {
-        DialogHandler.instance.startDialogue(introDialog);
-        DialogHandler.instance.onDialogueEnd = OnDialogFinished;
+        Fall();
     }
 
-    public void OnDialogFinished()
+
+
+    private void OnEnable()
     {
-        Destroy(smokeObj);
-        animator.SetTrigger("ToCombat");
+        if (isOnBike == true)
+        {
+            animator.SetTrigger("Fall");
+        }
     }
+
+    public void StopFall()
+    {
+        falling = false;
+    }
+
+    public void StartFall()
+    {
+        falling = true;
+    }
+
 }
