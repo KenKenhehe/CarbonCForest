@@ -121,7 +121,7 @@ public class DialogHandler : MonoBehaviour {
             {
                 continueButton.SetActive(false);
             }
-            yield return new WaitForSeconds(.02f);
+            yield return new WaitForSeconds(Time.fixedDeltaTime * 2);
         }
         typing = false;
     }

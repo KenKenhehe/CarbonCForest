@@ -58,12 +58,20 @@ public class SunLeeBikeController : EnemyCQC
         if (inBikeMode)
         {
             //DashToPlayerAtRate();
-            BikeBehaviour();
             OnBikeAttack();
         }
         else
         {
             //EnableBehaviour();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (inBikeMode)
+        {
+            //DashToPlayerAtRate();
+            BikeBehaviour();
         }
     }
 
@@ -137,6 +145,10 @@ public class SunLeeBikeController : EnemyCQC
         }
     }
 
+    public override void PlayTakeDamageSound()
+    {
+        soundFXHandler.Play("BikeDamaged");
+    }
 
     void Dash()
     {
@@ -150,8 +162,8 @@ public class SunLeeBikeController : EnemyCQC
             }
             else
             {
-                currentDashTime -= Time.deltaTime;
-                rb2d.velocity = new Vector2(dashSpeed * currentDir * Time.deltaTime, rb2d.velocity.y);
+                currentDashTime -= Time.fixedDeltaTime;
+                rb2d.velocity = new Vector2(dashSpeed * currentDir * Time.fixedDeltaTime, rb2d.velocity.y);
             }
         }
     }
@@ -161,10 +173,12 @@ public class SunLeeBikeController : EnemyCQC
         if (BikeMode == true)
         {
             //Fall down from bike
+            sunleeController.GetComponent<BoxCollider2D>().isTrigger = true;
             animator.SetTrigger("BikeOnlyRun");
             BikeMode = false;
             sunleeController.gameObject.SetActive(true);
             sunleeController.GetComponent<Rigidbody2D>().AddForce(new Vector2(100, 0));
+            rb2d.constraints = RigidbodyConstraints2D.FreezePosition;
         }
         else
         {
@@ -220,7 +234,8 @@ public class SunLeeBikeController : EnemyCQC
                     StartCoroutine(KeepRangeAttack());
                     previousState = MotionState.RANGE;
                 }
-                currentMotionState = (MotionState)Random.Range(1, 3);
+                //70 persent chance next attakc is dash, to avoid bomb filling the screen
+                currentMotionState = (Random.Range(0, 100) > 70) ? MotionState.DASH : MotionState.RANGE;
                 print(currentMotionState);
             }
             yield return new WaitForSeconds(.5f);
@@ -244,5 +259,10 @@ public class SunLeeBikeController : EnemyCQC
     public override void PlaySlashSound()
     {
         soundFXHandler.Play("SunleeSowrd");
+    }
+
+    public void setBikeMode(bool bikeMode)
+    {
+        this.BikeMode = bikeMode;
     }
 }

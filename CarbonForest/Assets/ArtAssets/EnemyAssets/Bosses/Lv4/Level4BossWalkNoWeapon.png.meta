@@ -1,18 +1,19 @@
 fileFormatVersion: 2
-guid: 7828036b384436946a02b1e3dbc8500a
+guid: 2bb49e7a3e38a634bbdbbceb8d02225a
 TextureImporter:
   fileIDToRecycleName:
     21300000: ThugIdle_0
     21300002: ThugIdle_1
     21300004: ThugIdle_2
     21300006: ThugIdle_3
-    21300008: Level4BossFallFromBikepiskel_0
-    21300010: Level4BossFallFromBikepiskel_1
-    21300012: Level4BossFallFromBikepiskel_2
-    21300014: Level4BossFallFromBikepiskel_3
-    21300016: Level4BossFallFromBikepiskel_4
-    21300018: Level4BossFallFromBikepiskel_5
-    21300020: Level4BossFallFromBikepiskel_6
+    21300008: Level4BossWalkNoWeapon_0
+    21300010: Level4BossWalkNoWeapon_1
+    21300012: Level4BossWalkNoWeapon_2
+    21300014: Level4BossWalkNoWeapon_3
+    21300016: Level4BossWalkNoWeapon_4
+    21300018: Level4BossWalkNoWeapon_5
+    21300020: Level4BossWalkNoWeapon_6
+    21300022: Level4BossWalkNoWeapon_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -74,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -85,7 +86,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,27 +96,27 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_0
+      name: Level4BossWalkNoWeapon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 480
         width: 160
         height: 160
-      alignment: 9
-      pivot: {x: 0.32, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 915efd74a8840214cb746117d00a5c21
+      spriteID: 2cc451a9bb690ff42aabadb61299f93a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_1
+      name: Level4BossWalkNoWeapon_1
       rect:
         serializedVersion: 2
         x: 160
@@ -123,19 +124,19 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fac35f1849cd5cb4fa8d9b9bbdb30fe6
+      spriteID: 79b7ac4fa80693544ac511a9d1356ca7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_2
+      name: Level4BossWalkNoWeapon_2
       rect:
         serializedVersion: 2
         x: 0
@@ -143,19 +144,19 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b474f3e0895ae041abd195b3a453737
+      spriteID: f9211277807e4de4fbe440a4ab258e6a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_3
+      name: Level4BossWalkNoWeapon_3
       rect:
         serializedVersion: 2
         x: 160
@@ -163,19 +164,19 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f80ba2a3d86e1c4497b681140a7bdd6
+      spriteID: 09f230633885de147808b359713046d1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_4
+      name: Level4BossWalkNoWeapon_4
       rect:
         serializedVersion: 2
         x: 0
@@ -183,19 +184,19 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5da8ed6ebbfa6242a175ed47f79b68a
+      spriteID: b58aa97e8f64712468c61400ddd79f2a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_5
+      name: Level4BossWalkNoWeapon_5
       rect:
         serializedVersion: 2
         x: 160
@@ -203,19 +204,19 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7e2fd9a9e7f2174693af82f0d8bbaaf
+      spriteID: 46c8f53f4aa57f34f83504114a30a03c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_6
+      name: Level4BossWalkNoWeapon_6
       rect:
         serializedVersion: 2
         x: 0
@@ -223,13 +224,33 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6bdb70d534e28e44baa21b212e74ccff
+      spriteID: 357c49cfba144ba4ba0b58e0e1f4861f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Level4BossWalkNoWeapon_7
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12e84699ed8ca9142902944259f773f6
       vertices: []
       indices: 
       edges: []

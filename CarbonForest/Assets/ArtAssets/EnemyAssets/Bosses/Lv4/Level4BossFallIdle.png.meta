@@ -1,18 +1,15 @@
 fileFormatVersion: 2
-guid: 7828036b384436946a02b1e3dbc8500a
+guid: c928f096cc8c66f4083c7f619e1b53d7
 TextureImporter:
   fileIDToRecycleName:
     21300000: ThugIdle_0
     21300002: ThugIdle_1
     21300004: ThugIdle_2
     21300006: ThugIdle_3
-    21300008: Level4BossFallFromBikepiskel_0
-    21300010: Level4BossFallFromBikepiskel_1
-    21300012: Level4BossFallFromBikepiskel_2
-    21300014: Level4BossFallFromBikepiskel_3
-    21300016: Level4BossFallFromBikepiskel_4
-    21300018: Level4BossFallFromBikepiskel_5
-    21300020: Level4BossFallFromBikepiskel_6
+    21300008: Level4BossFallIdle_0
+    21300010: Level4BossFallIdle_1
+    21300012: Level4BossFallIdle_2
+    21300014: Level4BossFallIdle_3
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -95,47 +92,27 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_0
+      name: Level4BossFallIdle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 480
         width: 160
         height: 160
-      alignment: 9
-      pivot: {x: 0.32, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 915efd74a8840214cb746117d00a5c21
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_1
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 480
-        width: 160
-        height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fac35f1849cd5cb4fa8d9b9bbdb30fe6
+      spriteID: 11e3dda891f258d4eb28e7411e77a251
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_2
+      name: Level4BossFallIdle_1
       rect:
         serializedVersion: 2
         x: 0
@@ -143,39 +120,19 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b474f3e0895ae041abd195b3a453737
+      spriteID: 36daa4d64c458fa4998e16ae5f1f1c22
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_3
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 320
-        width: 160
-        height: 160
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f80ba2a3d86e1c4497b681140a7bdd6
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_4
+      name: Level4BossFallIdle_2
       rect:
         serializedVersion: 2
         x: 0
@@ -183,39 +140,19 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5da8ed6ebbfa6242a175ed47f79b68a
+      spriteID: 0df1e5158e9ad2c44a77ca54e453a219
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 160
-        width: 160
-        height: 160
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d7e2fd9a9e7f2174693af82f0d8bbaaf
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Level4BossFallFromBikepiskel_6
+      name: Level4BossFallIdle_3
       rect:
         serializedVersion: 2
         x: 0
@@ -223,13 +160,13 @@ TextureImporter:
         width: 160
         height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6bdb70d534e28e44baa21b212e74ccff
+      spriteID: f82c9cd8e8c1adb42b9981a634f0f422
       vertices: []
       indices: 
       edges: []
