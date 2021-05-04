@@ -14,6 +14,7 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
         shakeController = FindObjectOfType<ShakeController>();
         tutorialManager = TutorialManagerZero.instance;
         Initialize();
+        soundFXHandler.Play("Cloth" + Random.Range(1, 3));
     }
 
     // Update is called once per frame
@@ -72,5 +73,16 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
         yield return new WaitForSeconds(1.5f);
         canMove = true;
         canAttack = true;
+    }
+
+    public override void ParriedBehaviour()
+    {
+        //print("Parry success! health restored");
+        tutorialManager.ParrySuccess();
+    }
+
+    public override void PlayTakeDamageSound()
+    {
+        soundFXHandler.Play("DamageFlesh" + Random.Range(1, 3));
     }
 }

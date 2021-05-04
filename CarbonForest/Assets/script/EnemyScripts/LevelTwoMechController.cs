@@ -35,6 +35,7 @@ public class LevelTwoMechController : Enemy
         hitDuration = new WaitForSeconds(.3f);
         shootBeamDuration = Random.Range(minShootBeamDuration, maxShootBeamDuration);
         StartCoroutine(ShootBeamsAtRandom());
+        soundFXHandler = SoundFXHandler.instance;
     }
 
     // Update is called once per frame
@@ -59,6 +60,7 @@ public class LevelTwoMechController : Enemy
     {
         Instantiate(dust, spawnPoint.position, Quaternion.identity);
         FindObjectOfType<ShakeController>().CamBigShake();
+        soundFXHandler.Play("MechFootStep");
     }
 
     public override void TakeDamage(int damage)
@@ -68,6 +70,7 @@ public class LevelTwoMechController : Enemy
         Instantiate(bloodFX, transform.position, Quaternion.identity);
         base.TakeDamage(damage);
         StartCoroutine(DamagedEffect());
+        soundFXHandler.Play("BikeDamaged");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -85,7 +88,7 @@ public class LevelTwoMechController : Enemy
         {
             GameObject beamNormalShootFX = 
                 Instantiate(BeamNormalShootFX, BeamNormalShootTransform.position, Quaternion.Euler(0, 0, 180));
-
+            soundFXHandler.Play("WeaponShoot");
             yield return new WaitForSeconds(Random.Range(.2f, .5f));
             
             GameObject beamTargetObj =
@@ -95,6 +98,7 @@ public class LevelTwoMechController : Enemy
 
             Instantiate(beamExplosionFX, beamTargetObj.transform.position, beamTargetObj.transform.rotation);
             Destroy(beamTargetObj);
+            soundFXHandler.Play("MissileExplode");
             FindObjectOfType<ShakeController>().CamShake();
             shootBeamDuration = Random.Range(minShootBeamDuration, maxShootBeamDuration);
             yield return new WaitForSeconds(shootBeamDuration);

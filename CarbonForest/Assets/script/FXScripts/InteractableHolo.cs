@@ -20,13 +20,21 @@ public class InteractableHolo : Interactable {
     public bool isInteracted = false;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
+        if(GetComponentInChildren<TextMesh>() != null)
+        {
+            Init();
+        }
+	}
 
+    public void Init()
+    {
         middScale = new Vector3(1, .75f, 1);
         textToDisplay = GetComponentInChildren<TextMesh>();
         textToDisplay.text = onCloseText;
         textToDisplay.fontSize = sizeBefore;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {

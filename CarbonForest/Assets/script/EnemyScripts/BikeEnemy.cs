@@ -42,6 +42,7 @@ public class BikeEnemy : Enemy {
         base.TakeDamage(damage);
         health -= damage;
         FindObjectOfType<ShakeController>().CamShake();
+        SoundFXHandler.instance.Play("BikeDamaged");
         Instantiate(bloodFX, transform.position + Vector3.down, Quaternion.identity);
         if (health <= 1)
         {
@@ -63,11 +64,16 @@ public class BikeEnemy : Enemy {
 
     public override void PlayExplosionSound()
     {
-        FindObjectOfType<SoundFXHandler>().Play("MissileExplode");
+        SoundFXHandler.instance.Play("MissileExplode");
     }
 
     public void ApplyDamage()
     {
         print("Damaged player");
     }
+
+    //public override void PlayTakeDamageSound()
+    //{
+    //    SoundFXHandler.instance.Play("BikeDamaged")
+    //}
 }

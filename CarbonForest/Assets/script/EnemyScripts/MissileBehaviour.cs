@@ -12,13 +12,19 @@ public class MissileBehaviour : MonoBehaviour {
     public int colorState = 0;
     public GameObject explosionFX;
     SoundFXHandler soundManager;
+
+    public SpriteRenderer blockColorRenderer;
     //Enemy enemy;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         soundManager = SoundFXHandler.instance;
         if (FindObjectOfType<PlayerGeneralHandler>() != null)
         {
             target = FindObjectOfType<PlayerGeneralHandler>().gameObject;
+        }
+        else
+        {
+            target = FindObjectOfType<GameObject>().gameObject;
         }
         rb = GetComponent<Rigidbody2D>();
         //enemy = new Enemy();
@@ -47,6 +53,7 @@ public class MissileBehaviour : MonoBehaviour {
         rb.velocity = transform.up * speed * Time.fixedDeltaTime;
     }
 
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<BossController>() == null && targetPlayer == true)

@@ -20,7 +20,8 @@ public class BulletController : MonoBehaviour {
         rb2d.velocity = moveDirection;
         Destroy(gameObject, 3f);
         enemy.facingRight = rb2d.velocity.x > 0 ? true : false;
-	}
+        GetComponent<SpriteRenderer>().flipX = rb2d.velocity.x > 0 ? true : false;
+    }
 	
 	// Update is called once per frame
 	void Update () {

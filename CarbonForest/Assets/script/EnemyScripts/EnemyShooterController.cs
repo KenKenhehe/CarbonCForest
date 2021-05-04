@@ -25,6 +25,7 @@ public class EnemyShooterController : Enemy {
 
     public void Initialize()
     {
+        CanMoveAfterShowAnimation();
         hitDuration = new WaitForSeconds(0.05f);
         sceneEventHandler = FindObjectOfType<SceneEventHandler>();
         playerToFocus = FindObjectOfType<PlayerAttack>();
@@ -43,11 +44,12 @@ public class EnemyShooterController : Enemy {
             animator = GetComponentInChildren<Animator>();
         }
         healthBar.fillAmount = health / startHealth;
+        
     }
 
     // Update is called once per frame
     void Update () {
-        if (playerToFocus != null)
+        if (playerToFocus != null && canMove == true)
         {
             MoveToPlayer();
             FacePlayer();
@@ -72,7 +74,8 @@ public class EnemyShooterController : Enemy {
 
     public override void  TakeDamage(int damage)
     {
-        FindObjectOfType<SoundFXHandler>().Play("DamageSmall");
+        //FindObjectOfType<SoundFXHandler>().Play("DamageSmall");
+        PlayTakeDamageSound();
         base.TakeDamage(damage);
         GameObject bloodfX = Instantiate<GameObject>(bloodFX, transform);
         bloodfX.transform.Rotate(0, facingRight ? 0 : 180, 0);
@@ -116,4 +119,6 @@ public class EnemyShooterController : Enemy {
     {
         return base.GetHealth();
     }
+
+    
 }

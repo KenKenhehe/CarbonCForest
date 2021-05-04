@@ -5,19 +5,24 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class PlayerGeneralHandler : MonoBehaviour {
+public class PlayerGeneralHandler : MonoBehaviour
+{
     public static PlayerGeneralHandler instance;
 
     public Color OriginColor;
     public Color DamagedColor;
-    
+
     public Color blockWhite;
     public Color blockBlue;
+
+    public GameObject BlueStandFX;
+    public GameObject WhiteStandFX;
 
     public int currentLevel;
 
     public GameObject powerUpFX;
     public GameObject parryFailFX;
+    public GameObject takeDamageFX;
 
     public float startHealth;
     private float healthPoints;
@@ -28,6 +33,8 @@ public class PlayerGeneralHandler : MonoBehaviour {
     public float blockLossRate = 10;
     public Text healthPointText;
     public Text blockPointText;
+
+    PlayerMovement playerMovement;
 
     [Header("bars...")]
     public Image healthBar;
@@ -53,7 +60,13 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     private Color originalColor;
 
-    public int colorState = 0; //0: white, 1: blue
+    [Header("Larger the number, lower the chance")]
+    [Range(1, 10)]
+    public int chanceToStagger;
+    /// <summary>
+    /// //0: white, 1: blue/Black
+    /// </summary>
+    public int colorState = 0;
     // Use this for initialization
     private void Awake()
     {
@@ -64,19 +77,21 @@ public class PlayerGeneralHandler : MonoBehaviour {
         animator = GetComponent<Animator>();
     }
 
-    void Start () {
+    void Start()
+    {
         originalColor = GetComponent<SpriteRenderer>().color;
         shakeController = FindObjectOfType<ShakeController>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
-        
+
         renderer = GetComponent<SpriteRenderer>();
         sceneEventHandler = FindObjectOfType<SceneEventHandler>();
         gameSwitch = FindObjectOfType<GameStateSwitch>();
         counterAttack = GetComponent<CounterAttackController>();
-        
+
         blockController = GetComponent<BlockController>();
         healthPoints = startHealth;
         blockPoints = startBlockPoint;
+        playerMovement = GetComponent<PlayerMovement>();
 
         //--------
         //For actual game save
@@ -84,17 +99,36 @@ public class PlayerGeneralHandler : MonoBehaviour {
         //  new Vector3(Saver.Load().position[0], Saver.Load().position[1], Saver.Load().position[2]);
         //--------
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         HandleBlockInput();
         HandleBlockState();
         plane.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - .75f, transform.position.z);
         HandleInteractable();
+
     }
+
+    public void ChangeBlockFXDir()
+    {
+        //PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+
+        if (playerMovement.facingRight == false)
+        {
+            WhiteStandFX.transform.localScale = new Vector2(-1, WhiteStandFX.transform.localScale.y);
+            BlueStandFX.transform.localScale = new Vector2(-1, BlueStandFX.transform.localScale.y);
+        }
+        else
+        {
+            WhiteStandFX.transform.localScale = new Vector2(1, WhiteStandFX.transform.localScale.y);
+            BlueStandFX.transform.localScale = new Vector2(1, BlueStandFX.transform.localScale.y);
+        }
+    }
+
     private void FixedUpdate()
     {
-        
+
     }
 
     void HandleInteractable()
@@ -123,6 +157,10 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     void HandleBlockState()
     {
+        if (WhiteStandFX != null && BlueStandFX != null)
+        {
+            ChangeBlockFXDir();
+        }
         if (blockPoints < 0)
         {
             blockController.blocking = false;
@@ -144,56 +182,72 @@ public class PlayerGeneralHandler : MonoBehaviour {
             }
         }
 
-        if ((Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire4") == 1) && 
+        if ((Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire4") == 1) &&
             canBlock == true && blockPoints > 0)
         {
             ClearAttackState();
             if (blockController.blocking == false)
             {
+
                 animator.SetTrigger("DefendAnimationTrigger");
                 EnableBlock();
             }
             blockPoints -= Time.deltaTime * blockLossRate;
-            ChangeEnemyAlphaAndBlockBar(.2f);
+            //ChangeEnemyAlphaAndBlockBar(.2f);
+            ShowAllEnemyStand(true);
         }
-        else if ((Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire4") < 1) && 
+        else if ((Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire4") < 1) &&
             blockController.blocking == true)
         {
             blockController.DisableBlocking();
             GetComponent<PlayerAttack>().enabled = true;
-            ChangeEnemyAlphaAndBlockBar(0);
+            //ChangeEnemyAlphaAndBlockBar(0);
+            ShowAllEnemyStand(false);
+            if (WhiteStandFX != null && BlueStandFX != null)
+            {
+                WhiteStandFX.SetActive(false);
+                BlueStandFX.SetActive(false);
+            }
         }
         else
         {
-            ChangeEnemyAlphaAndBlockBar(0);
+            //ChangeEnemyAlphaAndBlockBar(0);
+            ShowAllEnemyStand(false);
             blockController.blocking = false;
         }
-        if(blockPoints <= 0)
+        if (blockPoints <= 0)
         {
             StartCoroutine(StunnedAndRecover());
         }
 
-        if(blockController.blocking == true)
+        if (blockController.blocking == true)
         {
             ChangeBlockColor();
             if (Input.GetKeyDown(KeyCode.J) || Input.GetButtonDown("Fire1"))
             {
                 GetComponent<PlayerAttack>().attacking = false;
-                colorState = 0;
+                if (colorState == 1)
+                    colorState = 0;
+                else
+                    colorState = 1;
             }
-            else if (Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire3"))
-            {
-                colorState = 1;
-                GetComponent<PlayerAttack>().attacking = false;
-            }
+            //else if (Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire3"))
+            //{
+            //    colorState = 1;
+            //    GetComponent<PlayerAttack>().attacking = false;
+            //}
         }
     }
 
     public void TakeEnemyDamage(int damage, int EnemyColorState, Enemy enemy)
     {
-        if (enemy == null || blockController.blocking == false || 
+
+        if (enemy == null || blockController.blocking == false ||
             enemy.facingRight == GetComponent<PlayerMovement>().facingRight)
         {
+            SoundFXHandler.instance.Play("DamageSmall");
+            int hitChance = Random.Range(1, chanceToStagger);
+            Instantiate(takeDamageFX, transform.position, Quaternion.identity);
             healthPoints -= damage;
             healthBar.fillAmount = healthPoints / startHealth;
             if (healthPoints <= 0)
@@ -202,20 +256,35 @@ public class PlayerGeneralHandler : MonoBehaviour {
             }
             StartCoroutine(DamageEffect());
         }
-        else if(blockController.blocking == true && 
+        else if (blockController.blocking == true &&
             GetComponent<PlayerMovement>().facingRight != enemy.facingRight)
         {
             counterAttack.PlayRandomCounterAttack();
-            if(EnemyColorState != colorState)
+            if (EnemyColorState != colorState)
             {
                 StartCoroutine(StunnedAndRecover());
                 GetComponent<PlayerMovement>().parryStunned = true;
                 healthPoints -= (damage * 2);
                 blockController.DisableBlocking();
                 blockController.blocking = false;
-               
             }
         }
+    }
+
+    public void RestoreHealth(int healthPoint)
+    {
+        UIBarFX healthBarFX = healthBar.GetComponent<UIBarFX>();
+        print("health percentage before: " + healthPoints / startHealth);
+        if (healthPoints + healthPoint > startHealth)
+            healthPoints = startHealth;
+        else
+        {
+            healthPoints += healthPoint;
+            healthBarFX.playRestoreAnimation();
+        }
+        healthBarFX.growing = true;
+        healthBarFX.updatedPercentage = healthPoints / startHealth;
+        print("health percentage: " + healthPoints / startHealth);
     }
 
     void ClearAttackState()
@@ -255,7 +324,6 @@ public class PlayerGeneralHandler : MonoBehaviour {
 
     public void ReactivateControl()
     {
-        print("RRR");
         GetComponent<PlayerAttack>().enabled = true;
         if (GetComponent<PlayerHeavyAttack>() != null)
         {
@@ -278,6 +346,11 @@ public class PlayerGeneralHandler : MonoBehaviour {
     IEnumerator StunnedAndRecover()
     {
         Time.timeScale = .002f;
+        if (WhiteStandFX != null && BlueStandFX != null)
+        {
+            WhiteStandFX.SetActive(false);
+            BlueStandFX.SetActive(false);
+        }
         float FXRotation = GetComponent<PlayerMovement>().facingRight ? 90 : -90;
         Instantiate(parryFailFX, transform.position, Quaternion.Euler(0, 0, FXRotation));
         SoundFXHandler.instance.Play("EnemyParry");
@@ -290,6 +363,11 @@ public class PlayerGeneralHandler : MonoBehaviour {
         GetComponent<Rigidbody2D>().velocity *= 0;
         PlayerMovement.Instance.canMove = false;
         canBlock = false;
+        if (TutorialManagerZero.instance != null &&
+            TutorialManagerZero.instance.InParryTutorial == true)
+        {
+            TutorialManagerZero.instance.InParryFail();
+        }
         yield return new WaitForSeconds(2f);
         PlayerMovement.Instance.canMove = true;
         animator.SetBool("BlockFailIdle", false);
@@ -298,6 +376,11 @@ public class PlayerGeneralHandler : MonoBehaviour {
         if (GetComponent<PlayerHeavyAttack>() != null)
         {
             GetComponent<PlayerHeavyAttack>().enabled = true;
+        }
+        if (TutorialManagerZero.instance != null &&
+            TutorialManagerZero.instance.InParryTutorial == true)
+        {
+            TutorialManagerZero.instance.ReTryParry();
         }
     }
 
@@ -314,21 +397,49 @@ public class PlayerGeneralHandler : MonoBehaviour {
         GetComponent<PlayerAttack>().attack3Damage /= 2;
     }
 
-    void ChangeBlockColor()
+    void ShowAllEnemyStand(bool show)
     {
-        if(colorState == 0)
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemies)
         {
-            blockRenderer.color = blockWhite;
-        }
-        else if(colorState == 1)
-        {
-            blockRenderer.color = blockBlue;
+            enemy.ShowEnemyCurrentStand(show);
         }
     }
+
+    void ChangeBlockColor()
+    {
+        if (BlueStandFX != null && WhiteStandFX != null)
+        {
+            if (colorState == 0)
+            {
+                BlueStandFX.SetActive(false);
+                WhiteStandFX.SetActive(true);
+            }
+            else if (colorState == 1)
+            {
+                BlueStandFX.SetActive(true);
+                WhiteStandFX.SetActive(false);
+            }
+        }
+        else
+        {
+            if (colorState == 0)
+            {
+                blockRenderer.color = blockWhite;
+            }
+            else if (colorState == 1)
+            {
+                blockRenderer.color = blockBlue;
+            }
+        }
+    }
+
+
 
     void ChangeEnemyAlphaAndBlockBar(float alpha)
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>();
+        MissileBehaviour[] missiles = FindObjectsOfType<MissileBehaviour>();
         foreach (Enemy enemy in enemies)
         {
             if (enemy.blockColorRenderer != null)
@@ -336,6 +447,16 @@ public class PlayerGeneralHandler : MonoBehaviour {
                 enemy.blockColorRenderer.color = new Color(enemy.blockColorRenderer.color.r,
                 enemy.blockColorRenderer.color.g,
                 enemy.blockColorRenderer.color.b,
+                alpha);
+            }
+        }
+        foreach (MissileBehaviour missile in missiles)
+        {
+            if (missile.blockColorRenderer != null)
+            {
+                missile.blockColorRenderer.color = new Color(missile.blockColorRenderer.color.r,
+                missile.blockColorRenderer.color.g,
+                missile.blockColorRenderer.color.b,
                 alpha);
             }
         }

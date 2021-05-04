@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour {
 
     public SpriteRenderer blockColorRenderer;
 
+    public GameObject WhiteStandFX;
+    public GameObject BlueStandFX;
+
     protected WaitForSeconds hitDuration;
 
     public float xSize = 2;
@@ -67,15 +70,28 @@ public class Enemy : MonoBehaviour {
 
     public void FacePlayer()
     {
-        if (playerToFocus.transform.position.x > transform.position.x)
+        if (playerToFocus != null)
         {
-            facingRight = true;
-            transform.localScale = new Vector2(-xSize, transform.localScale.y);
-        }
-        else
-        {
-            facingRight = false;
-            transform.localScale = new Vector2(xSize, transform.localScale.y);
+            if (playerToFocus.transform.position.x > transform.position.x)
+            {
+                facingRight = true;
+                transform.localScale = new Vector2(-xSize, transform.localScale.y);
+                if (WhiteStandFX != null && BlueStandFX != null)
+                {
+                    WhiteStandFX.transform.localScale = new Vector2(1, 1);
+                    BlueStandFX.transform.localScale = new Vector2(1, 1);
+                }
+            }
+            else
+            {
+                facingRight = false;
+                transform.localScale = new Vector2(xSize, transform.localScale.y);
+                if (WhiteStandFX != null && BlueStandFX != null)
+                {
+                    WhiteStandFX.transform.localScale = new Vector2(-1, 1);
+                    BlueStandFX.transform.localScale = new Vector2(-1, 1);
+                }
+            }
         }
     }
 
@@ -155,4 +171,20 @@ public class Enemy : MonoBehaviour {
         }
     }
     
+    protected void CanMoveAfterShowAnimation()
+    {
+        StartCoroutine(WaitAndCanMove());
+    }
+
+    IEnumerator WaitAndCanMove()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(1);
+        canMove = true;
+    }
+
+    public virtual void ShowEnemyCurrentStand(bool show)
+    {
+
+    }
 }

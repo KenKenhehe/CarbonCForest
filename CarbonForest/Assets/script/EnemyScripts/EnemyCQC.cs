@@ -11,6 +11,8 @@ public class EnemyCQC : Enemy
     public GameObject blockBlob;
     public GameObject blockExplosionFX;
     public GameObject parryBoomFX;
+
+   
     public Color blockWhite;
     public Color blockBlue;
 
@@ -75,6 +77,7 @@ public class EnemyCQC : Enemy
         }
         StartCoroutine(ChangePatrolDir());
         ChangeBlockColorAtRandom();
+        CanMoveAfterShowAnimation();
     }
 
     public virtual void EnableBehaviour()
@@ -167,9 +170,10 @@ public class EnemyCQC : Enemy
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
 
                     shakeController.CamBigShake();
-                    Time.timeScale = .001f;
+                    Time.timeScale = .002f;
                     //collider.GetComponent<PlayerGeneralHandler>().CallPowerUp();
                     health -= damage * blockDamageMultiplyer;
+                    collider.GetComponent<PlayerGeneralHandler>().RestoreHealth(20);
                     animator.SetTrigger("Stunned");
                     if (healthBar != null)
                     {
@@ -331,5 +335,31 @@ public class EnemyCQC : Enemy
     public virtual void ParriedBehaviour()
     {
 
+    }
+
+    public override void ShowEnemyCurrentStand(bool show)
+    {
+        //Instantiate stand icon with animation
+        if (WhiteStandFX != null && BlueStandFX != null)
+        {
+            if (show == true)
+            {
+                if (colorState == 0)
+                {
+                    WhiteStandFX.SetActive(true);
+                    BlueStandFX.SetActive(false);
+                }
+                else if (colorState == 1)
+                {
+                    WhiteStandFX.SetActive(false);
+                    BlueStandFX.SetActive(true);
+                }
+            }
+            else
+            {
+                WhiteStandFX.SetActive(false);
+                BlueStandFX.SetActive(false);
+            }
+        }
     }
 }

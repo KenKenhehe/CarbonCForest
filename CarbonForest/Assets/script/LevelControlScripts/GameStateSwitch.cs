@@ -41,7 +41,7 @@ public class GameStateSwitch : MonoBehaviour {
         if(win == false)
         {
             gameOverText.enabled = true;
-            gameOverText.text = "阵亡... 按 R 回溯吧";
+            gameOverText.text = "Dead... press R to replay";
         }
 
         else if(win == true)

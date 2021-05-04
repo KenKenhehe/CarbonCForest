@@ -256,18 +256,24 @@ public class PlayerAttack : MonoBehaviour
 
     void BikeAttack1()
     {
+        if (soundFXHandler != null)
+            soundFXHandler.Play("SowrdSwing1");
         AttackAtRightTimeBike(attack1Damage, attack1Range, .4f,
             transform.position - new Vector3(attackRangeOffset, 0, 0));
     }
 
     void BikeAttack2()
     {
+        if (soundFXHandler != null)
+            soundFXHandler.Play("SowrdSwing2");
         AttackAtRightTimeBike(attack2Damage, attack2Range, .4f,
             transform.position - new Vector3(attackRangeOffset, 0, 0));
     }
 
     void BikeAttack3()
     {
+        if (soundFXHandler != null)
+            soundFXHandler.Play("SowrdSwing2");
         AttackAtRightTimeBike(attack3Damage, attack3Range, 1f,
             transform.position);
     }

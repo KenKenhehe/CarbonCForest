@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ExitStateToggler : Interactable {
     public GameObject doorToOpen;
+    public GameObject HoloToShow;
     public GameObject objectToDestory;
     public GameObject objectToActivate;
     public Text interactionHintText;
@@ -13,9 +14,11 @@ public class ExitStateToggler : Interactable {
 
     public GameObject soundManager;
     public GameObject BossEnable;
+
 	// Use this for initialization
 	void Start () {
         interactionHintText.text = "";
+        HoloToShow.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -69,6 +72,8 @@ public class ExitStateToggler : Interactable {
         }
         BossEnable.SetActive(true);
         Destroy(objectToDestory);
+        HoloToShow.SetActive(true);
+        HoloToShow.GetComponentInParent<InteractableHolo>().Init();
     }
 
     IEnumerator ClearText()

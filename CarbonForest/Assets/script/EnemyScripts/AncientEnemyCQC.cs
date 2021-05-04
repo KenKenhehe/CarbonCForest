@@ -8,6 +8,7 @@ public class AncientEnemyCQC : EnemyCQC
     void Start()
     {
         Initialize();
+        soundFXHandler.Play("Cloth" + Random.Range(1, 3));
     }
 
     // Update is called once per frame

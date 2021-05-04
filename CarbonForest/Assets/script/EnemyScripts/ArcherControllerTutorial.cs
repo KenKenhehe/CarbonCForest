@@ -18,6 +18,7 @@ public class ArcherControllerTutorial : EnemyShooterController
         arrowOffset = new Vector3(0, -.7f, 0);
         Initialize();
         tutorial = TutorialManagerZero.instance;
+        soundFXHandler.Play("Cloth" + Random.Range(1, 3));
     }
 
     // Update is called once per frame
@@ -25,7 +26,7 @@ public class ArcherControllerTutorial : EnemyShooterController
     {
         if (playerToFocus != null)
         {
-            if (canWalk == true)
+            if (canMove == true)
             {
                 MoveToPlayer();
                 FacePlayer();
@@ -70,7 +71,7 @@ public class ArcherControllerTutorial : EnemyShooterController
 
     public void DisableWalk()
     {
-        canWalk = false;
+        canMove = false;
     }
 
     public void FireArrow()
@@ -83,11 +84,16 @@ public class ArcherControllerTutorial : EnemyShooterController
 
     public void walkAgain()
     {
-        canWalk = true;
+        canMove = true;
     }
 
     public void DrawArrow()
     {
         SoundFXHandler.instance.Play("ArrowLoad");
+    }
+
+    public override void PlayTakeDamageSound()
+    {
+        soundFXHandler.Play("DamageFlesh" + Random.Range(1, 3));
     }
 }

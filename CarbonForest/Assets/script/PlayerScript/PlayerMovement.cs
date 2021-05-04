@@ -40,6 +40,11 @@ public class PlayerMovement : MonoBehaviour
     private GameObject LeftBound;
     private GameObject RightBound;
 
+    /// <summary>
+    /// If player on air, dodge is not allowed
+    /// </summary>
+    bool canDodge = true;
+
     // Use this for initialization
     private void Awake()
     {
@@ -84,14 +89,16 @@ public class PlayerMovement : MonoBehaviour
         {
             rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
             animator.SetBool("IsFalling", true);
+            canDodge = false;
         }
         else
         {
+            canDodge = true;
             animator.SetBool("IsFalling", false);
         }
         OnlyMoveBetween(LeftBound.transform.position.x, RightBound.transform.position.x);
 
-        if (canMove)
+        if (canMove && canDodge == true)
         {
             HandleDodge();
         }

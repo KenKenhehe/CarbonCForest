@@ -44,8 +44,9 @@ public class ScrollController : MonoBehaviour {
             scrollingBGs.SetActive(true);
             
             bgMusic.SetActive(true);                            
-            StartCoroutine(WaitAndCameraAdjust());              
+            StartCoroutine(WaitAndCameraAdjust());
             StartCoroutine(FlashBlackWhenFinish());
+            //StartCoroutine(FlashBlackWhenFinishDemo());
             StartCoroutine(WaitAndSpawnEnemy());
             StartCoroutine(WaitAndSpawnMech());
             StartCoroutine(WaitAndFireFinishBeam());
@@ -65,8 +66,22 @@ public class ScrollController : MonoBehaviour {
     {
         yield return new WaitForSeconds(111);
         flashBlack.SetActive(true);
+        FindObjectOfType<SoundFXHandler>().gameObject.SetActive(false);
         yield return new WaitForSeconds(10);
         SceneManager.LoadScene(levelIndex + 1);
+    }
+
+    /// <summary>
+    /// For demo only
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FlashBlackWhenFinishDemo()
+    {
+        yield return new WaitForSeconds(111);
+        FindObjectOfType<SoundFXHandler>().gameObject.SetActive(false);
+        flashBlack.SetActive(true);
+        yield return new WaitForSeconds(20);
+        SceneManager.LoadScene(0);
     }
 
     IEnumerator WaitAndSpawnEnemy()

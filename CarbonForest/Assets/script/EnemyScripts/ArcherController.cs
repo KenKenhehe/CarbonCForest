@@ -6,12 +6,12 @@ public class ArcherController : EnemyShooterController
 {
     public bool inTutorial;
     int arrowCount;
-    bool canWalk = true;
     GameObject arrow;
     // Start is called before the first frame update
     void Start()
     {
         Initialize();
+        soundFXHandler.Play("Cloth" + Random.Range(1, 3));
     }
 
     // Update is called once per frame
@@ -19,7 +19,7 @@ public class ArcherController : EnemyShooterController
     {
         if(playerToFocus != null)
         {
-            if (canWalk == true)
+            if (canMove == true)
             {
                 FacePlayer();
                 MoveToPlayer();
@@ -49,16 +49,21 @@ public class ArcherController : EnemyShooterController
 
     public void walkAgain()
     {
-        canWalk = true;
+        canMove = true;
     }
 
     public void DisableWalk()
     {
-        canWalk = false;
+        canMove = false;
     }
 
     public void DrawArrow()
     {
         SoundFXHandler.instance.Play("ArrowLoad");
+    }
+
+    public override void PlayTakeDamageSound()
+    {
+        soundFXHandler.Play("DamageFlesh" + Random.Range(1, 3));
     }
 }

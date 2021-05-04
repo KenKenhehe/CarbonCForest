@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TutorialTextGenerator : MonoBehaviour {
+    [Multiline]
     public string textToDisplay;
     TextMesh textMesh;
 	// Use this for initialization

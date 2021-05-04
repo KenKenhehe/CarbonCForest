@@ -47,6 +47,21 @@ public class TutorialTrigger : MonoBehaviour
                 tutorialManager.ResumeArrowFall();
                 Destroy(gameObject);
             }
+            else if(gameObject.tag == "HeavyAttackTutorial")
+            {
+                tutorialManager.StartHeavyAttackTutorial(collision);
+                Destroy(gameObject);
+            }
+            else if (gameObject.tag == "ChangeWeapon")
+            {
+                tutorialManager.StartChangeWeaponTutorial(collision);
+                Destroy(gameObject);
+            }
+            else if(gameObject.tag == "stopTutorial")
+            {
+                tutorialManager.StopTutorial();
+                Destroy(gameObject);
+            }
         }
     }
 
