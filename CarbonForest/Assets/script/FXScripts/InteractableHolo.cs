@@ -17,16 +17,18 @@ public class InteractableHolo : Interactable {
     TextMesh textToDisplay;
 
     float smoothness = 10;
-    public bool isInteracted = false;
 
 	// Use this for initialization
 	void Start () 
     {
         if(GetComponentInChildren<TextMesh>() != null)
         {
+            
             Init();
         }
-	}
+        print(gameObject.name + ": " + GetComponentInChildren<TextMesh>());
+
+    }
 
     public void Init()
     {
@@ -38,41 +40,26 @@ public class InteractableHolo : Interactable {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (isInteracted == true)
+        CheckIfInRange();
+        if (interacted == true && HologramSprite.transform.localScale.x <= maxScale.x - .2f)
         {
-            HologramSprite.transform.localScale = 
-                Vector3.Lerp(HologramSprite.transform.localScale, maxScale, Time.deltaTime * 10);
+            HologramSprite.transform.localScale =
+                Vector3.Lerp(HologramSprite.transform.localScale, maxScale, Time.deltaTime * 5);
         }
-        else
+        else if(interacted == false)
         {
-            EnableBehaviour();
-        }
-        //else if(isClose == true)
-        //{
-        //    HologramSprite.transform.localScale =
-        //       Vector3.Lerp(HologramSprite.transform.localScale, middScale, Time.deltaTime * 10);
-        //    if(HologramSprite.transform.localScale.x >= middScale.x - .2f)
-        //    {
-        //        isClose = false;
-        //    }
-        //}
-        
-        //else
-        //{
-        //    HologramSprite.transform.localScale = 
-        //        Vector3.Lerp(HologramSprite.transform.localScale, Vector3.zero, Time.deltaTime * 10);
-        //}
+            HologramSprite.transform.localScale =
+                Vector3.Lerp(HologramSprite.transform.localScale, Vector3.zero, Time.deltaTime * 5);
 
-       
-	}
+        }
+        EnableBehaviour();
+    }
 
     public override void Interact()
     {
-        //base.Interact();
-        if(isInteracted == false)
+        if(interacted == false)
         {
-            isInteracted = true;
+            interacted = true;
             textToDisplay.text = interactedText;
             textToDisplay.fontSize = sizeAfter;
         }
@@ -80,7 +67,7 @@ public class InteractableHolo : Interactable {
         {
             textToDisplay.fontSize = sizeBefore;
             textToDisplay.text = onCloseText;
-            isInteracted = false;
+            interacted = false;
         }
     }
 

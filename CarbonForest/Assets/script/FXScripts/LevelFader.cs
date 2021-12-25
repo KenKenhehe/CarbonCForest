@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,11 +40,33 @@ public class LevelFader: MonoBehaviour {
     {
         try
         {
-            SceneManager.LoadScene(levelIndex + 1);
+            
+            if(SceneManager.GetActiveScene().name == "StartMenu")
+            {
+                if(GameStateHolder.instance.FirstTimePlay == true)
+                    SceneManager.LoadScene(levelIndex + 1);
+                else
+                {
+                    SceneManager.LoadScene(GameStateHolder.instance.currentSceneIndex);
+                }
+            }
+            else
+            {
+                if (GameStateHolder.instance != null)
+                {
+                    GameStateHolder.instance.currentSceneIndex =
+                        SceneManager.GetActiveScene().buildIndex + 1;
+                }
+
+                SceneManager.LoadScene(levelIndex + 1);
+            }
+            
         }
-        catch
+        catch(Exception e)
         {
-            print("this is last Scene");
+            print(e + ": this is last Scene");
         }
     }
+
+    
 }

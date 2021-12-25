@@ -5,41 +5,43 @@ using UnityEngine.UI;
 
 public class ParryTutorialHandler : MonoBehaviour
 {
+
+    List<AncientEnemyCQCTutorial> enemiesWithParryHint;
     PlayerGeneralHandler player;
     [SerializeField] Color Black;
     [SerializeField] Color White;
     [SerializeField] SpriteRenderer UpperState;
     [SerializeField] SpriteRenderer LowerState;
-    [SerializeField] SpriteRenderer MiddleState;
+    [SerializeField] GameObject parryHint;
+    public static ParryTutorialHandler instance;
     // Start is called before the first frame update
-    void Start()
-    {
-        player = PlayerGeneralHandler.instance;
-        MiddleState.color = player.colorState == 1 ? Black : White;
-    }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        ChangeColorOnPlayerSwitchBlock();
-
-    }
-
-    void ChangeColorOnPlayerSwitchBlock()
-    {
-        if(player.GetComponent<BlockController>().blocking == true)
+        if (instance == null)
         {
-            MiddleState.color = player.colorState == 0 ? White : Black;
-            if(player.colorState == 0)
-            {
-                UpperState.color = Black;
-                LowerState.color = White;
-            }
-            if (player.colorState == 1)
-            {
-                LowerState.color = Black;
-                UpperState.color = White;
-            }
+            instance = this;
         }
     }
+
+    void Start()
+    {
+        enemiesWithParryHint = new List<AncientEnemyCQCTutorial>();
+        player = PlayerGeneralHandler.instance;
+        //MiddleState.color = player.colorState == 1 ? Black : White;
+    }
+
+    public void AttachParryHintToCurrentEnemy()
+    {
+        foreach (AncientEnemyCQCTutorial enemy in FindObjectsOfType<AncientEnemyCQCTutorial>())
+        {
+            GameObject parryHintobj = Instantiate(parryHint,
+                enemy.transform.position + new Vector3(0, 2, 0), Quaternion.identity, enemy.transform);
+
+            //parryHintobj.SetActive(false);
+            enemiesWithParryHint.Add(enemy);
+            print("Attached");
+        }
+    }
+
 }

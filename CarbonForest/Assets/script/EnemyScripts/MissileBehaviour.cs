@@ -13,10 +13,16 @@ public class MissileBehaviour : MonoBehaviour {
     public GameObject explosionFX;
     SoundFXHandler soundManager;
 
-    public SpriteRenderer blockColorRenderer;
+    public GameObject WhiteStyleFX;
+    public GameObject WhiteStyleBreakFX;
+
+    BlockController playerBlockController;
     //Enemy enemy;
     // Use this for initialization
     void Start () {
+        WhiteStyleFX.SetActive(false);
+        WhiteStyleBreakFX.SetActive(false);
+        playerBlockController = PlayerGeneralHandler.instance.gameObject.GetComponent<BlockController>();
         soundManager = SoundFXHandler.instance;
         if (FindObjectOfType<PlayerGeneralHandler>() != null)
         {
@@ -37,6 +43,17 @@ public class MissileBehaviour : MonoBehaviour {
 		if(target != null)
         {
             HeadTowardTarget();
+        }
+        if (WhiteStyleFX != null)
+        {
+            if (playerBlockController.blocking == true)
+            {
+                WhiteStyleFX.SetActive(true);
+            }
+            else
+            {
+                WhiteStyleFX.SetActive(false);
+            }
         }
 	}
 
@@ -111,6 +128,10 @@ public class MissileBehaviour : MonoBehaviour {
         
         targetPlayer = false;
         rotateSpeed += Random.Range(1000, 2000);
+        Destroy(WhiteStyleFX);
+
+        WhiteStyleBreakFX.SetActive(true);
+        WhiteStyleBreakFX.transform.parent = null;
     }
 
     private void OnDestroy()

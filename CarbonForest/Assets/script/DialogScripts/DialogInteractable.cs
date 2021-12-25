@@ -18,20 +18,7 @@ public class DialogInteractable : Interactable
 
     private void Update()
     {
-        //if (isClose == true)
-        //{
-        //    dialogTipImage.transform.localScale =
-        //       Vector3.Lerp(dialogTipImage.transform.localScale, scale, Time.deltaTime * 10);
-        //    if (dialogTipImage.transform.localScale.x >= scale.x - .2f)
-        //    {
-        //        isClose = false;
-        //    }
-        //}
-        //else
-        //{
-        //    dialogTipImage.transform.localScale =
-        //        Vector3.Lerp(dialogTipImage.transform.localScale, Vector3.zero, Time.deltaTime * 10);
-        //}
+        CheckIfInRange();
         EnableBehaviour();
     }
 

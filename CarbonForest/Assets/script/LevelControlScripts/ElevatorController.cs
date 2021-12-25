@@ -9,23 +9,35 @@ public class ElevatorController : Interactable {
     public bool atButtom;
     public Color glassColor;
 
+    public GameObject TextFX;
+
+    public Transform Up;
+    public Transform buttom;
+
     Rigidbody2D rb2d;
     public Vector2 dir = new Vector2(0,-1);
     CameraControl cameraControl;
-    SpriteRenderer glassRenderer;
     Animator animator;
+    Animator textFXAnimator;
+    
     
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
+        if(TextFX != null)
+        {
+            textFXAnimator = TextFX.GetComponent<Animator>();
+        }
         rb2d = GetComponent<Rigidbody2D>();
-        //dir = new Vector2(0, -1);
         cameraControl = FindObjectOfType<CameraControl>();
         animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if(transform.position.y >= upY && isActive == false)
+	void Update () 
+    {
+        EnableBehaviour();
+        if (transform.position.y >= Up.position.y && isActive == false)
         {
             if(FindObjectOfType<DoorController>() != null)
                 FindObjectOfType<DoorController>().SetToCanOpen("DoorOpenAfterLiftReach");
@@ -34,29 +46,33 @@ public class ElevatorController : Interactable {
 
     private void FixedUpdate()
     {
+        CheckIfInRange();
         MoveElevator();
     }
 
     public void MoveElevator()
     {
+        textFXAnimator.SetBool("Activate", isActive);
         animator.SetBool("Active", isActive);
-        if (isActive && transform.position.y > buttomY && dir.y < 0)
+        if (isActive && transform.position.y > buttom.position.y && dir.y < 0)
         {
             transform.Translate(dir * Time.deltaTime * moveSpeed);
-            if(transform.position.y <= buttomY)
+            if (transform.position.y <= buttom.position.y)
             {
                 isActive = false;
+                interacted = false;
             }
         }
-        if(isActive && transform.position.y < upY && dir.y > 0)
+        if (isActive && transform.position.y < Up.position.y && dir.y > 0)
         {
             transform.Translate(dir * Time.deltaTime * moveSpeed);
-            //rb2d.velocity = dir * Time.deltaTime * moveSpeed;
-            if (transform.position.y >= upY)
+            if (transform.position.y >= Up.position.y)
             {
                 isActive = false;
+                interacted = false;
             }
         }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -83,18 +99,19 @@ public class ElevatorController : Interactable {
 
     public override void Interact()
     {
-        base.Interact();
+        //base.Interact();
         cameraControl.camDepth = 0;
         if (isActive == false)
         {
             ActivateElevator();
+            interacted = true;
         }
         
     }
 
     public override void OnClose()
     {
-        base.OnClose();
+        isClose = true;
     }
 
 

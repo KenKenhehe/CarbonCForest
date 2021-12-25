@@ -5,14 +5,22 @@ using UnityEngine.UI;
 
 public class EnemyCQC : Enemy
 {
-    protected ShakeController shakeController;
+    //protected ShakeController shakeController;
     public bool withinAttackRange = false;
+    [Range(0, 100)]
+    [Header("Percentage of this enemy movement disabled when taken damage")]
+    public int hitRecoverRate = 50;
     public int blockDamageMultiplyer = 6;
     public GameObject blockBlob;
     public GameObject blockExplosionFX;
+
     public GameObject parryBoomFX;
 
-   
+    public GameObject standChangeFXNeg;
+    public GameObject standChangeFXPos;
+    public Vector3 standChangeFXOffset;
+
+
     public Color blockWhite;
     public Color blockBlue;
 
@@ -22,6 +30,7 @@ public class EnemyCQC : Enemy
     public Image blockBar;
 
     protected bool canAttack = true;
+    protected bool IsStunned = false;
 
     protected float randHoldTime;
 
@@ -34,6 +43,7 @@ public class EnemyCQC : Enemy
     public float attackRange = 1.5f;
     public float stunnedDuration = 4f;
     protected int colorState;
+    protected int currentColorState;
 
     protected float randomPatrolDir;
     // Use this for initialization
@@ -45,27 +55,35 @@ public class EnemyCQC : Enemy
     // Update is called once per frame
     void Update()
     {
-        EnableBehaviour();
+        if(IsStunned == false)
+            EnableBehaviour();
     }
 
     public virtual void Initialize()
     {
+        if(AllStatusBars != null)
+            AllStatusBars.SetActive(false);
+        
         hitDuration = new WaitForSeconds(0.2f);
         randomPatrolDir = Random.Range(-1f, 1f);
         animator = GetComponent<Animator>() == null ? GetComponentInChildren<Animator>() : GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>() == null ? GetComponentInChildren<SpriteRenderer>() : GetComponent<SpriteRenderer>();
-        shakeController = FindObjectOfType<ShakeController>();
+        shakeController = ShakeController.instance;
         soundFXHandler = SoundFXHandler.instance;
         health = Random.Range(minHealth, maxHealth);
         startHealth = health;
         playerToFocus = FindObjectOfType<PlayerAttack>();
         respondRange = Random.Range(1f, 1.5f);
         SightRange = Random.Range(minSightRange, maxSightRange);
-        rb2d = GetComponent<Rigidbody2D>();
+        
+        //rb2d.isKinematic = true;
+        //rb2d.useFullKinematicContacts = true;
         randHoldTime = Random.Range(.1f, 3f);
         attackRate = Random.Range(minAttackRate, maxAttackRate);
         colorState = Random.Range(0, 2);
+        currentColorState = colorState;
         blockColorRenderer = blockBlob.GetComponent<SpriteRenderer>();
+        
 
         blockColorRenderer.color = new Color(blockColorRenderer.color.r,
             blockColorRenderer.color.g, blockColorRenderer.color.b,
@@ -75,13 +93,15 @@ public class EnemyCQC : Enemy
         {
             blockBar.fillAmount = blockPoint / maxBlockPoint;
         }
-        StartCoroutine(ChangePatrolDir());
+        //StartCoroutine(ChangePatrolDir());
         ChangeBlockColorAtRandom();
         CanMoveAfterShowAnimation();
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
     public virtual void EnableBehaviour()
     {
+        PlayDynamicAnimation();
         if (playerToFocus != null)
         {
             if (canAttack == true && canMove == true)
@@ -102,9 +122,11 @@ public class EnemyCQC : Enemy
         else
         {
             randHoldTime -= Time.fixedDeltaTime;
-            rb2d.velocity = Vector2.zero;
+            rb2d.velocity = new Vector2(0, rb2d.velocity.y);
         }
     }
+
+    
 
     public void AttackPlayerAtRate()
     {
@@ -150,6 +172,8 @@ public class EnemyCQC : Enemy
                     collider.GetComponent<BlockController>().blocking == true &&
                     collider.GetComponent<PlayerMovement>().facingRight != facingRight)
                 {
+                    if (AllStatusBars != null)
+                        AllStatusBars.SetActive(true);
                     AddiBlockEvent();
                     blockPoint -= 1;
                     if (blockBar != null)
@@ -173,7 +197,7 @@ public class EnemyCQC : Enemy
                     Time.timeScale = .002f;
                     //collider.GetComponent<PlayerGeneralHandler>().CallPowerUp();
                     health -= damage * blockDamageMultiplyer;
-                    collider.GetComponent<PlayerGeneralHandler>().RestoreHealth(20);
+                    collider.GetComponent<PlayerGeneralHandler>().RestoreHealth();
                     animator.SetTrigger("Stunned");
                     if (healthBar != null)
                     {
@@ -182,9 +206,9 @@ public class EnemyCQC : Enemy
                     if (maxHealth < 20) // drones max health must be less than 20
                     {
                         rb2d.AddForce(facingRight == true ?
-                            new Vector2(-9000, Random.Range(10000, 12000)) :
-                            new Vector2(9000, Random.Range(10000, 12000)));
-                        rb2d.gravityScale = 70;
+                            new Vector2(-2000, Random.Range(3500, 4000)) :
+                            new Vector2(2000, Random.Range(3500, 4000)));
+                        rb2d.gravityScale = 60;
                     }
                     else if (maxHealth > 200)
                     {
@@ -208,11 +232,23 @@ public class EnemyCQC : Enemy
             base.AttackPlayer();
             if (Vector2.Distance(transform.position, playerToFocus.transform.position) <= respondRange + 1)
             {
+                canMove = false;
                 animator.SetTrigger("Attack1");
                 animator.SetTrigger("Attack2");
                 randHoldTime = Random.Range(.1f, 3f);
             }
+            else
+            {
+                canMove = true;
+            }
         }
+    }
+
+    public void SpawnChangeStandFX(bool positron)
+    {
+        print("spawned stand fx");
+        Instantiate(positron == true ? standChangeFXPos : standChangeFXNeg, 
+            transform.position + standChangeFXOffset, Quaternion.identity);
     }
 
     public void TakeDamageDeath()
@@ -222,29 +258,20 @@ public class EnemyCQC : Enemy
 
     public override void TakeDamage(int damage)
     {
+        blockBar.enabled = true;
         PlayTakeDamageSound();
         
         base.TakeDamage(damage);
         GameObject bloodfX = Instantiate(bloodFX, transform);
         bloodfX.transform.Rotate(0, facingRight ? 0 : 180, 0);
-        
-        StartCoroutine(TakeDamageForAWhile());
         StartCoroutine(DamagedEffect());
-        animator.SetTrigger("Damaged");
-        if(damage < 2)
+        int chance = Random.Range(0, 100);
+        bool enterHitRecover = chance <= hitRecoverRate ? true : false;
+        if (enterHitRecover)
         {
-            shakeController.CamShake();
-            Time.timeScale = Random.Range(0.3f, 0.6f);
-        }
-        else if (damage < 3)
-        {
-            shakeController.CamShake();
-            Time.timeScale = Random.Range(0.15f, 0.3f);
-        }
-        else if (damage >= 3)
-        {
-            shakeController.CamBigShake();
-            Time.timeScale = Random.Range(0.05f, 0.2f);
+            StartCoroutine(TakeDamageForAWhile());
+            
+            animator.SetTrigger("Damaged");
         }
 
         if (health <= 1)
@@ -279,19 +306,20 @@ public class EnemyCQC : Enemy
         {
             blockColorRenderer.color = blockBlue;
         }
+        currentColorState = colorState;
     }
 
     public IEnumerator DisableAttackForAWhile(float duration)
     {
         //renderer.color = new Color(1, 0.5f, 0.5f, 1);
-        
-        animator.SetBool("StunnedIdle", true);
+        IsStunned = true;
         canAttack = false;
         canMove = false;
-
+        animator.SetBool("StunnedIdle", true);        
         yield return new WaitForSeconds(duration);
         canAttack = true;
         canMove = true;
+        IsStunned = false;
         blockPoint = maxBlockPoint;
         animator.SetBool("StunnedIdle", false);
         if (blockBar != null)
@@ -303,7 +331,7 @@ public class EnemyCQC : Enemy
 
     public IEnumerator TakeDamageForAWhile()
     {
-        // For all boss or ellite enemy, attack continues
+        // For all boss or elite enemy, attack continues
         if (maxHealth < 100)
         {
             attackRate = Random.Range(1f, 2f);
@@ -361,5 +389,27 @@ public class EnemyCQC : Enemy
                 BlueStandFX.SetActive(false);
             }
         }
+    }
+
+    public void SetColorState(int color)
+    {
+        colorState = color;
+    }
+
+
+    public int GetColorState()
+    {
+        return colorState;
+    }
+
+    public void playShowBurstFX()
+    {
+        soundFXHandler.Play("Burst");
+    }
+
+    public void playHitGroundFX()
+    {
+        shakeController.CamShake();
+        soundFXHandler.Play("PillarHit");
     }
 }

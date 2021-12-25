@@ -17,6 +17,7 @@ public class PillarHandler : MonoBehaviour {
         if (collision.gameObject.GetComponent<BossController>() != null &&
            collision.gameObject.GetComponent<BossController>().dashing == true)
         {
+            BossController boss = collision.gameObject.GetComponent<BossController>();
             soundFXHandler.Play("PillarHit");
             Instantiate(collapseFX, transform.position,
                collision.gameObject.GetComponent<BossController>().facingRight == true ?
@@ -28,7 +29,6 @@ public class PillarHandler : MonoBehaviour {
                 soundFXHandler.Play("PillarDown");
                 Destroy(gameObject);
             }
-            BossController boss = collision.gameObject.GetComponent<BossController>();
             boss.dashing = false;
             boss.canMove = false;
             boss.stunnedAfterHitPliiar();

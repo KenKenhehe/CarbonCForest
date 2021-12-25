@@ -43,7 +43,7 @@ public class RangedArrowLauncher : MonoBehaviour
             {
                 GameObject arrowObj = Instantiate(arrow,
                     transform.position + spawnOffset + new Vector3(Random.Range(1f, 4f), 0, 0),
-                    Quaternion.Euler(0, 0, Random.Range(0f, 10f)));
+                    Quaternion.Euler(0, 0, Random.Range(0f, 5f)));
                 arrowObj.GetComponent<RangedArrowBehaviour>().rotateSpeed = ArrowRotationSpeed;
                 SoundFXHandler.instance.Play("RangedArrowShot");
                 yield return new WaitForSeconds(.2f);

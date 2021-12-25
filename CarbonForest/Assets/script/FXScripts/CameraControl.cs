@@ -18,13 +18,17 @@ public class CameraControl : MonoBehaviour {
 
     public static CameraControl instance;
 
-    // Use this for initialization
-    private void Start()
+    private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
+    }
+    // Use this for initialization
+    private void Start()
+    {
+        
         if (PlayerGeneralHandler.instance.gameObject != null)
         {
             mainPlayer = PlayerGeneralHandler.instance.gameObject;
@@ -81,6 +85,14 @@ public class CameraControl : MonoBehaviour {
         StartCoroutine(FocusOnGameObjectAWhileCoroutine(gameObject, focusDuration));
     }
 
+    public void ChangePositionPreset(CameraPositionPreset preset)
+    {
+        cameraSpeed = preset.cameraSpeed;
+        offsetY = preset.offsetY;
+        offsetX = preset.offsetX;
+        camDepth = preset.camDepth;
+    }
+
     IEnumerator FocusOnGameObjectAWhileCoroutine(GameObject gameObject, float focusDuration)
     {
         player = gameObject;
@@ -90,4 +102,6 @@ public class CameraControl : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         ToggleCollider(true);
     }
+
+
 }

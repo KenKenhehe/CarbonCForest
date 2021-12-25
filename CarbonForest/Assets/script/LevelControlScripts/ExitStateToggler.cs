@@ -5,25 +5,28 @@ using UnityEngine.UI;
 
 public class ExitStateToggler : Interactable {
     public GameObject doorToOpen;
-    public GameObject HoloToShow;
+    public GameObject ExitTerminal;
     public GameObject objectToDestory;
     public GameObject objectToActivate;
-    public Text interactionHintText;
     bool canPush = false;
 
 
     public GameObject soundManager;
     public GameObject BossEnable;
 
-	// Use this for initialization
-	void Start () {
-        interactionHintText.text = "";
-        HoloToShow.SetActive(false);
-	}
+    DoorController[] doors;
+    InfiniteSpawnTrigger infiniteSpawnTrigger;
+
+    // Use this for initialization
+    void Start () {
+        ExitTerminal.GetComponent<InteractableHolo>().enabled = false;
+        doors = FindObjectsOfType<DoorController>();
+        infiniteSpawnTrigger = FindObjectOfType<InfiniteSpawnTrigger>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	
+        CheckIfInRange();
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,10 +34,6 @@ public class ExitStateToggler : Interactable {
         if(collision.gameObject.GetComponent<PlayerGeneralHandler>() != null)
         {
             canPush = true;
-            if (doorToOpen.GetComponent<SceneSwitchHandler>().doorOpened == false)
-            {
-                interactionHintText.text = "Press F to Interact";
-            }
         }
 
     }
@@ -53,10 +52,7 @@ public class ExitStateToggler : Interactable {
         base.Interact();
         doorToOpen.GetComponent<SceneSwitchHandler>().doorOpened = true;
         doorToOpen.GetComponentInChildren<SpriteRenderer>().color = new Color(0, 0, 0, 0);
-        interactionHintText.text = "Seems some door has opened...";
-        StartCoroutine(ClearText());
         objectToActivate.SetActive(true);
-        DoorController[] doors = FindObjectsOfType<DoorController>();
         foreach (DoorController door in doors)
         {
             if (door.gameObject.name == "DoorOpenAfterPress")
@@ -64,21 +60,13 @@ public class ExitStateToggler : Interactable {
                 door.canOpen = true;
             }
         }
-
-        FindObjectOfType<InfiniteSpawnTrigger>().canStopSpawn = true;
+        infiniteSpawnTrigger.canStopSpawn = true;
         if (FindObjectOfType<SoundManager>() == null)
         {
             Instantiate(soundManager);
         }
         BossEnable.SetActive(true);
         Destroy(objectToDestory);
-        HoloToShow.SetActive(true);
-        HoloToShow.GetComponentInParent<InteractableHolo>().Init();
-    }
-
-    IEnumerator ClearText()
-    {
-        yield return new WaitForSeconds(10);
-        interactionHintText.text = "";
+        ExitTerminal.GetComponent<InteractableHolo>().enabled = true;
     }
 }

@@ -113,7 +113,7 @@ public class TutorialManagerZero : MonoBehaviour
         CheckSlowMotion();
         BlockParryTutorial();
         BlockRangeTutorial();
-        
+
     }
     void BlockRangeTutorial()
     {
@@ -185,7 +185,7 @@ public class TutorialManagerZero : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerGeneralHandler>() != null)
         {
-            StartNextTutorial(collision);
+            StartAttackTutorial(collision);
         }
     }
 
@@ -193,8 +193,8 @@ public class TutorialManagerZero : MonoBehaviour
 
     public void StartMovementTutorial()
     {
-        MoveHintObj = Instantiate(MoveHint, movementHintTransform.position,
-            Quaternion.identity, player.gameObject.transform);
+        MoveHintObj = Instantiate(MoveHint, player.transform.position + new Vector3(-0.25f, 2, 0),
+             Quaternion.identity, player.gameObject.transform);
     }
 
     //zero
@@ -232,11 +232,16 @@ public class TutorialManagerZero : MonoBehaviour
     public void StartParryTutorial()
     {
         InParryTutorial = true;
-        Destroy(normalAttackHintObj);
+        Destroy(ChangeWeaponHitnObj);
         //Destroy(DodgeHintObj);
         swordsManTutObj = Instantiate(swordsManTutorial, swordsmanTutorialTransform.position, Quaternion.identity);
         camera.FocusOnGameObjectForAwhile(swordsManTutObj, 1.5f);
         inParryBlock = true;
+        //Set enemy to leave stand(which is different that what player default is) 
+        //to teach stand changing
+        swordsManTutObj.GetComponent<EnemyCQC>().SetColorState(1);
+        //TODO: instantiate parry hint
+
         StartCoroutine(DisableMovementControlForAwhile(player, 3));
     }
 
@@ -266,7 +271,7 @@ public class TutorialManagerZero : MonoBehaviour
     }
 
     //normal attack 
-    public void StartNextTutorial(Collider2D collision)
+    public void StartAttackTutorial(Collider2D collision)
     {
         if (hasAttack == false)
         {
@@ -293,6 +298,7 @@ public class TutorialManagerZero : MonoBehaviour
 
     public void StartChangeWeaponTutorial(Collider2D collision)
     {
+        Destroy(normalAttackHintObj);
         StartPopUpTutorial(ChangeWeaponHint, ref ChangeWeaponHitnObj,
             ChangeWeaponHintTransform.position, collision.transform);
     }
@@ -303,13 +309,13 @@ public class TutorialManagerZero : MonoBehaviour
         {
             Destroy(ParryFailObj);
         }
-       
+
         teachBlockWindow.SetActive(false);
         teachParryWindow.SetActive(false);
         if (ParrySuccessObj != null)
             Destroy(ParrySuccessObj);
 
-        if(shouldPauseWhenParryFail == false)
+        if (shouldPauseWhenParryFail == false)
         {
             StartPopUpTutorial(ParryFailHintNoPause, ref ParryFailObj,
              player.transform.position + parryFailTextOffset,
@@ -329,21 +335,21 @@ public class TutorialManagerZero : MonoBehaviour
               0),
               null);
             Time.timeScale = 0;
-           
+
             inParryBlock = false;
         }
         else
         {
             teachBlockWindow.SetActive(true);
             ParryFailObj.SetActive(false);
-           
+
         }
     }
 
 
     public void ParrySuccess()
     {
-        if(ParrySuccessObj != null)
+        if (ParrySuccessObj != null)
             Destroy(ParrySuccessObj);
         teachParryWindow.SetActive(false);
         ParrySuccessObj = Instantiate(ParrySuccessHint,
@@ -391,7 +397,7 @@ public class TutorialManagerZero : MonoBehaviour
             parrySuccessed = false;
             ExtendSuccessShowDuration = 0;
         }
-        
+
     }
 
 
@@ -404,6 +410,7 @@ public class TutorialManagerZero : MonoBehaviour
         player.GetComponent<Animator>().SetBool("DefendWalkBackward", false);
         yield return new WaitForSeconds(second);
         player.GetComponent<PlayerGeneralHandler>().ReactivateControl();
+        ParryTutorialHandler.instance.AttachParryHintToCurrentEnemy();
     }
 
 }

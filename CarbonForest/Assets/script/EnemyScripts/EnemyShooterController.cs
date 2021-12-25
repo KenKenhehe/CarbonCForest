@@ -13,7 +13,7 @@ public class EnemyShooterController : Enemy {
     protected float fireRate;
 
     protected float fireTime = 0;
-    ShakeController shakeController;
+   
     SpriteRenderer renderer;
     WaitForSeconds hitDuration;
     SceneEventHandler sceneEventHandler;
@@ -25,6 +25,8 @@ public class EnemyShooterController : Enemy {
 
     public void Initialize()
     {
+        if (AllStatusBars != null)
+            AllStatusBars.SetActive(false);
         CanMoveAfterShowAnimation();
         hitDuration = new WaitForSeconds(0.05f);
         sceneEventHandler = FindObjectOfType<SceneEventHandler>();
@@ -35,7 +37,7 @@ public class EnemyShooterController : Enemy {
         respondRange = Random.Range(minRespondRange, maxRespondRange);
         renderer = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
-        shakeController = FindObjectOfType<ShakeController>();
+        shakeController = ShakeController.instance;
         facingRight = false;
         animator = GetComponent<Animator>();
         soundFXHandler = SoundFXHandler.instance;
@@ -81,23 +83,26 @@ public class EnemyShooterController : Enemy {
         bloodfX.transform.Rotate(0, facingRight ? 0 : 180, 0);
         fireTime = 0;
         animator.SetTrigger("Damaged");
-        if (damage < 3)
-        {
-            shakeController.CamShake();
-            Time.timeScale = Random.Range(0.15f, 0.3f);
-        }
-        else if(damage >= 3)
-        {
-            shakeController.CamBigShake();
-            Time.timeScale = Random.Range(0.05f, 0.2f);
-        }
-        
+        //if (damage < 2)
+        //{
+        //    shakeController.CamShake();
+        //    Time.timeScale = Random.Range(0.5f, 0.8f);
+        //}
+        //else if (damage < 3)
+        //{
+        //    shakeController.CamShake();
+        //    Time.timeScale = Random.Range(0.15f, 0.3f);
+        //}
+        //else if (damage >= 3)
+        //{
+        //    shakeController.CamBigShake();
+        //    Time.timeScale = Random.Range(0.05f, 0.2f);
+        //}
+
         if (health <= 1)
         {
             PlayExplosionSound();
             shakeController.CamBigShake();
-            Instantiate(destoryFX, transform.position, Quaternion.identity);
-            Destroy(gameObject);
             if (explosionFXs != null)
             {
                 Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position, Quaternion.Euler(
@@ -106,6 +111,8 @@ public class EnemyShooterController : Enemy {
                     Random.Range(-20, 20))
                     );
             }
+            Instantiate(destoryFX, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
         
     }

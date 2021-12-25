@@ -25,6 +25,7 @@ public class SceneSwitchHandler : Interactable
 
     private void Update()
     {
+        CheckIfInRange();
         if (FindObjectOfType<BossController>() == null)
         {
             bossDefeated = true;

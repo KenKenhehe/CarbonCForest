@@ -6,11 +6,14 @@ public class TerminalController : Interactable
 {
     PlayerGeneralHandler player;
     bool controlDeactivated = false;
-    public GameObject statusMenu;
+
+    public GameObject SystemUI;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerGeneralHandler.instance;
+        if(SystemUI != null)
+            SystemUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -21,13 +24,19 @@ public class TerminalController : Interactable
 
     public override void Interact()
     {
-        if (controlDeactivated == false)
+        if (SystemUI != null)
         {
-            player.DeactivateControl();
-        }
-        else
-        {
-            player.ReactivateControl();
+            if (controlDeactivated == false)
+            {
+                player.DeactivateControl();
+                //Show UI
+                SystemUI.SetActive(true);
+            }
+            else
+            {
+                player.ReactivateControl();
+                SystemUI.SetActive(false);
+            }
         }
     }
 }

@@ -7,13 +7,19 @@ public class EnemyTurret : EnemyShooterController {
 	// Use this for initialization
 	void Start () {
         Initialize();
+        StartCoroutine(MoveAfterShowAnimation());
+        soundFXHandler.Play("TurrentShow" + Random.Range(1, 4));
         fireRate = Random.Range(.8f, 1.6f);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        AttackPlayer();
-        MoveToPlayer();
+        
+        if (canMove)
+        {
+            MoveToPlayer();
+            AttackPlayer();
+        }
 	}
 
     public override void AttackPlayer()
@@ -92,5 +98,12 @@ public class EnemyTurret : EnemyShooterController {
     {
         base.TakeDamage(damage);
         StartCoroutine(DamagedEffect());
+    }
+
+    IEnumerator MoveAfterShowAnimation()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(2f);
+        canMove = true;
     }
 }

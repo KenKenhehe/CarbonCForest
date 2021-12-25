@@ -11,7 +11,7 @@ TextureImporter:
     21300012: BikeHopOn_6
     21300014: BikeHopOn_7
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -95,10 +95,10 @@ TextureImporter:
       name: BikeHopOn_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 899
-        width: 102
-        height: 51
+        x: 0
+        y: 896
+        width: 128
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -106,7 +106,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc36192cd90e84345b10cdc3b2671be6
+      spriteID: 4a8deeebc7c0ba743b656485383bef63
       vertices: []
       indices: 
       edges: []
@@ -115,10 +115,10 @@ TextureImporter:
       name: BikeHopOn_1
       rect:
         serializedVersion: 2
-        x: 25
-        y: 771
-        width: 97
-        height: 51
+        x: 0
+        y: 768
+        width: 128
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -126,7 +126,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8cc1b0f3a34ba348bd6b7e20ab29443
+      spriteID: 4398c4980be59544b8ffc531b6c99785
       vertices: []
       indices: 
       edges: []
@@ -135,10 +135,10 @@ TextureImporter:
       name: BikeHopOn_2
       rect:
         serializedVersion: 2
-        x: 25
-        y: 643
-        width: 97
-        height: 50
+        x: 0
+        y: 640
+        width: 128
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,7 +146,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b88ee339eaa3084d93cdf5ec9b113fd
+      spriteID: df9bda47688b3b64db347e3bb1f4177e
       vertices: []
       indices: 
       edges: []
@@ -155,10 +155,10 @@ TextureImporter:
       name: BikeHopOn_3
       rect:
         serializedVersion: 2
-        x: 25
-        y: 515
-        width: 97
-        height: 50
+        x: 0
+        y: 512
+        width: 128
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,7 +166,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0e6d7cfdbe12cb4b833ec837061653f
+      spriteID: 5b2b4cd27146fa7489f0a35267dd3e51
       vertices: []
       indices: 
       edges: []
@@ -175,10 +175,10 @@ TextureImporter:
       name: BikeHopOn_4
       rect:
         serializedVersion: 2
-        x: 25
-        y: 387
-        width: 97
-        height: 53
+        x: 0
+        y: 384
+        width: 128
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,7 +186,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 480f2bc8ff6f28d448ded88a161dfd44
+      spriteID: cd1cf6c9735ef6b41abea1e670f0f544
       vertices: []
       indices: 
       edges: []
@@ -195,10 +195,10 @@ TextureImporter:
       name: BikeHopOn_5
       rect:
         serializedVersion: 2
-        x: 25
-        y: 259
-        width: 97
-        height: 56
+        x: 0
+        y: 256
+        width: 128
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,7 +206,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c07044cc9e81c9f479d26e6ce1d66050
+      spriteID: c08e7d7eae7c7f544b451d740b1dc7a5
       vertices: []
       indices: 
       edges: []
@@ -215,10 +215,10 @@ TextureImporter:
       name: BikeHopOn_6
       rect:
         serializedVersion: 2
-        x: 25
-        y: 131
-        width: 97
-        height: 57
+        x: 0
+        y: 128
+        width: 128
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,7 +226,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a960460ed38e8c47997af08151bfe23
+      spriteID: 98962a7f234a24b4cae9cf92cf5bc5cc
       vertices: []
       indices: 
       edges: []
@@ -235,10 +235,10 @@ TextureImporter:
       name: BikeHopOn_7
       rect:
         serializedVersion: 2
-        x: 25
-        y: 3
-        width: 97
-        height: 57
+        x: 0
+        y: 0
+        width: 128
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,7 +246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5162c83921f032440bb447109a4dc108
+      spriteID: af3608d17ed49f340ac8ebe01dd8f7d2
       vertices: []
       indices: 
       edges: []

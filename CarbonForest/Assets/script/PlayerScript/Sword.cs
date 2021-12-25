@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Sword : Weapon
 {
+   
     public string[] attackTriggerNames = new string[] { "Attack", "Attack2", "Attack3" };
     public string[] HeavyAttackTriggerNames = new string[] { "HeavyAttack1", "HeavyAttack2", "HeavyAttack3" };
     public override void PlayAttackAnimationOnAttackNum(Animator animator)

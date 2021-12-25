@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
     public float unstableness = 1;
     public int minHealth = 10;
     public int maxHealth = 20;
 
     public int blockPoint = 2;
     public int maxBlockPoint = 3;
+    public bool blocking = false;
 
     protected PlayerAttack playerToFocus;
     protected float health;
@@ -21,6 +23,8 @@ public class Enemy : MonoBehaviour {
     public float minSightRange;
 
     protected float respondRange = 0;
+
+    public GameObject AllStatusBars;
 
     public Image healthBar;
 
@@ -45,6 +49,7 @@ public class Enemy : MonoBehaviour {
     public bool takingDamage = false;
     public bool canMove = true;
 
+
     public Color damagedColor;
     public Color originColor;
 
@@ -52,21 +57,39 @@ public class Enemy : MonoBehaviour {
     protected Rigidbody2D rb2d;
 
     protected SoundFXHandler soundFXHandler;
+    protected ShakeController shakeController;
 
     public virtual void TakeDamage(int damage)
     {
+        if (AllStatusBars != null)
+        {
+            AllStatusBars.SetActive(true);
+        }
         health -= damage;
         if (healthBar != null)
         {
             healthBar.fillAmount = health / startHealth;
         }
+        if (damage < 2)
+        {
+            shakeController.CamShake();
+            Time.timeScale = Random.Range(0.5f, 0.8f);
+        }
+        else if (damage < 3)
+        {
+            shakeController.CamShake();
+            Time.timeScale = Random.Range(0.15f, 0.3f);
+        }
+        else if (damage >= 3)
+        {
+            shakeController.CamBigShake();
+            Time.timeScale = Random.Range(0.05f, 0.2f);
+        }
+
         StartCoroutine(DamagedState());
     }
 
-    public virtual void AttackPlayer()
-    {
-
-    }
+    public virtual void AttackPlayer() {}
 
     public void FacePlayer()
     {
@@ -97,9 +120,10 @@ public class Enemy : MonoBehaviour {
 
     public virtual void MoveToPlayer()
     {
+
         if (rb2d.velocity.y < 0)
         {
-            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.deltaTime;
+            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.fixedDeltaTime;
         }
 
         if (playerToFocus.transform.position.x - respondRange > transform.position.x)
@@ -112,13 +136,14 @@ public class Enemy : MonoBehaviour {
         }
         else
         {
-            rb2d.velocity = Vector2.zero;
+            rb2d.velocity = new Vector2(0, rb2d.velocity.y);
         }
+
     }
 
     public IEnumerator DamagedEffect()
     {
-        GetComponentInChildren<SpriteRenderer>().color = new Color(1,1,1,0.1f);
+        GetComponentInChildren<SpriteRenderer>().color = new Color(1, 1, 1, 0.1f);
 
         yield return hitDuration;
 
@@ -154,12 +179,17 @@ public class Enemy : MonoBehaviour {
         soundFXHandler.Play("DamageSmall");
     }
 
+    public virtual void PlayShowSFX()
+    {
+        soundFXHandler.Play("DroneShow" + Random.Range(1, 4));
+    }
+
     public virtual void DeathBehaviour()
     {
 
     }
 
-    public virtual void PlayDynamicAnimation() 
+    public virtual void PlayDynamicAnimation()
     {
         if (rb2d.velocity == Vector2.zero)
         {
@@ -170,7 +200,7 @@ public class Enemy : MonoBehaviour {
             animator.SetBool("IsWalking", true);
         }
     }
-    
+
     protected void CanMoveAfterShowAnimation()
     {
         StartCoroutine(WaitAndCanMove());
@@ -187,4 +217,5 @@ public class Enemy : MonoBehaviour {
     {
 
     }
+
 }

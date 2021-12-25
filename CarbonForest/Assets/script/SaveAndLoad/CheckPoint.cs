@@ -9,7 +9,10 @@ public class CheckPoint : MonoBehaviour
         if(collision.GetComponent<PlayerGeneralHandler>() != null)
         {
             print("Check Point Reached");
-            Saver.Save(collision.GetComponent<PlayerGeneralHandler>());
+
+            //TODO: Enable saving icon
+            //GameStateHolder.instance.FirstTimePlay = false;
+            //Saver.Save(GameStateHolder.instance);
         }
     }
 }

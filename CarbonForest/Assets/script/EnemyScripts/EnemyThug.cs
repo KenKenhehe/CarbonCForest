@@ -36,11 +36,13 @@ public class EnemyThug : EnemyCQC
         {
             if (currentAttackMode == AttackMode.Melee)
             {
-                canMove = true;
                 if (Vector2.Distance(transform.position, playerToFocus.transform.position) <= respondRange + 1)
                 {
+                    canMove = false;
                     animator.SetTrigger("Attack1");
                 }
+                else
+                    canMove = true;
             }
             else
             {

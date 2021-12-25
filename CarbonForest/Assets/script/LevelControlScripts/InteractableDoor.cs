@@ -6,10 +6,10 @@ public class InteractableDoor : Interactable
 {
     Animator animator;
     BoxCollider2D boxCollider2D;
-    bool isClose = false;
     bool interacted = false;
     [SerializeField]GameObject interactHint;
     MusicDirector musicDirector;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +21,7 @@ public class InteractableDoor : Interactable
     // Update is called once per frame
     void Update()
     {
+        CheckIfInRange();
         if (isClose == true && interacted == false)
         {
             interactHint.SetActive(true);

@@ -272,14 +272,17 @@ public class PlayerMovement : MonoBehaviour
 
     void DodgeFX()
     {
-        GameObject sFX = Instantiate(
-            dodgeSparkFX,
-            new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
-            Quaternion.Euler(new Vector3(-15, facingRight ? -90 : 90, 0)), transform
-            );
-        if (rb2d.velocity.y < 0)
+        if (dodgeSparkFX != null)
         {
-            Destroy(sFX);
+            GameObject sFX = Instantiate(
+                dodgeSparkFX,
+                new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
+                Quaternion.Euler(new Vector3(-15, facingRight ? -90 : 90, 0)), transform
+                );
+            if (rb2d.velocity.y < 0)
+            {
+                Destroy(sFX);
+            }
         }
         if (dodgeFXLeft != null)
         {

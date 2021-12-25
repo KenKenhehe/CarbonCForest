@@ -53,6 +53,10 @@ public class PlayerAttack : MonoBehaviour
 
     SoundFXHandler soundFXHandler;
 
+    public GameObject attackShakeFX;
+    public Transform attackShakeTransformRight;
+    public Transform attackShakeTransformLeft;
+
     // Use this for initialization
     void Start()
     {
@@ -128,10 +132,6 @@ public class PlayerAttack : MonoBehaviour
 
             float ranfomPushbackRange = Random.Range(.5f, 1f);
 
-            //Instantiate(currentWeapon.slahsFX, 
-            //    transform.position + (Vector3.right * (playerMovement.facingRight ? range : -range) * ranfomPushbackRange), 
-            //    Quaternion.Euler(0, 0, Random.Range(0, 360)));
-
             enemy.transform.position = new Vector3(
                 (playerMovement.facingRight ==
                 true ?
@@ -139,12 +139,15 @@ public class PlayerAttack : MonoBehaviour
                 :
                 obj.transform.position.x - (shockForce * enemy.unstableness * ranfomPushbackRange)),
                 obj.transform.position.y,
-                obj.transform.position.z) ;
+                obj.transform.position.z);
 
-            Instantiate(currentWeapon.slahsFX,
-               enemy.transform.position + new Vector3(Random.Range(-.2f, .2f), Random.Range(-.3f, .2f), 0) + 
-               (Vector3)enemy.GetComponent<BoxCollider2D>().offset,
-               Quaternion.Euler(0, 0, Random.Range(0, 360))) ;
+            if (enemy.blocking == false)
+            {
+                Instantiate(currentWeapon.slashFX,
+                   enemy.transform.position + new Vector3(Random.Range(-.2f, .2f), Random.Range(-.3f, .2f), 0) +
+                   (Vector3)enemy.GetComponent<BoxCollider2D>().offset,
+                   Quaternion.Euler(0, 0, Random.Range(0, 360)));
+            }
         }
     }
 
@@ -212,7 +215,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (soundFXHandler != null)
             soundFXHandler.Play("SpearWhoosh" + Random.Range(1, 4));
-        AttackAtRightTime(currentWeapon.attack3Damage, currentWeapon.attack3Range, 1f);
+        AttackAtRightTime(currentWeapon.attack2Damage, currentWeapon.attack3Range, 1f);
     }
 
     void SpearAttack4()
@@ -299,9 +302,36 @@ public class PlayerAttack : MonoBehaviour
         playerMovement.speed = playerMovement.walkSpeed;
     }
 
+    void EnableHeavyMovemet()
+    {
+        if (playerMovement.dodging == false)
+            playerMovement.speed = 0;
+    }
+
+    void DisableHeavyMovement()
+    {
+        playerMovement.speed = playerMovement.walkSpeed;
+    }
+
     IEnumerator waitForAttack()
     {
         yield return new WaitForSeconds(.15f);
         attacking = false;
+    }
+
+    void AttackShakeFX()
+    {
+        shakeController.CamShake();
+        //Spawn FX here
+        if (currentWeapon.attackShakeFX != null)
+        {
+            Instantiate(currentWeapon.attackShakeFX,
+                (playerMovement.facingRight == true ?
+                attackShakeTransformRight :
+                attackShakeTransformLeft).position + new Vector3(0, 0.6f, 0),
+                Quaternion.identity);
+        }
+        //Spawn Sound here
+        soundFXHandler.Play("WeaponFloorImpact");
     }
 }

@@ -13,8 +13,9 @@ public class Weapon : ScriptableObject
     public int attack2Damage;
     public int attack3Damage;
 
-    public GameObject slahsFX;
+    public GameObject slashFX;
 
+    public GameObject attackShakeFX;
 
     public string Name;
     // Start is called before the first frame update
@@ -22,7 +23,7 @@ public class Weapon : ScriptableObject
     {
         
     }
-    public virtual void  OverrideWeaponTriggerName(){}
+    public virtual void OverrideWeaponTriggerName(){}
     public virtual void PlayAttackAnimationOnAttackNum(Animator animator) {}
 
     public virtual void PlayHeavyAttackAnimationOnAttackNum(Animator animator) { }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossController : EnemyCQC {
+public class BossController : EnemyCQC
+{
     public GameObject missile;
     public Transform launchPoint;
     public ParticleSystem ChargeFX;
@@ -23,7 +24,7 @@ public class BossController : EnemyCQC {
 
     public Slider healthBar;
     SoundFXHandler soundFXHandler;
-    
+
     private void FixedUpdate()
     {
         healthBar.value = health;
@@ -31,16 +32,16 @@ public class BossController : EnemyCQC {
         EnableBehaviour();
         PlayDynamicAnimation();
         ChangeBlockColorAtRandom();
-        if(missileCount >= 5)
+        if (missileCount >= 5)
         {
             isRangeMode = false;
             charging = true;
             animator.SetBool("RangeAttack", false);
         }
 
-        if(dashing == true)
+        if (dashing == true)
         {
-            if(dashTime <= 0)
+            if (dashTime <= 0)
             {
                 dashing = false;
                 dashTime = 2f;
@@ -52,9 +53,10 @@ public class BossController : EnemyCQC {
                 rb2d.velocity = new Vector2(
                 facingRight == true ? (dashSpeed) * Time.fixedDeltaTime : -(dashSpeed) * Time.fixedDeltaTime,
                 rb2d.velocity.y
-                ); 
+                );
             }
         }
+
     }
 
     public void DetactPlayerHit()
@@ -72,7 +74,7 @@ public class BossController : EnemyCQC {
 
                 FindObjectOfType<ShakeController>().CamBigShake();
             }
-            else if(hitObj.GetComponent<PlayerGeneralHandler>() != null &&
+            else if (hitObj.GetComponent<PlayerGeneralHandler>() != null &&
                 hitObj.GetComponent<PlayerMovement>().dodging == true)
             {
                 Time.timeScale = .01f;
@@ -91,7 +93,10 @@ public class BossController : EnemyCQC {
         blockBlob.SetActive(false);
         StartCoroutine(showBlobAfterAWhile());
         GetComponent<BossHealthBarComponent>().SetupForCombat();
+        canMove = false;
     }
+
+    
 
     IEnumerator showBlobAfterAWhile()
     {
@@ -121,7 +126,7 @@ public class BossController : EnemyCQC {
 
     void SwitchAttackIntension()
     {
-        if(intensionSwitchTime < 4)
+        if (intensionSwitchTime < 4)
         {
             intensionSwitchTime += Time.deltaTime;
         }
@@ -129,17 +134,25 @@ public class BossController : EnemyCQC {
         {
             intensionSwitchTime = 0;
             isRangeMode = Random.Range(0, 2) == 1 ? true : false;
-            colorState = Random.Range(0, 2);
-            if (blockColorRenderer.color.a > 0)
+            if (!isRangeMode)
             {
-               ChangeBlockColorAtRandom();
+                colorState = Random.Range(0, 2);
+                if (colorState != currentColorState)
+                {
+                    SpawnChangeStandFX(colorState == 1);
+                    currentColorState = colorState;
+                }
+                if (blockColorRenderer.color.a > 0)
+                {
+                    ChangeBlockColorAtRandom();
+                }
             }
         }
     }
-    
+
     void TriggerEventAfterDead()
     {
-        if(GetHealth() <= 1)
+        if (GetHealth() <= 1)
         {
             FindObjectOfType<DoorController>().SetToCanOpen("DoorOpenAfterBoss");
         }
@@ -147,6 +160,7 @@ public class BossController : EnemyCQC {
 
     public override void AttackPlayer()
     {
+
         if (charging == false && dashing == false)
         {
             animator.SetBool("RangeAttack", isRangeMode);
@@ -161,13 +175,14 @@ public class BossController : EnemyCQC {
                 CloseAttack();
             }
         }
-        else
+        else if(dashing == false)
         {
-            animator.SetBool("RangeAttack", false);
-            animator.SetTrigger("DashCharging");
             missileCount = 0;
             charging = false;
+            animator.SetBool("RangeAttack", false);
+            animator.SetTrigger("DashCharging");
         }
+
 
     }
 
@@ -200,7 +215,7 @@ public class BossController : EnemyCQC {
     {
         soundFXHandler.Play("MissileLaunch");
         missileCount += 1;
-        Instantiate(missile,launchPoint.position, Quaternion.identity);
+        Instantiate(missile, launchPoint.position, Quaternion.identity);
     }
 
     public void DisableCharging()
@@ -211,7 +226,7 @@ public class BossController : EnemyCQC {
     public void SpawnChargeFX()
     {
         ChargeFX.Play();
-    } 
+    }
 
     public void DestoryChargeFX()
     {
@@ -220,7 +235,9 @@ public class BossController : EnemyCQC {
 
     public void stunnedAfterHitPliiar()
     {
+        missileCount = 0;
         animator.SetTrigger("Stunned");
+        print("STUNNED");
         StartCoroutine(DisableAttackForAWhile(7));
         rb2d.velocity = Vector2.zero;
         dashing = false;
@@ -259,5 +276,5 @@ public class BossController : EnemyCQC {
         FindObjectOfType<CameraControl>().player = playerToFocus.gameObject;
     }
 
-    
+
 }

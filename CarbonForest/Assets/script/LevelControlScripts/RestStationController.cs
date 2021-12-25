@@ -5,25 +5,22 @@ using UnityEngine;
 public class RestStationController : Interactable {
 
     bool doorHasOpen = false;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private void Update()
+    {
+        CheckIfInRange();
+    }
 
     public override void Interact()
     {
         base.Interact();
         if(doorHasOpen == false)
         {
+            print("Station interact");
             PlayerGeneralHandler player = FindObjectOfType<PlayerGeneralHandler>();
             GetComponent<BoxCollider2D>().enabled = false;
             doorHasOpen = true;
-            Saver.Save(player);
+            //Saver.Save(GameStateHolder.instance);
         }
     }
 }

@@ -10,6 +10,8 @@ public class IndoorDarkenerController : MonoBehaviour
     public GameObject buildingToEnter;
     public Transform entry;
     public Transform exit;
+    public Transform HorizontalBoundry;
+    public bool IsHorizontalBoundry = false;
     GameObject player;
     bool IsIndoor = false;
     // Start is called before the first frame update
@@ -21,24 +23,42 @@ public class IndoorDarkenerController : MonoBehaviour
         }
         player = FindObjectOfType<PlayerGeneralHandler>().gameObject;
         animator = GetComponent<Animator>();
-        buildingAnimator = buildingToEnter.GetComponent<Animator>();
+        if(IsHorizontalBoundry == false)
+            buildingAnimator = buildingToEnter.GetComponent<Animator>();
     }
     private void Update()
     {
-        if(player.transform.position.x > entry.position.x && 
-            player.transform.position.x < exit.position.x)
+        if (IsHorizontalBoundry == false)
         {
-            IsIndoor = true;
+            if (player.transform.position.x > entry.position.x &&
+                player.transform.position.x < exit.position.x)
+            {
+                IsIndoor = true;
+            }
+            else
+            {
+                IsIndoor = false;
+            }
         }
         else
         {
-            IsIndoor = false;
+            if (player.transform.position.y < HorizontalBoundry.position.y)
+            {
+                IsIndoor = true;
+            }
+            else
+            {
+                IsIndoor = false;
+            }
         }
         SetIsIndoor(IsIndoor);
     }
     public void SetIsIndoor(bool isIndoor)
     {
         animator.SetBool("IsInside", isIndoor);
-        buildingAnimator.SetBool("IsInside", isIndoor);
+        if (buildingAnimator != null)
+        {
+            buildingAnimator.SetBool("IsInside", isIndoor);
+        }
     }
 }

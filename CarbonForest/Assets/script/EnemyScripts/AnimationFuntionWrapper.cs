@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class AnimationFuntionWrapper : MonoBehaviour {
 
+    public void ApplyDamageWrapper()
+    {
+        GetComponentInParent<EnemyCQC>().ApplyDamage();
+    }
+
+    public void TakeDamageDeathWrapper()
+    {
+        GetComponentInParent<EnemyCQC>().TakeDamageDeath();
+    }
+
+    public void DronePlayShowSFXWrapper()
+    {
+        GetComponentInParent<EnemyCQC>().PlayShowSFX();
+    }
+
     public void EnemyAttack()
     {
         GetComponentInParent<EnemyCQC>().ApplyDamage();
@@ -56,6 +71,7 @@ public class AnimationFuntionWrapper : MonoBehaviour {
 
     public void ShowImpact()
     {
+        GetComponentInParent<BossController>().canMove = true;
         FindObjectOfType<SoundFXHandler>().Play("FloorImpact");
     }
 }

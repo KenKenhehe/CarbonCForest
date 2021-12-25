@@ -7,7 +7,7 @@ TextureImporter:
     21300004: BikeStartEngine_2
     21300006: BikeStartEngine_3
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -94,15 +94,15 @@ TextureImporter:
         x: 0
         y: 384
         width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.6, y: 0.25}
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16495a31319b8a54f92f5176559c0543
+      spriteID: f1702d9f5c398254a9b2261329c89e6f
       vertices: []
       indices: 
       edges: []
@@ -114,15 +114,15 @@ TextureImporter:
         x: 0
         y: 256
         width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.6, y: 0.25}
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c520352a136417b48a0310ea78cf8ac3
+      spriteID: 0aa48c17a045ce344944d4ad2712faa6
       vertices: []
       indices: 
       edges: []
@@ -134,15 +134,15 @@ TextureImporter:
         x: 0
         y: 128
         width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.6, y: 0.25}
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6093e0de68fff7443bfd8277c82edcea
+      spriteID: e468970e879fac6408d77563b157c567
       vertices: []
       indices: 
       edges: []
@@ -152,17 +152,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 3
+        y: 0
         width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.6, y: 0.25}
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53df3103de91e914ea9538b3fb93d954
+      spriteID: 56f74886bbf47c743abd4015377771a1
       vertices: []
       indices: 
       edges: []

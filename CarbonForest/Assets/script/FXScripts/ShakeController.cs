@@ -6,15 +6,16 @@ public class ShakeController : MonoBehaviour {
     public Animator camShake;
     public float smoothness;
     WaitForSeconds shakeDuration = new WaitForSeconds(.1f);
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public static ShakeController instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+
 
     public void CamShake()
     {

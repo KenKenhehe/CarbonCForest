@@ -81,6 +81,26 @@ public class LevelTwoMechController : Enemy
         }
     }
 
+    public void TurrentShow()
+    {
+        soundFXHandler.Play("MechTurrentShow");
+    }
+
+    public void PlayPreparelaunch()
+    {
+        soundFXHandler.Play("MechPowerOn");
+        //StartCoroutine(MultiplePowerOnSound());
+    }
+
+    IEnumerator MultiplePowerOnSound()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(0.2f);
+           
+        }
+    }
+
     IEnumerator ShootBeamsAtRandom()
     {
         yield return new WaitForSeconds(shootBeamDuration);

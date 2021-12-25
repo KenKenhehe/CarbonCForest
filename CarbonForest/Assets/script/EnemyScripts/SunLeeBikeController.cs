@@ -8,7 +8,8 @@ public class SunLeeBikeController : EnemyCQC
     {
         IDLE,
         DASH,
-        RANGE
+        RANGE,
+        SWITCH_STAND
     }
 
     bool inBikeMode = true;
@@ -228,15 +229,24 @@ public class SunLeeBikeController : EnemyCQC
                 else if (currentMotionState == MotionState.RANGE &&
                     Vector2.Distance(playerToFocus.transform.position, transform.position) > respondRange)
                 {
-                    //if the previous mode is range, no need to play the "transform to gun animation" again
+                    //if the previous mode is already range, 
+                    //no need to play the "transform to gun animation" again
                     if (previousState != MotionState.RANGE)
                         animator.SetTrigger("ToRange");
                     StartCoroutine(KeepRangeAttack());
                     previousState = MotionState.RANGE;
                 }
-                //70 persent chance next attakc is dash, to avoid bomb filling the screen
-                currentMotionState = (Random.Range(0, 100) > 70) ? MotionState.DASH : MotionState.RANGE;
-                print(currentMotionState);
+                else if(currentMotionState == MotionState.SWITCH_STAND)
+                {
+                    //Play switch stand animation
+                    animator.SetTrigger("Switch");
+
+                    //Flip the color state 
+                    colorState = (colorState == 0 ? 1 : 0);
+                }
+                //70 persent chance next attack is dash, to avoid bomb filling the screen
+                currentMotionState = (Random.Range(0, 100) > 85) ? MotionState.DASH : MotionState.RANGE;
+                //print(currentMotionState);
             }
             yield return new WaitForSeconds(.5f);
         }

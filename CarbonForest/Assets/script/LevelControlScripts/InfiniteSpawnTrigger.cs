@@ -30,7 +30,7 @@ public class InfiniteSpawnTrigger : MonoBehaviour {
             if (enemyCount < maxEnemyCount)
             {
                 GameObject enemyobj =
-                    levelEnemyEvent.SpawnEnemyAtRandomXInfinate(enemyTypes[Random.Range(0, 2)].gameObject, parent);   
+                    levelEnemyEvent.SpawnEnemyAtRandomXInfinate(enemyTypes[Random.Range(0, enemyTypes.Length)].gameObject, parent);   
             }
             yield return new WaitForSeconds(1.5f);
         }

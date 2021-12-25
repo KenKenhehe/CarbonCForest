@@ -70,9 +70,11 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
     {
         canAttack = false;
         canMove = false;
+        blocking = true;
         yield return new WaitForSeconds(1.5f);
         canMove = true;
         canAttack = true;
+        blocking = false;
     }
 
     public override void ParriedBehaviour()

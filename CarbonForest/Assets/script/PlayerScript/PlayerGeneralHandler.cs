@@ -25,6 +25,8 @@ public class PlayerGeneralHandler : MonoBehaviour
     public GameObject takeDamageFX;
 
     public float startHealth;
+    public int HealthToRestore;
+
     private float healthPoints;
 
     public float startBlockPoint = 60;
@@ -105,7 +107,7 @@ public class PlayerGeneralHandler : MonoBehaviour
     {
         HandleBlockInput();
         HandleBlockState();
-        plane.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - .75f, transform.position.z);
+        plane.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - .85f, transform.position.z);
         HandleInteractable();
 
     }
@@ -137,13 +139,12 @@ public class PlayerGeneralHandler : MonoBehaviour
         foreach (Collider2D collider in interactables)
         {
             Interactable interactable = collider.GetComponent<Interactable>();
-            if (interactable != null)
+            if (interactable != null && interactable.InRange == true)
             {
                 interactable.OnClose();
                 if (Input.GetButtonDown("Interact"))
                 {
                     interactable.Interact();
-                    print("Inrer");
                 }
             }
         }
@@ -271,20 +272,18 @@ public class PlayerGeneralHandler : MonoBehaviour
         }
     }
 
-    public void RestoreHealth(int healthPoint)
+    public void RestoreHealth()
     {
         UIBarFX healthBarFX = healthBar.GetComponent<UIBarFX>();
-        print("health percentage before: " + healthPoints / startHealth);
-        if (healthPoints + healthPoint > startHealth)
+        if (healthPoints + HealthToRestore > startHealth)
             healthPoints = startHealth;
         else
         {
-            healthPoints += healthPoint;
+            healthPoints += HealthToRestore;
             healthBarFX.playRestoreAnimation();
         }
         healthBarFX.growing = true;
         healthBarFX.updatedPercentage = healthPoints / startHealth;
-        print("health percentage: " + healthPoints / startHealth);
     }
 
     void ClearAttackState()
@@ -439,7 +438,7 @@ public class PlayerGeneralHandler : MonoBehaviour
     void ChangeEnemyAlphaAndBlockBar(float alpha)
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>();
-        MissileBehaviour[] missiles = FindObjectsOfType<MissileBehaviour>();
+        //MissileBehaviour[] missiles = FindObjectsOfType<MissileBehaviour>();
         foreach (Enemy enemy in enemies)
         {
             if (enemy.blockColorRenderer != null)
@@ -450,16 +449,16 @@ public class PlayerGeneralHandler : MonoBehaviour
                 alpha);
             }
         }
-        foreach (MissileBehaviour missile in missiles)
-        {
-            if (missile.blockColorRenderer != null)
-            {
-                missile.blockColorRenderer.color = new Color(missile.blockColorRenderer.color.r,
-                missile.blockColorRenderer.color.g,
-                missile.blockColorRenderer.color.b,
-                alpha);
-            }
-        }
+        //foreach (MissileBehaviour missile in missiles)
+        //{
+        //    if (missile.blockColorRenderer != null)
+        //    {
+        //        missile.blockColorRenderer.color = new Color(missile.blockColorRenderer.color.r,
+        //        missile.blockColorRenderer.color.g,
+        //        missile.blockColorRenderer.color.b,
+        //        alpha);
+        //    }
+        //}
     }
 
     public void SetToDefaultState()

@@ -14,6 +14,7 @@ public class BikeEnemy : Enemy {
         target = FindObjectOfType<MotoController>().gameObject;
         randomRange = Random.Range(2f, 4f);
         randomAttackPeriod = Random.Range(1.5f, 3f);
+        shakeController = ShakeController.instance;
     }
 	
 	// Update is called once per frame
