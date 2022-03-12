@@ -57,6 +57,8 @@ public class PlayerAttack : MonoBehaviour
     public Transform attackShakeTransformRight;
     public Transform attackShakeTransformLeft;
 
+    bool withinAttackConnectionWindow = false;
+
     // Use this for initialization
     void Start()
     {
@@ -69,6 +71,7 @@ public class PlayerAttack : MonoBehaviour
         shakeController = FindObjectOfType<ShakeController>();
         renderer = GetComponent<SpriteRenderer>();
         soundFXHandler = SoundFXHandler.instance;
+        WeaponUIHandler.instance.ChangeToCurrentWeaponUI(currentWeapon);
     }
 
     // Update is called once per frame
@@ -82,6 +85,7 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.J))
         {
             attacking = true;
+            withinAttackConnectionWindow = true;
             Welding = true;
             //StopAllCoroutines();
             currentWeapon.PlayAttackAnimationOnAttackNum(animator);
@@ -100,6 +104,13 @@ public class PlayerAttack : MonoBehaviour
             }
             currentWeapon = weapons[currentWeaponNum];
             animator.runtimeAnimatorController = currentWeapon.animatorController;
+            WeaponUIHandler.instance.ChangeToCurrentWeaponUI(currentWeapon);
+            //print("Attacking = " + attacking);
+            if (withinAttackConnectionWindow)
+            {
+                attacking = true;
+                animator.SetTrigger("Connect");
+            }
         }
 
         if (attacking == true)
@@ -284,22 +295,25 @@ public class PlayerAttack : MonoBehaviour
     //Handled by animation event, triggers when player animation is not attack animation
     void DisableAttack()
     {
+        StopAllCoroutines();
         StartCoroutine(waitForAttack());
+        StartCoroutine(waitForattackConnectionWindow());
     }
 
     //Animation event function, triggers when attacking
     void EnableFriction()
     {
-        if (playerMovement.dodging == false)
-        {
-            playerMovement.speed = 50;
-        }
+        //if (playerMovement.dodging == false)
+        //{
+        //    playerMovement.speed = 50;
+        //}
     }
 
     //Handled by animation event, triggers when player animation is not attack animation
     void DisableFriction()
     {
-        playerMovement.speed = playerMovement.walkSpeed;
+        if(playerMovement != null)
+            playerMovement.speed = playerMovement.walkSpeed;
     }
 
     void EnableHeavyMovemet()
@@ -317,6 +331,13 @@ public class PlayerAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(.15f);
         attacking = false;
+        
+    }
+
+    IEnumerator waitForattackConnectionWindow()
+    {
+        yield return new WaitForSeconds(.5f);
+        withinAttackConnectionWindow = false;
     }
 
     void AttackShakeFX()

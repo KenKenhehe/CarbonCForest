@@ -94,10 +94,10 @@ public class BossController : EnemyCQC
         StartCoroutine(showBlobAfterAWhile());
         GetComponent<BossHealthBarComponent>().SetupForCombat();
         canMove = false;
+        soundFXHandler.Play("L1BossShow");
     }
 
     
-
     IEnumerator showBlobAfterAWhile()
     {
         yield return new WaitForSeconds(1.5f);
@@ -199,6 +199,7 @@ public class BossController : EnemyCQC
 
     public void Dash()
     {
+        soundFXHandler.Play("L1BossDash");
         FacePlayer();
         dashing = true;
         canAttack = false;
@@ -225,6 +226,7 @@ public class BossController : EnemyCQC
 
     public void SpawnChargeFX()
     {
+        soundFXHandler.Play("L1BossCharge");
         ChargeFX.Play();
     }
 
@@ -276,5 +278,13 @@ public class BossController : EnemyCQC
         FindObjectOfType<CameraControl>().player = playerToFocus.gameObject;
     }
 
+    public override void PlayTakeDamageSound()
+    {
+        soundFXHandler.Play("L1BossTakeDamage" + Random.Range(2, 4));
+    }
 
+    public override void PlaySlashSound()
+    {
+        soundFXHandler.Play("L1BossAttack" + Random.Range(1, 3));
+    }
 }

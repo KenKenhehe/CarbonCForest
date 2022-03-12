@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+struct LevelOneState
+{
+
+}
+
+struct LevelTwoState
+{
+
+}
+
 public class GameStateHolder : MonoBehaviour
 {
     public bool FirstTimePlay = true;

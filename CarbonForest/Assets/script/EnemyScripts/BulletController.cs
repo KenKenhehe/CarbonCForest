@@ -38,7 +38,7 @@ public class BulletController : MonoBehaviour {
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<PlayerAttack>() != null)
+        if(collision.gameObject.GetComponent<PlayerGeneralHandler>() != null)
         {
             hasBolcked = true;
             GameObject player = collision.gameObject;
@@ -47,6 +47,7 @@ public class BulletController : MonoBehaviour {
                 player.GetComponent<PlayerMovement>().dodging == false)
             {
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, 0, enemy);
+                print("Damage player");
                 Destroy(gameObject);
             }
             else if(player.GetComponent<BlockController>().blocking == true)

@@ -49,8 +49,10 @@ public class RangedArrowBehaviour : MonoBehaviour
     {
         if(collision.GetComponent<PlayerGeneralHandler>() != null)
         {
+            print("HitPlayer");
             PlayerGeneralHandler player = collision.GetComponent<PlayerGeneralHandler>();
             player.TakeEnemyDamage(Damage, 0, new Enemy());
+            Destroy(gameObject);
         }
         else
         {

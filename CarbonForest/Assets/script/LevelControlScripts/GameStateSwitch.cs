@@ -30,10 +30,10 @@ public class GameStateSwitch : MonoBehaviour {
 
     void OnGameOver()
     {
-        if(sceneEventHandler.gameOver == true && Input.GetKey(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        //if(sceneEventHandler.gameOver == true && Input.GetKey(KeyCode.R))
+        //{
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //}
     }
 
     public void ShowGameOverState(bool win)

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Weapon : ScriptableObject
 {
     public RuntimeAnimatorController animatorController;
+    public RuntimeAnimatorController ShowUIAnimatorController;
     public float attack1Range = 0.4f;
     public float attack2Range = 1;
     public float attack3Range = 1.53f;
@@ -16,6 +18,8 @@ public class Weapon : ScriptableObject
     public GameObject slashFX;
 
     public GameObject attackShakeFX;
+
+    public Sprite weaponIcon;
 
     public string Name;
     // Start is called before the first frame update

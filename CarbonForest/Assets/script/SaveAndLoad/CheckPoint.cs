@@ -13,6 +13,8 @@ public class CheckPoint : MonoBehaviour
             //TODO: Enable saving icon
             //GameStateHolder.instance.FirstTimePlay = false;
             //Saver.Save(GameStateHolder.instance);
+
+            //Play save anmation and sound
         }
     }
 }

@@ -7,20 +7,26 @@ public class UIBarFX : MonoBehaviour
 {
     [SerializeField] float fillSpeed;
     Image image;
+
+    [HideInInspector] public float healthValue;
     [HideInInspector] public bool growing = false;
     [HideInInspector] public float updatedPercentage = 0;
     Animator animator;
+    GameObject healthBar;
+
     // Start is called before the first frame update
     void Start()
     {
         image = GetComponent<Image>();
         animator = GetComponentInParent<Animator>();
+        healthBar = gameObject.transform.parent.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
         GrowTo(updatedPercentage);
+
     }
 
     ///
@@ -32,6 +38,11 @@ public class UIBarFX : MonoBehaviour
             if (image.fillAmount >= after)
                 growing = false;
         }
+    }
+
+    public void PlayTakeDamageAnimation()
+    {
+        animator.SetTrigger("TakeDamage");
     }
 
     public void playRestoreAnimation()

@@ -75,7 +75,7 @@ public class EnemyCQC : Enemy
         playerToFocus = FindObjectOfType<PlayerAttack>();
         respondRange = Random.Range(1f, 1.5f);
         SightRange = Random.Range(minSightRange, maxSightRange);
-        
+        rb2d = GetComponent<Rigidbody2D>();
         //rb2d.isKinematic = true;
         //rb2d.useFullKinematicContacts = true;
         randHoldTime = Random.Range(.1f, 3f);
@@ -96,7 +96,7 @@ public class EnemyCQC : Enemy
         //StartCoroutine(ChangePatrolDir());
         ChangeBlockColorAtRandom();
         CanMoveAfterShowAnimation();
-        rb2d = GetComponent<Rigidbody2D>();
+        
     }
 
     public virtual void EnableBehaviour()
@@ -199,10 +199,7 @@ public class EnemyCQC : Enemy
                     health -= damage * blockDamageMultiplyer;
                     collider.GetComponent<PlayerGeneralHandler>().RestoreHealth();
                     animator.SetTrigger("Stunned");
-                    if (healthBar != null)
-                    {
-                        healthBar.fillAmount = (float)health / startHealth;
-                    }
+                    UpdateHealthUI();
                     if (maxHealth < 20) // drones max health must be less than 20
                     {
                         rb2d.AddForce(facingRight == true ?
@@ -262,7 +259,7 @@ public class EnemyCQC : Enemy
         PlayTakeDamageSound();
         
         base.TakeDamage(damage);
-        GameObject bloodfX = Instantiate(bloodFX, transform);
+        GameObject bloodfX = Instantiate(bloodFX, transform.position + BloodFXOffset, Quaternion.identity, transform);
         bloodfX.transform.Rotate(0, facingRight ? 0 : 180, 0);
         StartCoroutine(DamagedEffect());
         int chance = Random.Range(0, 100);
@@ -286,10 +283,10 @@ public class EnemyCQC : Enemy
     {
         base.DeathBehaviour();
         shakeController.CamBigShake();
-        Instantiate(destoryFX, transform.position, Quaternion.identity);
+        Instantiate(destoryFX, transform.position + DeathFXOffset, Quaternion.identity);
         if (explosionFXs != null)
         {
-            Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position, Quaternion.identity);
+            Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position + DeathFXOffset, Quaternion.identity);
         }
         Destroy(gameObject);
     }
@@ -396,6 +393,10 @@ public class EnemyCQC : Enemy
         colorState = color;
     }
 
+    public override void PlaySlashSound()
+    {
+        soundFXHandler.Play("PoliceAttack" + Random.Range(1,4));
+    }
 
     public int GetColorState()
     {
@@ -411,5 +412,13 @@ public class EnemyCQC : Enemy
     {
         shakeController.CamShake();
         soundFXHandler.Play("PillarHit");
+    }
+
+    public void UpdateHealthUI()
+    {
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = (float)health / startHealth;
+        }
     }
 }

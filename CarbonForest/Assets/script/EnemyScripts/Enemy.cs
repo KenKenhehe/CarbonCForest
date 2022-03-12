@@ -31,6 +31,10 @@ public class Enemy : MonoBehaviour
     public GameObject bloodFX;
     public GameObject destoryFX;
     public GameObject[] explosionFXs;
+
+    public Vector3 DeathFXOffset;
+    public Vector3 BloodFXOffset;
+
     public float speed;
     public float maxX;
     public float minX;
@@ -193,6 +197,7 @@ public class Enemy : MonoBehaviour
     {
         if (rb2d.velocity == Vector2.zero)
         {
+            
             animator.SetBool("IsWalking", false);
         }
         else

@@ -57,19 +57,25 @@ public class ElevatorController : Interactable {
         if (isActive && transform.position.y > buttom.position.y && dir.y < 0)
         {
             transform.Translate(dir * Time.deltaTime * moveSpeed);
+            SoundFXHandler.instance.Play("ElevatorLoop");
             if (transform.position.y <= buttom.position.y)
             {
                 isActive = false;
                 interacted = false;
+                SoundFXHandler.instance.Stop("ElevatorLoop");
+                SoundFXHandler.instance.Play("ElevatorStop");
             }
         }
         if (isActive && transform.position.y < Up.position.y && dir.y > 0)
         {
             transform.Translate(dir * Time.deltaTime * moveSpeed);
+            SoundFXHandler.instance.Play("ElevatorLoop");
             if (transform.position.y >= Up.position.y)
             {
                 isActive = false;
                 interacted = false;
+                SoundFXHandler.instance.Stop("ElevatorLoop");
+                SoundFXHandler.instance.Play("ElevatorStop");
             }
         }
 
@@ -105,6 +111,7 @@ public class ElevatorController : Interactable {
         {
             ActivateElevator();
             interacted = true;
+            SoundFXHandler.instance.Play("ElevatorStart");
         }
         
     }

@@ -105,13 +105,13 @@ public class EnemyShooterController : Enemy {
             shakeController.CamBigShake();
             if (explosionFXs != null)
             {
-                Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position, Quaternion.Euler(
+                Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position + DeathFXOffset, Quaternion.Euler(
                     transform.rotation.x, 
                     transform.rotation.y,
                     Random.Range(-20, 20))
                     );
             }
-            Instantiate(destoryFX, transform.position, Quaternion.identity);
+            Instantiate(destoryFX, transform.position + DeathFXOffset, Quaternion.identity);
             Destroy(gameObject);
         }
         

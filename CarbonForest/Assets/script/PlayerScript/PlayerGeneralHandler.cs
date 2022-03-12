@@ -40,7 +40,11 @@ public class PlayerGeneralHandler : MonoBehaviour
 
     [Header("bars...")]
     public Image healthBar;
+    public Image healthBarIcon;
+    public Text healthValue;
+
     public Image blockBar;
+    public Text blockValue;
 
     public bool canBlock = true;
     public bool AttackEnabledAfterTut = true;
@@ -61,6 +65,7 @@ public class PlayerGeneralHandler : MonoBehaviour
     private Animator blockAnimator;
 
     private Color originalColor;
+    private Color originalHealthBarColor;
 
     [Header("Larger the number, lower the chance")]
     [Range(1, 10)]
@@ -81,6 +86,7 @@ public class PlayerGeneralHandler : MonoBehaviour
 
     void Start()
     {
+        originalHealthBarColor = healthBar.color;
         originalColor = GetComponent<SpriteRenderer>().color;
         shakeController = FindObjectOfType<ShakeController>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
@@ -95,6 +101,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         blockPoints = startBlockPoint;
         playerMovement = GetComponent<PlayerMovement>();
 
+        healthValue.text = healthPoints.ToString();
         //--------
         //For actual game save
         //transform.position = 
@@ -174,7 +181,9 @@ public class PlayerGeneralHandler : MonoBehaviour
     void HandleBlockInput()
     {
         animator.SetBool("Defending", blockController.blocking);
-        blockBar.fillAmount = blockPoints / startBlockPoint;
+        //blockBar.fillAmount = blockPoints / startBlockPoint;
+        blockValue.text = Mathf.FloorToInt(((blockPoints / startBlockPoint) * 100)).ToString() + "%";
+        //Change block value
         if (blockController.blocking == false)
         {
             if (blockPoints < startBlockPoint)
@@ -183,23 +192,28 @@ public class PlayerGeneralHandler : MonoBehaviour
             }
         }
 
+
+
         if ((Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire4") == 1) &&
             canBlock == true && blockPoints > 0)
         {
             ClearAttackState();
             if (blockController.blocking == false)
             {
-
+                StatusUIHandler.instance.TriggerToBlockStateAnimation();
                 animator.SetTrigger("DefendAnimationTrigger");
                 EnableBlock();
             }
             blockPoints -= Time.deltaTime * blockLossRate;
             //ChangeEnemyAlphaAndBlockBar(.2f);
             ShowAllEnemyStand(true);
+
         }
         else if ((Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire4") < 1) &&
             blockController.blocking == true)
         {
+            
+            StatusUIHandler.instance.TriggerToIdleStateAnimation();
             blockController.DisableBlocking();
             GetComponent<PlayerAttack>().enabled = true;
             //ChangeEnemyAlphaAndBlockBar(0);
@@ -209,6 +223,7 @@ public class PlayerGeneralHandler : MonoBehaviour
                 WhiteStandFX.SetActive(false);
                 BlueStandFX.SetActive(false);
             }
+           
         }
         else
         {
@@ -219,6 +234,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         if (blockPoints <= 0)
         {
             StartCoroutine(StunnedAndRecover());
+           
         }
 
         if (blockController.blocking == true)
@@ -228,9 +244,14 @@ public class PlayerGeneralHandler : MonoBehaviour
             {
                 GetComponent<PlayerAttack>().attacking = false;
                 if (colorState == 1)
+                {
                     colorState = 0;
+                }
                 else
+                {
                     colorState = 1;
+                }
+                    
             }
             //else if (Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire3"))
             //{
@@ -250,7 +271,9 @@ public class PlayerGeneralHandler : MonoBehaviour
             int hitChance = Random.Range(1, chanceToStagger);
             Instantiate(takeDamageFX, transform.position, Quaternion.identity);
             healthPoints -= damage;
-            healthBar.fillAmount = healthPoints / startHealth;
+            UpdateHealthUI();
+            UIBarFX healthBarFX = healthBar.GetComponent<UIBarFX>();
+            healthBarFX.PlayTakeDamageAnimation();
             if (healthPoints <= 0)
             {
                 PlayerDead();
@@ -263,6 +286,7 @@ public class PlayerGeneralHandler : MonoBehaviour
             counterAttack.PlayRandomCounterAttack();
             if (EnemyColorState != colorState)
             {
+                StatusUIHandler.instance.TriggerToIdleStateAnimation();
                 StartCoroutine(StunnedAndRecover());
                 GetComponent<PlayerMovement>().parryStunned = true;
                 healthPoints -= (damage * 2);
@@ -276,14 +300,24 @@ public class PlayerGeneralHandler : MonoBehaviour
     {
         UIBarFX healthBarFX = healthBar.GetComponent<UIBarFX>();
         if (healthPoints + HealthToRestore > startHealth)
-            healthPoints = startHealth;
+        {
+            UpdateHealthUI();
+        }
         else
         {
             healthPoints += HealthToRestore;
             healthBarFX.playRestoreAnimation();
+
         }
         healthBarFX.growing = true;
         healthBarFX.updatedPercentage = healthPoints / startHealth;
+        healthValue.text = healthPoints.ToString();
+    }
+
+    void UpdateHealthUI()
+    {
+        healthBar.fillAmount = healthPoints / startHealth;
+        healthValue.text = healthPoints.ToString();
     }
 
     void ClearAttackState()
@@ -295,9 +329,13 @@ public class PlayerGeneralHandler : MonoBehaviour
     IEnumerator DamageEffect()
     {
         GetComponentInChildren<SpriteRenderer>().color = new Color(1, 1, 1, 0.1f);
+        healthBar.color = Color.white;
+        healthBarIcon.color = Color.red;
 
         yield return new WaitForSeconds(0.2f);
 
+        healthBar.color = originalHealthBarColor;
+        healthBarIcon.color = Color.white;
         GetComponentInChildren<SpriteRenderer>().color = originalColor;
     }
 
@@ -335,6 +373,7 @@ public class PlayerGeneralHandler : MonoBehaviour
 
     void PlayerDead()
     {
+        StatusUIHandler.instance.ToDeathUI();
         sceneEventHandler.gameOver = true;
         gameSwitch.ShowGameOverState(false);
         animator.SetTrigger("Dead");
@@ -367,7 +406,9 @@ public class PlayerGeneralHandler : MonoBehaviour
         {
             TutorialManagerZero.instance.InParryFail();
         }
+        blockPoints = startBlockPoint;
         yield return new WaitForSeconds(2f);
+        
         PlayerMovement.Instance.canMove = true;
         animator.SetBool("BlockFailIdle", false);
         canBlock = true;
@@ -413,11 +454,13 @@ public class PlayerGeneralHandler : MonoBehaviour
             {
                 BlueStandFX.SetActive(false);
                 WhiteStandFX.SetActive(true);
+                StatusUIHandler.instance.ToWhiteState();
             }
             else if (colorState == 1)
             {
                 BlueStandFX.SetActive(true);
                 WhiteStandFX.SetActive(false);
+                StatusUIHandler.instance.ToBlueOrBlackState();
             }
         }
         else
@@ -433,7 +476,20 @@ public class PlayerGeneralHandler : MonoBehaviour
         }
     }
 
+    public void DisplayTip(GameObject tipToDisplay, Vector2 tipOffset)
+    {
+        tipToDisplay.transform.parent = this.gameObject.transform;
+        tipToDisplay.transform.position =
+            new Vector3(tipOffset.x, tipOffset.y, tipToDisplay.transform.position.z);
+        
+    }
 
+    IEnumerator tipFlashOnPlayerTop(GameObject tipToDisplay)
+    {
+        tipToDisplay.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        tipToDisplay.SetActive(true);
+    }
 
     void ChangeEnemyAlphaAndBlockBar(float alpha)
     {
