@@ -15,7 +15,7 @@ public class ParryHintIconObject : MonoBehaviour
         print(parentToFollow);
         player = PlayerGeneralHandler.instance;
         setAllChildActive(false);
-        transform.SetParent(null);
+        //transform.SetParent(null);
     }
 
     // Update is called once per frame

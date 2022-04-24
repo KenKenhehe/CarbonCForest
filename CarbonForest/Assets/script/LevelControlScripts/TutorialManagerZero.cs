@@ -49,6 +49,7 @@ public class TutorialManagerZero : MonoBehaviour
     public GameObject teachParryWindow;
     public GameObject teachBlockWindow;
 
+    public bool playerCanBlockAtStart = false;
     public bool hasBlock = false;
     public bool hasSpawnBlockHint;
     public int normalAttackCount = 5;
@@ -84,6 +85,7 @@ public class TutorialManagerZero : MonoBehaviour
     SoundFXHandler soundFX;
 
 
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -103,7 +105,7 @@ public class TutorialManagerZero : MonoBehaviour
             teachParryWindow.SetActive(false);
         }
         StartMovementTutorial();
-        player.GetComponent<PlayerGeneralHandler>().canBlock = false;
+        player.GetComponent<PlayerGeneralHandler>().canBlock = playerCanBlockAtStart;
         soundFX = SoundFXHandler.instance;
     }
 
@@ -124,7 +126,7 @@ public class TutorialManagerZero : MonoBehaviour
         }
         else if (InTutorial == true && hasBlock == false)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space) || Input.GetAxis("RT") == 1)
             {
                 InTutorial = false;
                 hasBlock = true;
@@ -185,16 +187,21 @@ public class TutorialManagerZero : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerGeneralHandler>() != null)
         {
-            StartAttackTutorial(collision);
+            if (normalAttackHintObj != null)
+            {
+                StartAttackTutorial(collision);
+            }
         }
     }
 
-
-
     public void StartMovementTutorial()
     {
-        MoveHintObj = Instantiate(MoveHint, player.transform.position + new Vector3(-0.25f, 2, 0),
-             Quaternion.identity, player.gameObject.transform);
+        if (MoveHint != null)
+        {
+            MoveHintObj = Instantiate(MoveHint, player.transform.position + new Vector3(-0.25f, 2, 0),
+                 Quaternion.identity, player.gameObject.transform);
+            print("Spawned " + MoveHintObj);
+        }
     }
 
     //zero

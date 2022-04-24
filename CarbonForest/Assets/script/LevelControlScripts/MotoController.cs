@@ -29,7 +29,7 @@ public class MotoController : Interactable {
 
     private void FixedUpdate()
     {
-        if (SceneManager.GetActiveScene().name != "Chapter1.5")
+        if (SceneManager.GetActiveScene().name != "Chapter1-2")
         {
             BikeInput();
         }

@@ -12,6 +12,7 @@ public class ArcherControllerTutorial : EnemyShooterController
    
     GameObject arrow;
     TutorialManagerZero tutorial;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class ArcherControllerTutorial : EnemyShooterController
     // Update is called once per frame
     void Update()
     {
-        if (playerToFocus != null)
+        if (playerToFocus != null && isDead == false)
         {
             if (canMove == true)
             {
@@ -95,5 +96,10 @@ public class ArcherControllerTutorial : EnemyShooterController
     public override void PlayTakeDamageSound()
     {
         soundFXHandler.Play("DamageFlesh" + Random.Range(1, 3));
+    }
+
+    public override void DeathBehaviour()
+    {
+        DeathWithAnimation();
     }
 }

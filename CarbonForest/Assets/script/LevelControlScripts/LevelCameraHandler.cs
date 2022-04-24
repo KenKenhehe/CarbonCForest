@@ -8,8 +8,10 @@ public class LevelCameraHandler : MonoBehaviour
     PlayerGeneralHandler player;
     bool HasTriggered = false;
     // Start is called before the first frame update
+    GameHandler gameHandler;
     void Start()
     {
+        gameHandler = GameHandler.instance;
         camera = FindObjectOfType<CameraControl>();
         player = FindObjectOfType<PlayerGeneralHandler>();
     }
@@ -17,7 +19,8 @@ public class LevelCameraHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(FindObjectsOfType<Enemy>().Length <= 0 && HasTriggered == true)
+        if((FindObjectsOfType<Enemy>().Length <= 0 || gameHandler.globalEnemyCount <= 0) && 
+            HasTriggered == true)
         {
             camera.player = player.gameObject;
             Destroy(gameObject);

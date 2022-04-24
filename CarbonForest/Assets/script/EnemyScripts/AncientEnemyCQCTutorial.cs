@@ -9,8 +9,10 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
     int parryCount = 1;
     public float FXOffset = 1;
     public GameObject counterAttackFX;
+
     void Start()
     {
+        print(GetComponent<Enemy>());
         shakeController = FindObjectOfType<ShakeController>();
         tutorialManager = TutorialManagerZero.instance;
         Initialize();
@@ -20,8 +22,11 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
     // Update is called once per frame
     void Update()
     {
-        EnableBehaviour();
-        PlayDynamicAnimation();
+        if (!isDead)
+        {
+            EnableBehaviour();
+            PlayDynamicAnimation();
+        }
     }
 
     public override void EnableBehaviour()
@@ -86,5 +91,14 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
     public override void PlayTakeDamageSound()
     {
         soundFXHandler.Play("DamageFlesh" + Random.Range(1, 3));
+    }
+
+    public override void DeathBehaviour()
+    {
+        DeathWithAnimation();
+        for(int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            Destroy(gameObject.transform.GetChild(i).gameObject);
+        }
     }
 }

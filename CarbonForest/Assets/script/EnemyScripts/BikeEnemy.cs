@@ -44,7 +44,8 @@ public class BikeEnemy : Enemy {
         health -= damage;
         FindObjectOfType<ShakeController>().CamShake();
         SoundFXHandler.instance.Play("BikeDamaged");
-        Instantiate(bloodFX, transform.position + Vector3.down, Quaternion.identity);
+        int bloodObjIndex = Random.Range(0, bloodFX.Length);
+        Instantiate(bloodFX[bloodObjIndex], transform.position + Vector3.down, Quaternion.identity);
         if (health <= 1)
         {
             FindObjectOfType<ShakeController>().CamBigShake();

@@ -61,7 +61,8 @@ public class EnemyCQC : Enemy
 
     public virtual void Initialize()
     {
-        if(AllStatusBars != null)
+        GameHandler.instance.globalEnemyCount += 1;
+        if (AllStatusBars != null)
             AllStatusBars.SetActive(false);
         
         hitDuration = new WaitForSeconds(0.2f);
@@ -102,7 +103,7 @@ public class EnemyCQC : Enemy
     public virtual void EnableBehaviour()
     {
         PlayDynamicAnimation();
-        if (playerToFocus != null)
+        if (playerToFocus != null && PlayerGeneralHandler.instance.isDead == false)
         {
             if (canAttack == true && canMove == true)
                 FacePlayer();
@@ -175,7 +176,7 @@ public class EnemyCQC : Enemy
                     if (AllStatusBars != null)
                         AllStatusBars.SetActive(true);
                     AddiBlockEvent();
-                    blockPoint -= 1;
+                    blockPoint -= playerToFocus.currentWeapon.parryPoint;
                     if (blockBar != null)
                     {
                         blockBar.fillAmount = (float)blockPoint / maxBlockPoint;
@@ -185,6 +186,7 @@ public class EnemyCQC : Enemy
 
                 if (blockPoint <= 0)
                 {
+                    playerToFocus.GetComponent<PlayerGeneralHandler>().IncreaseFlowPoint();
                     if (parryBoomFX != null)
                     {
                         GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
@@ -195,9 +197,7 @@ public class EnemyCQC : Enemy
 
                     shakeController.CamBigShake();
                     Time.timeScale = .002f;
-                    //collider.GetComponent<PlayerGeneralHandler>().CallPowerUp();
                     health -= damage * blockDamageMultiplyer;
-                    collider.GetComponent<PlayerGeneralHandler>().RestoreHealth();
                     animator.SetTrigger("Stunned");
                     UpdateHealthUI();
                     if (maxHealth < 20) // drones max health must be less than 20
@@ -259,29 +259,42 @@ public class EnemyCQC : Enemy
         PlayTakeDamageSound();
         
         base.TakeDamage(damage);
-        GameObject bloodfX = Instantiate(bloodFX, transform.position + BloodFXOffset, Quaternion.identity, transform);
-        bloodfX.transform.Rotate(0, facingRight ? 0 : 180, 0);
-        StartCoroutine(DamagedEffect());
-        int chance = Random.Range(0, 100);
-        bool enterHitRecover = chance <= hitRecoverRate ? true : false;
-        if (enterHitRecover)
-        {
-            StartCoroutine(TakeDamageForAWhile());
-            
-            animator.SetTrigger("Damaged");
-        }
-
         if (health <= 1)
         {
             DeathBehaviour();
             PlayExplosionSound();
         }
-        
+        else
+        {
+            int bloodObjIndex = Random.Range(0, bloodFX.Length);
+            int spawnDir = (facingRight == true ? 1 : -1);
+            Vector3 finalOffset = new Vector3(BloodFXOffset.x * spawnDir, BloodFXOffset.y, BloodFXOffset.z);
+            GameObject bloodfX = Instantiate(bloodFX[bloodObjIndex], transform.position + finalOffset, transform.rotation);
+
+            //int spawnDir = (facingRight == true? -1 : 1);
+
+            bloodfX.transform.localScale = new Vector3(
+                bloodfX.transform.localScale.x * spawnDir,
+                bloodfX.transform.localScale.y,
+                bloodfX.transform.localScale.z
+                );
+
+            StartCoroutine(DamagedEffect());
+            int chance = Random.Range(0, 100);
+            bool enterHitRecover = chance <= hitRecoverRate ? true : false;
+            if (enterHitRecover)
+            {
+                StartCoroutine(TakeDamageForAWhile());
+
+                animator.SetTrigger("Damaged");
+            }
+        }
     }
 
     public override void DeathBehaviour()
     {
         base.DeathBehaviour();
+        playerToFocus.GetComponent<PlayerGeneralHandler>().RestoreHealth();
         shakeController.CamBigShake();
         Instantiate(destoryFX, transform.position + DeathFXOffset, Quaternion.identity);
         if (explosionFXs != null)

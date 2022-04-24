@@ -16,7 +16,7 @@ public class EnemyShooterController : Enemy {
    
     SpriteRenderer renderer;
     WaitForSeconds hitDuration;
-    SceneEventHandler sceneEventHandler;
+    GameHandler sceneEventHandler;
     // Use this for initialization
 
     void Start () {
@@ -25,11 +25,12 @@ public class EnemyShooterController : Enemy {
 
     public void Initialize()
     {
+        GameHandler.instance.globalEnemyCount += 1;
         if (AllStatusBars != null)
             AllStatusBars.SetActive(false);
         CanMoveAfterShowAnimation();
         hitDuration = new WaitForSeconds(0.05f);
-        sceneEventHandler = FindObjectOfType<SceneEventHandler>();
+        sceneEventHandler = FindObjectOfType<GameHandler>();
         playerToFocus = FindObjectOfType<PlayerAttack>();
         fireRate = Random.Range(1.0f, 3.0f);
         health = Random.Range(minHealth, maxHealth);
@@ -46,7 +47,6 @@ public class EnemyShooterController : Enemy {
             animator = GetComponentInChildren<Animator>();
         }
         healthBar.fillAmount = health / startHealth;
-        
     }
 
     // Update is called once per frame
@@ -79,42 +79,42 @@ public class EnemyShooterController : Enemy {
         //FindObjectOfType<SoundFXHandler>().Play("DamageSmall");
         PlayTakeDamageSound();
         base.TakeDamage(damage);
-        GameObject bloodfX = Instantiate<GameObject>(bloodFX, transform);
-        bloodfX.transform.Rotate(0, facingRight ? 0 : 180, 0);
+        int spawnDir = (facingRight == true ? 1 : -1);
+        int bloodObjIndex = Random.Range(0, bloodFX.Length);
+        GameObject bloodfX = Instantiate(bloodFX[bloodObjIndex], transform.position - (BloodFXOffset * spawnDir), transform.rotation);
+
+        //int spawnDir = (facingRight == true? -1 : 1);
+
+        bloodfX.transform.localScale = new Vector3(
+            bloodfX.transform.localScale.x * spawnDir,
+            bloodfX.transform.localScale.y,
+            bloodfX.transform.localScale.z
+            );
         fireTime = 0;
         animator.SetTrigger("Damaged");
-        //if (damage < 2)
-        //{
-        //    shakeController.CamShake();
-        //    Time.timeScale = Random.Range(0.5f, 0.8f);
-        //}
-        //else if (damage < 3)
-        //{
-        //    shakeController.CamShake();
-        //    Time.timeScale = Random.Range(0.15f, 0.3f);
-        //}
-        //else if (damage >= 3)
-        //{
-        //    shakeController.CamBigShake();
-        //    Time.timeScale = Random.Range(0.05f, 0.2f);
-        //}
 
         if (health <= 1)
         {
             PlayExplosionSound();
-            shakeController.CamBigShake();
-            if (explosionFXs != null)
-            {
-                Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position + DeathFXOffset, Quaternion.Euler(
-                    transform.rotation.x, 
-                    transform.rotation.y,
-                    Random.Range(-20, 20))
-                    );
-            }
-            Instantiate(destoryFX, transform.position + DeathFXOffset, Quaternion.identity);
-            Destroy(gameObject);
+            DeathBehaviour();
         }
         
+    }
+
+    public override void DeathBehaviour()
+    {
+        base.DeathBehaviour();
+        shakeController.CamBigShake();
+        if (explosionFXs != null)
+        {
+            Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position + DeathFXOffset, Quaternion.Euler(
+                transform.rotation.x,
+                transform.rotation.y,
+                Random.Range(-20, 20))
+                );
+        }
+        Instantiate(destoryFX, transform.position + DeathFXOffset, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     public void setHealth(int health)

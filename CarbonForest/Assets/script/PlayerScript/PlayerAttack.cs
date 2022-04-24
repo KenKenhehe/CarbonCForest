@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerAttack : MonoBehaviour
 {
     [Tooltip("How many weapons do player have")]
-    public int currentWeaponNum = 0;
+    int currentWeaponNum = 0;
 
     [Tooltip("Which weapon player is choosing")]
     public int currentWeaponCount = 1;
@@ -43,13 +43,9 @@ public class PlayerAttack : MonoBehaviour
     public Weapon[] weapons;
     public Weapon currentWeapon;
 
-    Rigidbody2D rb2d;
     PlayerMovement playerMovement;
-    BoxCollider2D bx2d;
     EnemyShooterController enemyBeingHit;
     ShakeController shakeController;
-    SpriteRenderer renderer;
-    CameraControl cameraControl;
 
     SoundFXHandler soundFXHandler;
 
@@ -65,13 +61,10 @@ public class PlayerAttack : MonoBehaviour
         animator = GetComponent<Animator>();
         currentWeapon = weapons[currentWeaponNum];
         animator.runtimeAnimatorController = currentWeapon.animatorController;
-        rb2d = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
-        bx2d = GetComponent<BoxCollider2D>();
         shakeController = FindObjectOfType<ShakeController>();
-        renderer = GetComponent<SpriteRenderer>();
         soundFXHandler = SoundFXHandler.instance;
-        WeaponUIHandler.instance.ChangeToCurrentWeaponUI(currentWeapon);
+        //WeaponUIHandler.instance.ChangeToCurrentWeaponUI(currentWeapon);
     }
 
     // Update is called once per frame
@@ -91,7 +84,7 @@ public class PlayerAttack : MonoBehaviour
             currentWeapon.PlayAttackAnimationOnAttackNum(animator);
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("RB"))
         {
 
             if (currentWeaponNum >= currentWeaponCount)
@@ -105,8 +98,7 @@ public class PlayerAttack : MonoBehaviour
             currentWeapon = weapons[currentWeaponNum];
             animator.runtimeAnimatorController = currentWeapon.animatorController;
             WeaponUIHandler.instance.ChangeToCurrentWeaponUI(currentWeapon);
-            //print("Attacking = " + attacking);
-            if (withinAttackConnectionWindow)
+            if (withinAttackConnectionWindow && currentWeaponCount > 0)
             {
                 attacking = true;
                 animator.SetTrigger("Connect");
@@ -233,21 +225,21 @@ public class PlayerAttack : MonoBehaviour
     {
         if (soundFXHandler != null)
             soundFXHandler.Play("SpearWhoosh" + Random.Range(1, 4));
-        AttackAtRightTime(currentWeapon.attack3Damage, currentWeapon.attack3Range, 1f);
+        AttackAtRightTime(Spear.attack4Damage, Spear.attack4Range, 1f);
     }
 
     void SpearAttack5()
     {
         if (soundFXHandler != null)
             soundFXHandler.Play("SpearWhoosh" + Random.Range(1, 4));
-        AttackAtRightTime(currentWeapon.attack3Damage, currentWeapon.attack3Range, 1f);
+        AttackAtRightTime(Spear.attack5Damage, Spear.attack5Range, 1f);
     }
 
     void SpearHeavyAttack()
     {
         if (soundFXHandler != null)
             soundFXHandler.Play("SpearHeavyWhoosh" + Random.Range(1, 5));
-        AttackAtRightTime(((Spear)currentWeapon).heavyAttackDamage, ((Spear)currentWeapon).heavyAttackRange, .5f);
+        AttackAtRightTime(Spear.heavyAttackDamage, Spear.heavyAttackRange, .5f);
     }
 
     void HeavyAttackSwingSFX()

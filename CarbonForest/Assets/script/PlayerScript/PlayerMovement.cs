@@ -149,7 +149,8 @@ public class PlayerMovement : MonoBehaviour
             && playerAttack.attacking == false
             && GetComponent<BlockController>().blocking == false)
             {
-                DodgeFX();
+                //DodgeFX();
+                animator.SetTrigger("Dodging");
                 dodging = true;
                 dodgeTime = startDodgeTime;
             }

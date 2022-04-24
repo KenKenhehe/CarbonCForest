@@ -10,6 +10,9 @@ public class WeaponUIHandler : MonoBehaviour
     Image currentWeaponUI;
     public static WeaponUIHandler instance;
 
+    //No animation for ancient UI
+    public bool IsAncientUI = false;
+
     private void Awake()
     {
         if(instance == null)
@@ -29,10 +32,19 @@ public class WeaponUIHandler : MonoBehaviour
 
     public void ChangeToCurrentWeaponUI(Weapon weapon)
     {
-        // Switch image to the current weapon's icon
-        currentWeaponUI.sprite = weapon.weaponIcon;
-        // Play switch animation
-        animator.runtimeAnimatorController = weapon.ShowUIAnimatorController;
-        animator.SetTrigger("ShowIcon");
+        
+        if (!IsAncientUI)
+        {
+            // Switch image to the current weapon's icon
+            currentWeaponUI.sprite = weapon.weaponIcon;
+            // Play switch animation
+            animator.runtimeAnimatorController = weapon.ShowUIAnimatorController;
+            if (player.gameObject.GetComponent<PlayerAttack>().currentWeaponCount > 0)
+                animator.SetTrigger("ShowIcon");
+        }
+        else
+        {
+            currentWeaponUI.sprite = weapon.weaponAncientIcon;
+        }
     }
 }

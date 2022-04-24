@@ -5,14 +5,14 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Spear : Weapon
 {
-    public int attack4Range;
-    public int attack5Range;
+    public static float attack4Range = 4.25f;
+    public static float attack5Range = 4.25f;
 
-    public int attack4Damage;
-    public int attack5Damage;
+    public static int attack4Damage = 2;
+    public static int attack5Damage = 2;
 
-    public int heavyAttackRange;
-    public int heavyAttackDamage;
+    public static float heavyAttackRange = 4.25f;
+    public static int heavyAttackDamage = 2;
 
     public string[] spearAttackTriggerNames = new string[] { "Attack", "Attack2", "Attack3", "Attack4", "Attack5" };
     public string[] HeavyAttackTriggerNames = new string[] { "HeavyAttack1", "HeavyAttack2", "HeavyAttack3", "HeavyAttack4", "HeavyAttack5"};

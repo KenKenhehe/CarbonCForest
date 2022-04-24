@@ -25,11 +25,6 @@ public class LevelZeroEndEventController : CutSceneEventHandler
         animator = fadeOutCanvas.GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        
-    }
-
     public override void CutSceneEvent()
     {
         base.CutSceneEvent();
@@ -55,7 +50,10 @@ public class LevelZeroEndEventController : CutSceneEventHandler
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TriggerCollider();
+        if (collision.gameObject.GetComponent<PlayerGeneralHandler>() != null)
+        {
+            TriggerCollider();
+        }
     }
 
     public override void TriggerCollider()

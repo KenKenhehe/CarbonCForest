@@ -14,8 +14,11 @@ public class AncientEnemyCQC : EnemyCQC
     // Update is called once per frame
     void Update()
     {
-        EnableBehaviour();
-        PlayDynamicAnimation();
+        if (!isDead)
+        {
+            EnableBehaviour();
+            PlayDynamicAnimation();
+        }
     }
 
     public override void PlayDynamicAnimation()
@@ -86,4 +89,13 @@ public class AncientEnemyCQC : EnemyCQC
         base.MoveToPlayer();
     }
 
+    public override void DeathBehaviour()
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            print("set" + gameObject.transform.GetChild(i) + "Inactive");
+            Destroy(gameObject.transform.GetChild(i).gameObject);
+        }
+        DeathWithAnimation();
+    }
 }

@@ -15,18 +15,18 @@ public class Weapon : ScriptableObject
     public int attack2Damage;
     public int attack3Damage;
 
+    public int parryPoint = 1;
+
     public GameObject slashFX;
 
     public GameObject attackShakeFX;
 
     public Sprite weaponIcon;
+    public Sprite weaponAncientIcon;
+
 
     public string Name;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
     public virtual void OverrideWeaponTriggerName(){}
     public virtual void PlayAttackAnimationOnAttackNum(Animator animator) {}
 

@@ -48,6 +48,12 @@ public class ExitStateToggler : Interactable {
 
     public override void Interact()
     {
+        //Use a coroutine so that this doesn't stall
+        StartCoroutine(DoorOpenRoutine());
+    }
+
+    IEnumerator DoorOpenRoutine()
+    {
         SoundFXHandler.instance.Play("ButtonPress");
         base.Interact();
         doorToOpen.GetComponent<SceneSwitchHandler>().doorOpened = true;
@@ -68,5 +74,6 @@ public class ExitStateToggler : Interactable {
         BossEnable.SetActive(true);
         Destroy(objectToDestory);
         ExitTerminal.GetComponent<InteractableHolo>().enabled = true;
+        yield return null;
     }
 }

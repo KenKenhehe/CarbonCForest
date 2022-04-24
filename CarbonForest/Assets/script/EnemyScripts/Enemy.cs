@@ -12,13 +12,15 @@ public class Enemy : MonoBehaviour
     public int blockPoint = 2;
     public int maxBlockPoint = 3;
     public bool blocking = false;
+    public bool isDead = false;
+
 
     protected PlayerAttack playerToFocus;
     protected float health;
     protected float startHealth;
     protected float SightRange;
     protected bool PlayerSeen = false;
-
+   
     public float maxSightRange;
     public float minSightRange;
 
@@ -28,7 +30,7 @@ public class Enemy : MonoBehaviour
 
     public Image healthBar;
 
-    public GameObject bloodFX;
+    public GameObject[] bloodFX;
     public GameObject destoryFX;
     public GameObject[] explosionFXs;
 
@@ -97,7 +99,7 @@ public class Enemy : MonoBehaviour
 
     public void FacePlayer()
     {
-        if (playerToFocus != null)
+        if (playerToFocus != null && playerToFocus.GetComponent<PlayerGeneralHandler>().isDead == false)
         {
             if (playerToFocus.transform.position.x > transform.position.x)
             {
@@ -124,23 +126,25 @@ public class Enemy : MonoBehaviour
 
     public virtual void MoveToPlayer()
     {
+        if (playerToFocus != null && playerToFocus.GetComponent<PlayerGeneralHandler>().isDead == false)
+        {
+            if (rb2d.velocity.y < 0)
+            {
+                rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.fixedDeltaTime;
+            }
 
-        if (rb2d.velocity.y < 0)
-        {
-            rb2d.velocity += Vector2.up * fallMultiplier * Physics2D.gravity.y * Time.fixedDeltaTime;
-        }
-
-        if (playerToFocus.transform.position.x - respondRange > transform.position.x)
-        {
-            rb2d.velocity = new Vector2(speed * Time.fixedDeltaTime, rb2d.velocity.y);
-        }
-        else if (playerToFocus.transform.position.x + respondRange < transform.position.x)
-        {
-            rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y);
-        }
-        else
-        {
-            rb2d.velocity = new Vector2(0, rb2d.velocity.y);
+            if (playerToFocus.transform.position.x - respondRange > transform.position.x)
+            {
+                rb2d.velocity = new Vector2(speed * Time.fixedDeltaTime, rb2d.velocity.y);
+            }
+            else if (playerToFocus.transform.position.x + respondRange < transform.position.x)
+            {
+                rb2d.velocity = new Vector2(-(speed * Time.fixedDeltaTime), rb2d.velocity.y);
+            }
+            else
+            {
+                rb2d.velocity = new Vector2(0, rb2d.velocity.y);
+            }
         }
 
     }
@@ -190,7 +194,25 @@ public class Enemy : MonoBehaviour
 
     public virtual void DeathBehaviour()
     {
+        isDead = true;
+        GameHandler.instance.globalEnemyCount -= 1;
+    }
 
+    protected void DeathWithAnimation()
+    {
+        AllStatusBars.SetActive(false);
+        rb2d.bodyType = RigidbodyType2D.Kinematic;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        playerToFocus.GetComponent<PlayerGeneralHandler>().RestoreHealth();
+        shakeController.CamBigShake();
+        if (explosionFXs != null)
+        {
+            Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position + DeathFXOffset, Quaternion.identity);
+        }
+        animator.SetTrigger("Death" + Random.Range(1, 3));
+        isDead = true;
+        GameHandler.instance.globalEnemyCount -= 1;
+        Destroy(gameObject, 10);
     }
 
     public virtual void PlayDynamicAnimation()

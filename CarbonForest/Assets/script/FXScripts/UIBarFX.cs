@@ -19,6 +19,7 @@ public class UIBarFX : MonoBehaviour
     {
         image = GetComponent<Image>();
         animator = GetComponentInParent<Animator>();
+        print(animator);
         healthBar = gameObject.transform.parent.gameObject;
     }
 
@@ -47,8 +48,8 @@ public class UIBarFX : MonoBehaviour
 
     public void playRestoreAnimation()
     {
-        animator.Play("HealthRestoreSuccess");
-        animator.Play("HealthTextPop");
-        print("play animation");
+        //animator.Play("HealthRestoreSuccess");
+        //animator.Play("HealthTextPop");
+        //print("play animation");
     }
 }

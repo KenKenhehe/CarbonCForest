@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ParryTutorialHandler : MonoBehaviour
 {
-
     List<AncientEnemyCQCTutorial> enemiesWithParryHint;
     PlayerGeneralHandler player;
     [SerializeField] Color Black;
@@ -35,12 +34,14 @@ public class ParryTutorialHandler : MonoBehaviour
     {
         foreach (AncientEnemyCQCTutorial enemy in FindObjectsOfType<AncientEnemyCQCTutorial>())
         {
-            GameObject parryHintobj = Instantiate(parryHint,
-                enemy.transform.position + new Vector3(0, 2, 0), Quaternion.identity, enemy.transform);
+            if (enemy.isDead == false)
+            {
+                GameObject parryHintobj = Instantiate(parryHint,
+                    enemy.transform.position + new Vector3(0, 2, 0), Quaternion.identity, enemy.transform);
 
-            //parryHintobj.SetActive(false);
-            enemiesWithParryHint.Add(enemy);
-            print("Attached");
+                //parryHintobj.SetActive(false);
+                enemiesWithParryHint.Add(enemy);
+            }
         }
     }
 

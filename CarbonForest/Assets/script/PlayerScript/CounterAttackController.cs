@@ -18,17 +18,13 @@ public class CounterAttackController : MonoBehaviour {
         movement = GetComponent<PlayerMovement>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void PlayRandomCounterAttack()
     {
         foreach(string actionName in actionNames)
         {
             animator.ResetTrigger(actionName);
         }
+        StopAllCoroutines();
         countering = true;
         animator.SetTrigger(actionNames[Random.Range(0, actionNames.Length)]);
         Instantiate(counterAttackFX[Random.Range(0, 2)], 
@@ -37,6 +33,13 @@ public class CounterAttackController : MonoBehaviour {
                 transform.position.y,
                 transform.position.z), 
             Quaternion.Euler(transform.rotation.x, transform.rotation.y, Random.Range(0, 360f)));
+        StartCoroutine(DisableCounterAfterDuation());
+    }
+
+    IEnumerator DisableCounterAfterDuation()
+    {
+        yield return new WaitForSeconds(0.5f);
+        countering = false;
     }
 
     void DisableCounter()

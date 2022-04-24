@@ -67,7 +67,8 @@ public class LevelTwoMechController : Enemy
     {
         Time.timeScale = .6f;
         FindObjectOfType<ShakeController>().CamBigShake();
-        Instantiate(bloodFX, transform.position, Quaternion.identity);
+        int bloodObjIndex = Random.Range(0, bloodFX.Length);
+        Instantiate(bloodFX[bloodObjIndex], transform.position, Quaternion.identity);
         base.TakeDamage(damage);
         StartCoroutine(DamagedEffect());
         soundFXHandler.Play("BikeDamaged");

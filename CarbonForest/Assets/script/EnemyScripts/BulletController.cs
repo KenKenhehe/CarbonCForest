@@ -25,12 +25,13 @@ public class BulletController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(hasBolcked == false)
-            rb2d.velocity = moveDirection * speed * Time.deltaTime;
+        
     }
 
     private void FixedUpdate()
     {
+        if (hasBolcked == false)
+            rb2d.velocity = moveDirection * speed * Time.deltaTime;
         if (target != null)
         {
             DetactMissHit();

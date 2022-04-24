@@ -28,6 +28,12 @@ public class IndoorDarkenerController : MonoBehaviour
     }
     private void Update()
     {
+        if(player != null)
+            checkIndoor();
+    }
+
+    void checkIndoor()
+    {
         if (IsHorizontalBoundry == false)
         {
             if (player.transform.position.x > entry.position.x &&

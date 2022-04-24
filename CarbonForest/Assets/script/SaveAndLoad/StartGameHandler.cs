@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartGameHandler : MonoBehaviour
 {
@@ -10,32 +11,82 @@ public class StartGameHandler : MonoBehaviour
 
     [Header("Normal UI display")]
     public GameObject GameUI;
+
+    public GameObject ConfirmNewGameUI;
+
+    public bool mimicFirstTime = true;
+
+    public Canvas thisCanvas;
+
+    bool canSetScene = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        bool isFirstTime;
+        ConfirmNewGameUI.SetActive(false);
         try
         {
-            isFirstTime = Saver.Load().isFirstTimePlay;
+            GameStateHolder.instance.FirstTimePlay = Saver.Load().isFirstTimePlay;
         }
-        catch (Exception)
+        catch (NullReferenceException e)
         {
-            isFirstTime = true;
+            GameStateHolder.instance.FirstTimePlay = true;
         }
 
-        if (isFirstTime)
+        if (GameStateHolder.instance.FirstTimePlay || mimicFirstTime == true)
         {
             FirstStartUI.SetActive(true);
             GameUI.SetActive(false);
+            canSetScene = true;
         }
         else
         {
             FirstStartUI.SetActive(false);
             GameUI.SetActive(true);
+            canSetScene = false;
+        }
+
+        print("Start handler: " + GameStateHolder.instance.FirstTimePlay);
+    }
+
+    void Update()
+    {
+        MenuInput();
+    }
+
+    void MenuInput()
+    {
+        if (Input.anyKey && canSetScene)
+        {
+            thisCanvas.sortingLayerName = "Default";
+            LevelFader.instance.StartLevelTransition();
         }
     }
-    private void Update()
+
+
+    public void ShowNewGameConfirm()
     {
-       
+        GameUI.SetActive(false);
+        ConfirmNewGameUI.SetActive(true);
+    }
+
+    public void CancelNewGameConfirm()
+    {
+        GameUI.SetActive(true);
+        ConfirmNewGameUI.SetActive(false);
+    }
+
+    public void ContinueGame()
+    {
+        thisCanvas.sortingLayerName = "Default";
+        LevelFader.instance.StartLevelTransition();
+    }
+
+    public void StartNewGame()
+    {
+        thisCanvas.sortingLayerName = "Default";
+        GameStateHolder.instance.currentSceneIndex = 1;
+        Saver.Save(GameStateHolder.instance);
+        LevelFader.instance.StartLevelTransition();
     }
 }

@@ -2,23 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-struct LevelOneState
-{
-
-}
-
-struct LevelTwoState
-{
-
-}
-
 public class GameStateHolder : MonoBehaviour
 {
+    [HideInInspector]
     public bool FirstTimePlay = true;
+
     public static GameStateHolder instance;
 
-    [HideInInspector]
-    public PlayerGeneralHandler playerData;
+    //[HideInInspector]
+    //public PlayerGeneralHandler playerData;
 
     [HideInInspector]
     public int currentSceneIndex = 0;
@@ -32,9 +24,9 @@ public class GameStateHolder : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        playerData = PlayerGeneralHandler.instance;
-    }
+    //void Start()
+    //{
+    //    playerData = PlayerGeneralHandler.instance;
+    //}
 
 }
