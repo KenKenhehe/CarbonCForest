@@ -81,12 +81,12 @@ public class Enemy : MonoBehaviour
             shakeController.CamShake();
             Time.timeScale = Random.Range(0.5f, 0.8f);
         }
-        else if (damage < 3)
+        else if (damage <= 3)
         {
             shakeController.CamShake();
             Time.timeScale = Random.Range(0.15f, 0.3f);
         }
-        else if (damage >= 3)
+        else if (damage > 3)
         {
             shakeController.CamBigShake();
             Time.timeScale = Random.Range(0.05f, 0.2f);

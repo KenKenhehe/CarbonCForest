@@ -138,7 +138,8 @@ public class TutorialManagerZero : MonoBehaviour
 
     void BlockParryTutorial()
     {
-        if (Input.GetKeyDown(KeyCode.F) && hasReadTeachParry == false)
+        if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("Interact"))
+            && hasReadTeachParry == false)
         {
             hasReadTeachParry = true;
             Time.timeScale = 0.1f;
@@ -187,10 +188,7 @@ public class TutorialManagerZero : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerGeneralHandler>() != null)
         {
-            if (normalAttackHintObj != null)
-            {
-                StartAttackTutorial(collision);
-            }
+            StartAttackTutorial(collision);
         }
     }
 
@@ -284,6 +282,7 @@ public class TutorialManagerZero : MonoBehaviour
         {
             GameObject player = collision.gameObject;
 
+            print("NORMAL ATTACK");
             normalAttackHintObj =
                 Instantiate(normalAttackHint,
                 normalAttackHintTransform.position,

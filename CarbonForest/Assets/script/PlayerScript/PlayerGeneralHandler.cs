@@ -24,6 +24,8 @@ public class PlayerGeneralHandler : MonoBehaviour
     public GameObject parryFailFX;
     public GameObject takeDamageFX;
 
+    public Vector3 TakeDamageFXOffset;
+
     public float startHealth;
     public int HealthToRestore;
 
@@ -35,6 +37,7 @@ public class PlayerGeneralHandler : MonoBehaviour
     public float blockLossRate = 10;
     public Text healthPointText;
     public Text blockPointText;
+
 
     PlayerMovement playerMovement;
 
@@ -51,6 +54,8 @@ public class PlayerGeneralHandler : MonoBehaviour
 
     public bool canBlock = true;
     public bool AttackEnabledAfterTut = true;
+    [HideInInspector]
+    public bool hasCollideWithEdge = false;
 
     public Transform plane;
 
@@ -305,6 +310,8 @@ public class PlayerGeneralHandler : MonoBehaviour
         resCountText.text = resurrectCount.ToString();
     }
 
+
+
     public void TakeEnemyDamage(int damage, int EnemyColorState, Enemy enemy)
     {
         if (enemy == null || blockController.blocking == false ||
@@ -312,7 +319,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         {
             SoundFXHandler.instance.Play("DamageSmall");
             int hitChance = Random.Range(1, chanceToStagger);
-            Instantiate(takeDamageFX, transform.position, Quaternion.identity);
+            Instantiate(takeDamageFX, transform.position + TakeDamageFXOffset, Quaternion.identity);
             healthPoints -= damage;
             UpdateHealthUI();
             if(Random.Range(0, 9) < 1)
@@ -464,6 +471,36 @@ public class PlayerGeneralHandler : MonoBehaviour
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
         gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         ReactivateControl();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "ColliderRight")
+        {
+            print("COLLIDER RIGHT");
+            hasCollideWithEdge = true;       
+        }
+
+        if (collision.gameObject.tag == "ColliderLeft")
+        {
+            print("COLLIDER LEFT");
+            hasCollideWithEdge = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "ColliderRight")
+        {
+            print("COLLIDER RIGHT EXIT");
+            hasCollideWithEdge = false;
+        }
+
+        if (collision.gameObject.tag == "ColliderLeft")
+        {
+            print("COLLIDER LEFT EXIT");
+            hasCollideWithEdge = false;
+        }
     }
 
     void PlayerDead()

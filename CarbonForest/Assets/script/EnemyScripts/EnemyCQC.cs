@@ -164,10 +164,16 @@ public class EnemyCQC : Enemy
             if (collider.GetComponent<PlayerGeneralHandler>() != null)
             {
                 collider.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, colorState, this);
-                collider.transform.position = new Vector3(
-                (facingRight == true ? collider.transform.position.x + shockForce : collider.transform.position.x - shockForce),
-                collider.transform.position.y,
-                collider.transform.position.z);
+
+                //Prevent player goes out of screen 
+                if (collider.GetComponent<PlayerGeneralHandler>().hasCollideWithEdge == false)
+                {
+                    collider.transform.position = new Vector3(
+                    (facingRight == true ? collider.transform.position.x + shockForce : collider.transform.position.x - shockForce),
+                    collider.transform.position.y,
+                    collider.transform.position.z);
+                }
+
                 shakeController.CamShake();
                 if (colorState == collider.GetComponent<PlayerGeneralHandler>().colorState &&
                     collider.GetComponent<BlockController>().blocking == true &&
@@ -358,6 +364,8 @@ public class EnemyCQC : Enemy
             collision.gameObject.GetComponent<EnemyCQC>().rb2d.velocity =
                 new Vector2(speed * Time.deltaTime * Random.Range(0, 2), rb2d.velocity.y);
         }
+
+       
     }
 
     public override float GetHealth()

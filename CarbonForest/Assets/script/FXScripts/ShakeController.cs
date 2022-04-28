@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XInputDotNetPure;
 
 public class ShakeController : MonoBehaviour {
     public Animator camShake;
@@ -25,5 +26,6 @@ public class ShakeController : MonoBehaviour {
     public void CamBigShake()
     {
         camShake.SetTrigger("BigShake");
+        ControllerVibrationHandler.instance.SetVibration(0.1f);
     }
 }

@@ -44,7 +44,7 @@ public class PauseMenu : MonoBehaviour {
 
     public void Resume()
     {
-        PlayerGeneralHandler.instance.DeactivateControl();
+        PlayerGeneralHandler.instance.ReactivateControl();
         GameIsPause = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1;

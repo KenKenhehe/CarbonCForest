@@ -33,12 +33,6 @@ public class MusicDirector : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void TriggerEventMusic(string name)
     {
         soundFXHandler.Play(name);
