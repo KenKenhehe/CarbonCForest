@@ -89,6 +89,11 @@ public class AncientEnemyCQC : EnemyCQC
         base.MoveToPlayer();
     }
 
+    public override void PlayExplosionSound()
+    {
+        soundFXHandler.Play("Explode");
+    }
+
     public override void DeathBehaviour()
     {
         for (int i = 0; i < gameObject.transform.childCount; i++)

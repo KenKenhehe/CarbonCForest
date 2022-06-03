@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour {
     public GameObject player;
     public GameObject mainPlayer;
-    public float cameraSpeed = 5;
+    public float cameraXSpeed = 6;
+    public float cameraYSpeed = 7;
     public float offsetY = 0.2f;
     public float offsetX = 0.6f;
     public float maxX;
@@ -28,8 +29,7 @@ public class CameraControl : MonoBehaviour {
     // Use this for initialization
     private void Start()
     {
-        
-        if (PlayerGeneralHandler.instance.gameObject != null)
+        if (PlayerGeneralHandler.instance != null)
         {
             mainPlayer = PlayerGeneralHandler.instance.gameObject;
         }
@@ -50,9 +50,9 @@ public class CameraControl : MonoBehaviour {
         if (player != null)
         {
             transform.position = new Vector3(
-               Mathf.Lerp(transform.position.x + offsetX, player.transform.position.x + offsetX, Time.deltaTime * cameraSpeed),
-               Mathf.Lerp(transform.position.y + offsetY, player.transform.position.y + offsetY, Time.deltaTime * cameraSpeed),
-               Mathf.Lerp(transform.position.z, player.transform.position.z + camDepth, Time.deltaTime * cameraSpeed)
+               Mathf.Lerp(transform.position.x + offsetX, player.transform.position.x + offsetX, Time.deltaTime * cameraXSpeed),
+               Mathf.Lerp(transform.position.y + offsetY, player.transform.position.y + offsetY, Time.deltaTime * cameraYSpeed),
+               Mathf.Lerp(transform.position.z, player.transform.position.z + camDepth, Time.deltaTime * cameraXSpeed)
                 );
         }
         else
@@ -87,7 +87,7 @@ public class CameraControl : MonoBehaviour {
 
     public void ChangePositionPreset(CameraPositionPreset preset)
     {
-        cameraSpeed = preset.cameraSpeed;
+        cameraXSpeed = preset.cameraSpeed;
         offsetY = preset.offsetY;
         offsetX = preset.offsetX;
         camDepth = preset.camDepth;

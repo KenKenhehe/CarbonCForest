@@ -5,6 +5,7 @@ using UnityEngine;
 public class KeyCardHandler : Interactable
 {
     public GameObject tip;
+    public GameObject KeycardSprite;
 
     private void Update()
     {
@@ -16,13 +17,14 @@ public class KeyCardHandler : Interactable
     {
         print("Keycard interacted");
 
+        KeycardSprite.SetActive(false);
         //play collect animation
 
         //set door to can open
         SecurityDoorHandler.instance.CanOpen = true;
 
         if(tip != null)
-            PlayerGeneralHandler.instance.DisplayTip(tip, new Vector2(0, 1));
+            PlayerGeneralHandler.instance.DisplayTip(tip, new Vector2(0, 0.4f));
 
         Destroy(gameObject);
     }

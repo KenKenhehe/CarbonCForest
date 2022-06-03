@@ -17,6 +17,8 @@ public class ScrollController : MonoBehaviour {
     public GameObject mech;
     private int levelIndex;
     public GameObject darkBluryImage;
+
+    public bool isDemo = false;
     // Use this for initialization
     void Start () {
         levelIndex = SceneManager.GetActiveScene().buildIndex;
@@ -64,11 +66,16 @@ public class ScrollController : MonoBehaviour {
 
     IEnumerator FlashBlackWhenFinish()
     {
-        yield return new WaitForSeconds(111);
+        yield return new WaitForSeconds(110);
         flashBlack.SetActive(true);
         FindObjectOfType<SoundFXHandler>().gameObject.SetActive(false);
         yield return new WaitForSeconds(10);
-        SceneManager.LoadScene(levelIndex + 1);
+        if(!isDemo)
+            SceneManager.LoadScene(levelIndex + 1);
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     /// <summary>
@@ -87,7 +94,8 @@ public class ScrollController : MonoBehaviour {
     IEnumerator WaitAndSpawnEnemy()
     {
         yield return new WaitForSeconds(enemyMusicTiming);
-        StartCoroutine( FindObjectOfType<LevelEnemyEvent>().SpawnEnemyAtRandomX());
+        //StartCoroutine(FindObjectOfType<BikeEnemySpawner>().SpawnBikeEnemyAtRandom());
+        FindObjectOfType<BikeEnemySpawner>().SpawnBikeEnemyAtRandom();
     }
     IEnumerator WaitAndSpawnMech()
     {
@@ -96,7 +104,7 @@ public class ScrollController : MonoBehaviour {
     }
     IEnumerator WaitAndFireFinishBeam()
     {
-        yield return new WaitForSeconds(mechMusicTiming + 29);
+        yield return new WaitForSeconds(mechMusicTiming + 28);
         LevelTwoMechController.hasEnd = true;
     }
 }

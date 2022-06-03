@@ -107,6 +107,7 @@ public class ElevatorController : Interactable {
     {
         //base.Interact();
         cameraControl.camDepth = 0;
+        cameraControl.offsetY += 0.03f;
         if (isActive == false)
         {
             ActivateElevator();

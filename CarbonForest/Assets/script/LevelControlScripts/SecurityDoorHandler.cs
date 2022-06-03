@@ -10,6 +10,9 @@ public class SecurityDoorHandler : Interactable
     public static SecurityDoorHandler instance;
     BoxCollider2D boxCollider2D;
 
+    public Animator TerminalAnimator;
+    public Animator animator;
+
     private void Awake()
     {
         if (instance == null)
@@ -20,6 +23,7 @@ public class SecurityDoorHandler : Interactable
     {
         CanOpen = false;
         boxCollider2D = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -36,6 +40,8 @@ public class SecurityDoorHandler : Interactable
             boxCollider2D.isTrigger = true;
 
             //play door open animation
+            TerminalAnimator.SetTrigger("Unlock");
+            animator.SetTrigger("Open");
 
         }
 
@@ -44,6 +50,7 @@ public class SecurityDoorHandler : Interactable
             print("Door locked, need key card...");
 
             //play lock animation
+            TerminalAnimator.SetTrigger("Locked");
 
             // play lock sound
         }

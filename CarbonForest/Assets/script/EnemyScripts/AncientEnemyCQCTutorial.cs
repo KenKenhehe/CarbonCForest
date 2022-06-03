@@ -101,4 +101,8 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
             Destroy(gameObject.transform.GetChild(i).gameObject);
         }
     }
+    public override void PlayExplosionSound()
+    {
+        soundFXHandler.Play("Explode");
+    }
 }

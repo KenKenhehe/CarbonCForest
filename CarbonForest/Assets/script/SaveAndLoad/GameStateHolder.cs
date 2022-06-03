@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class GameStateHolder : MonoBehaviour
 {
+    //------All player state data------
     [HideInInspector]
     public bool FirstTimePlay = true;
+
+    [HideInInspector]
+    public int currentSceneIndex = 0;
+
+    [HideInInspector]
+    public int weaponCount = 0; // starts from 0
 
     public static GameStateHolder instance;
 
     //[HideInInspector]
     //public PlayerGeneralHandler playerData;
 
-    [HideInInspector]
-    public int currentSceneIndex = 0;
-
+   
     private void Awake()
     {
         if(instance == null)

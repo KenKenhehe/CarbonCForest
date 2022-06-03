@@ -9,6 +9,10 @@ public class MotoController : Interactable {
     public float midBound;
     public float rightBound;
     public float leftBound;
+
+    public float upBound;
+    public float lowerBound;
+
     public Animator animator;
 
     bool canControl = true;
@@ -19,6 +23,7 @@ public class MotoController : Interactable {
         if(SceneManager.GetActiveScene().name == "Chapter2")
         {
             animator.SetTrigger("Run");
+            SoundFXHandler.instance.Play("BikeLoop");
         }
 	}
 	
@@ -49,9 +54,19 @@ public class MotoController : Interactable {
                 transform.Translate(Vector2.right * bikeSpeed * Time.deltaTime);
             }
             else if(Input.GetKey(KeyCode.A)){
-                transform.Translate(Vector2.left * (bikeSpeed / 2) * Time.deltaTime);
-               
+                transform.Translate(Vector2.left * (bikeSpeed / 2) * Time.deltaTime);  
             }
+
+            //Add vertical movement
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.Translate(Vector2.up * bikeSpeed * Time.deltaTime);
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                transform.Translate(Vector2.down * (bikeSpeed / 2) * Time.deltaTime);
+            }
+            
             else
             {
                 transform.position = Vector2.Lerp(
@@ -67,6 +82,15 @@ public class MotoController : Interactable {
             {
                 transform.position = new Vector2(leftBound, transform.position.y);
             }
+
+            if (transform.position.y > upBound)
+            {
+                transform.position = new Vector2(transform.position.x, upBound);
+            }
+            else if (transform.position.y < lowerBound)
+            {
+                transform.position = new Vector2(transform.position.x, lowerBound);
+            }
         }
     }
 
@@ -80,6 +104,7 @@ public class MotoController : Interactable {
             FindObjectOfType<CameraControl>().player = gameObject;
             StartCoroutine(WaitAndMoveRight());
             animator.SetTrigger("hopOn");
+            SoundFXHandler.instance.Play("BikeStart");
         }
     }
 

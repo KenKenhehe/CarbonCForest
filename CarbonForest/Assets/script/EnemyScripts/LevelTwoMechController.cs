@@ -25,6 +25,9 @@ public class LevelTwoMechController : Enemy
     public static bool hasEnd = false;
     public GameObject beamTargetFollow;
     GameObject beamTargetFollowObj;
+
+    public GameObject ChargeFX;
+
     // Use this for initialization
     void Start()
     {
@@ -36,6 +39,8 @@ public class LevelTwoMechController : Enemy
         shootBeamDuration = Random.Range(minShootBeamDuration, maxShootBeamDuration);
         StartCoroutine(ShootBeamsAtRandom());
         soundFXHandler = SoundFXHandler.instance;
+        shakeController = ShakeController.instance;
+        ChargeFX.SetActive(false);
     }
 
     // Update is called once per frame
@@ -80,6 +85,12 @@ public class LevelTwoMechController : Enemy
         {
             collision.gameObject.GetComponent<BikeEnemy>().TakeDamage(100);
         }
+    }
+
+    public void SpawnChargeFX()
+    {
+        if(ChargeFX != null)
+            ChargeFX.SetActive(true);
     }
 
     public void TurrentShow()

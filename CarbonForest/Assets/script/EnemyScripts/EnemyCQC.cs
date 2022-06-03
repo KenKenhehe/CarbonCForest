@@ -259,6 +259,11 @@ public class EnemyCQC : Enemy
         TakeDamage(10);
     }
 
+    public override void PlayExplosionSound()
+    {
+        soundFXHandler.Play("ExplodeMech");
+    }
+
     public override void TakeDamage(int damage)
     {
         blockBar.enabled = true;

@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [Tooltip("How many weapons do player have")]
+    [Tooltip("Which weapon player is choosing")]
     int currentWeaponNum = 0;
 
-    [Tooltip("Which weapon player is choosing")]
+    [Tooltip("How many weapons do player have")]
     public int currentWeaponCount = 1;
 
     public float friction = 600;
@@ -58,6 +58,19 @@ public class PlayerAttack : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Chapter0")
+        {
+            currentWeaponCount = 2;
+        }
+        else if(SceneManager.GetActiveScene().name == "Chapter1")
+        {
+            currentWeaponCount = 0;
+            print("Current weapon num is 0");
+        }
+        else
+        {
+            currentWeaponCount = Saver.Load().currentWeaponCount;
+        }
         animator = GetComponent<Animator>();
         currentWeapon = weapons[currentWeaponNum];
         animator.runtimeAnimatorController = currentWeapon.animatorController;

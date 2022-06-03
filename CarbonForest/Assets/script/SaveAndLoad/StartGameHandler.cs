@@ -89,4 +89,9 @@ public class StartGameHandler : MonoBehaviour
         Saver.Save(GameStateHolder.instance);
         LevelFader.instance.StartLevelTransition();
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

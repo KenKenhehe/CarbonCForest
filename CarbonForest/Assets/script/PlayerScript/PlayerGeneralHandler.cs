@@ -473,6 +473,16 @@ public class PlayerGeneralHandler : MonoBehaviour
         ReactivateControl();
     }
 
+    public void TopUpStatus()
+    {
+        healthPoints = startHealth;
+        resurrectCount += 1;
+        UpdateHealthUI();
+        flowPoint = 0;
+        flowBar.fillAmount = (((float)flowPoint) / 100);
+        resCountText.text = resurrectCount.ToString();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "ColliderRight")
@@ -624,16 +634,25 @@ public class PlayerGeneralHandler : MonoBehaviour
     public void DisplayTip(GameObject tipToDisplay, Vector2 tipOffset)
     {
         tipToDisplay.transform.parent = this.gameObject.transform;
-        tipToDisplay.transform.position =
+        tipToDisplay.transform.localPosition =
             new Vector3(tipOffset.x, tipOffset.y, tipToDisplay.transform.position.z);
-        
+        StartCoroutine(tipFlashOnPlayerTop(tipToDisplay));
     }
 
     IEnumerator tipFlashOnPlayerTop(GameObject tipToDisplay)
     {
-        tipToDisplay.SetActive(false);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         tipToDisplay.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        tipToDisplay.SetActive(false);
+        yield return new WaitForSeconds(0.05f);
+        tipToDisplay.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        tipToDisplay.SetActive(false);
+        yield return new WaitForSeconds(0.05f);
+        tipToDisplay.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        tipToDisplay.SetActive(false);
     }
 
     void ChangeEnemyAlphaAndBlockBar(float alpha)

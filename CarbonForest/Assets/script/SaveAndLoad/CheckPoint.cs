@@ -14,6 +14,7 @@ public class CheckPoint : MonoBehaviour
             //TODO: Enable saving icon
             GameStateHolder.instance.FirstTimePlay = false;
             GameStateHolder.instance.currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            GameStateHolder.instance.weaponCount = FindObjectOfType<PlayerAttack>().currentWeaponCount;
             Saver.Save(GameStateHolder.instance);
 
             Destroy(gameObject);

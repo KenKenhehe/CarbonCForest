@@ -10,7 +10,7 @@ public class BikeEnemy : Enemy {
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
-        health = Random.Range(10, 15);
+        health = Random.Range(minHealth, maxHealth);
         target = FindObjectOfType<MotoController>().gameObject;
         randomRange = Random.Range(2f, 4f);
         randomAttackPeriod = Random.Range(1.5f, 3f);
@@ -28,7 +28,7 @@ public class BikeEnemy : Enemy {
         {
             AttackPlayer();
             randomAttackPeriod = Random.Range(1.5f, 3f);
-            randomRange = Random.Range(2f, 4f);
+            randomRange = Random.Range(8f, 16f);
         }
 	}
 
@@ -42,22 +42,23 @@ public class BikeEnemy : Enemy {
         Time.timeScale = Random.Range(.3f, .5f);
         base.TakeDamage(damage);
         health -= damage;
-        FindObjectOfType<ShakeController>().CamShake();
+        //FindObjectOfType<ShakeController>().CamShake();
         SoundFXHandler.instance.Play("BikeDamaged");
         int bloodObjIndex = Random.Range(0, bloodFX.Length);
-        Instantiate(bloodFX[bloodObjIndex], transform.position + Vector3.down, Quaternion.identity);
+        Instantiate(bloodFX[bloodObjIndex], transform.position + Vector3.down + 
+            new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0), Quaternion.identity);
         if (health <= 1)
         {
             FindObjectOfType<ShakeController>().CamBigShake();
             Destroy(gameObject);
             Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position + Vector3.down, Quaternion.identity);
-            Instantiate(destoryFX, transform.position + Vector3.down, Quaternion.identity);
+            Instantiate(destoryFX, transform.position + Vector3.down, Quaternion.Euler(0, 0, 90));
             PlayExplosionSound();
         }
         StartCoroutine(DamagedEffect());
     }
 
-    public void MoveToPlayer()
+    public override void  MoveToPlayer()
     {
         transform.position = new Vector2(
             Mathf.Lerp(transform.position.x, target.transform.position.x - randomRange, speed * Time.deltaTime),

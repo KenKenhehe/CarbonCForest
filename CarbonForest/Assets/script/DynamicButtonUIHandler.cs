@@ -30,8 +30,6 @@ public class DynamicButtonUIHandler : MonoBehaviour
     {
         if ((int)Time.time % updateRate == 0)
         {
-            print(Input.GetJoystickNames()[1]);
-            print(string.IsNullOrEmpty(Input.GetJoystickNames()[1]) == false);
             if (isControllerConnected())
             {
                 KeyboardUI.SetActive(false);

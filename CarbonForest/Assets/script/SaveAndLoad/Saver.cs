@@ -17,6 +17,7 @@ public static class Saver
         GameData data = new GameData();
         data.CurrentSceneIndex = gameState.currentSceneIndex;
         data.isFirstTimePlay = gameState.FirstTimePlay;
+        data.currentWeaponCount = gameState.weaponCount;
 
         formatter.Serialize(fs, data);
 
