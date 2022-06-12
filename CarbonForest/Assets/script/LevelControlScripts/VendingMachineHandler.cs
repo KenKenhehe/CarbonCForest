@@ -8,8 +8,13 @@ public class VendingMachineHandler : Interactable
     public Animator VendingMacAnimator;
     public Animator QRCodeAnimator;
 
+    public GameObject AdditionalHint;
+
     public GameObject noodle;
     bool hasOpenShelf = false;
+
+    bool hasLeft = false;
+    bool hasRecover = false;
 
     public float cameraDepthWhenFocus = 2;
 
@@ -28,14 +33,23 @@ public class VendingMachineHandler : Interactable
 
     public override void Interact()
     {
-        if(hasOpenShelf == false)
+        if (hasOpenShelf == false)
+        {
             StartCoroutine(EnableQRcodeAndVendingMachine());
+            interactHint.SetActive(false);
+            interactHint = AdditionalHint;
+        }
         else
         {
-            //play sound
-            SoundFXHandler.instance.Play("NoodleAte");
-            noodle.SetActive(false);
-            PlayerGeneralHandler.instance.TopUpStatus();
+            if (hasRecover == false)
+            {
+                //play sound
+                SoundFXHandler.instance.Play("NoodleAte");
+                noodle.SetActive(false);
+                hasRecover = true;
+                PlayerGeneralHandler.instance.TopUpStatus();
+                interacted = true;
+            }
         }
     }
 
@@ -58,5 +72,12 @@ public class VendingMachineHandler : Interactable
     public override void OnClose()
     {
         isClose = true;
+        hasLeft = false;
+        print("On close");
+    }
+
+    void OnLeave()
+    {
+
     }
 }

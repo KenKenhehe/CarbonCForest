@@ -39,16 +39,22 @@ public class SunLeeBikeController : EnemyCQC
     MotionState currentMotionState = MotionState.IDLE;
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     void Start()
     {
         sunleeController = SunleeController.instance;
         currentDashTime = dashTime;
         StartCoroutine(ActivateBehaviourList());
         animator = GetComponent<Animator>();
-        if (instance == null)
-        {
-            instance = this;
-        }
+       
         Initialize();
         print(sunleeController);
     }
@@ -232,18 +238,27 @@ public class SunLeeBikeController : EnemyCQC
                     //if the previous mode is already range, 
                     //no need to play the "transform to gun animation" again
                     if (previousState != MotionState.RANGE)
+                    {
                         animator.SetTrigger("ToRange");
-                    StartCoroutine(KeepRangeAttack());
+                        StartCoroutine(KeepRangeAttack());
+                    }
+                    else
+                    {
+                        animator.SetTrigger("Run");
+                        currentMotionState = MotionState.DASH;
+                    }
                     previousState = MotionState.RANGE;
                 }
-                else if(currentMotionState == MotionState.SWITCH_STAND)
-                {
-                    //Play switch stand animation
-                    animator.SetTrigger("Switch");
+                //else if(currentMotionState == MotionState.SWITCH_STAND)
+                //{
+                //    //Play switch stand animation
+                //    animator.SetTrigger("Switch");
 
-                    //Flip the color state 
-                    colorState = (colorState == 0 ? 1 : 0);
-                }
+                //    //Flip the color state 
+                //    colorState = (colorState == 0 ? 1 : 0);
+
+
+                //}
                 //70 persent chance next attack is dash, to avoid bomb filling the screen
                 currentMotionState = (Random.Range(0, 100) > 85) ? MotionState.DASH : MotionState.RANGE;
                 //print(currentMotionState);

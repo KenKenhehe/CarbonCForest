@@ -93,6 +93,10 @@ public class EnemyCQC : Enemy
         if (blockBar != null)
         {
             blockBar.fillAmount = blockPoint / maxBlockPoint;
+            print(blockPoint);
+            print(maxBlockPoint);
+            print(blockPoint / maxBlockPoint);
+            print("Block bar fill amount: " + blockBar.fillAmount.ToString());
         }
         //StartCoroutine(ChangePatrolDir());
         ChangeBlockColorAtRandom();

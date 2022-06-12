@@ -476,11 +476,15 @@ public class PlayerGeneralHandler : MonoBehaviour
     public void TopUpStatus()
     {
         healthPoints = startHealth;
-        resurrectCount += 1;
+        if (resurrectCount <= maxResCount)
+        {
+            resurrectCount += 1;
+        }
         UpdateHealthUI();
         flowPoint = 0;
         flowBar.fillAmount = (((float)flowPoint) / 100);
         resCountText.text = resurrectCount.ToString();
+        StatusUIHandler.instance.PlayHealthRecoverUIFX();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -21,6 +21,7 @@ public class EnemyThug : EnemyCQC
         StartCoroutine(ChangeAttackMode());
         print("Start: " + currentAttackMode);
         Initialize();
+        canMove = true;
     }
 
     // Update is called once per frame
@@ -41,19 +42,22 @@ public class EnemyThug : EnemyCQC
                     canMove = false;
                     animator.SetTrigger("Attack1");
                 }
-                else
-                    canMove = true;
             }
             else
             {
-                canMove = false;
                 if (Vector2.Distance(transform.position, playerToFocus.transform.position) <= respondRange + 10)
                 {
                     FacePlayer();
+                    canMove = false;
                     animator.SetTrigger("Attack2");
                 }
             }
         }
+    }
+
+    public void ReactivateMovement()
+    {
+        canMove = true;
     }
 
     public void LaunchBomb()
@@ -76,8 +80,16 @@ public class EnemyThug : EnemyCQC
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(0, 5));
-            currentAttackMode = (AttackMode)Random.Range(0, 2);
-            print(currentAttackMode);
+            int probibility = Random.Range(0, 100);
+            if (probibility < 10)
+                currentAttackMode = AttackMode.Ranged;
+            else
+                currentAttackMode = AttackMode.Melee;
         }
+    }
+
+    public override void PlayShowSFX()
+    {
+        soundFXHandler.Play("Cloth" + Random.Range(1, 5));
     }
 }

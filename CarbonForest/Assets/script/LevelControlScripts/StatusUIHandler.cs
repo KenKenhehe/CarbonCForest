@@ -180,6 +180,11 @@ public class StatusUIHandler : MonoBehaviour
         }
     }
 
+    public void PlayHealthRecoverUIFX()
+    {
+        animator.SetTrigger("HealthRecover");
+    }
+
     public void UpdateBlockValue(GameObject blockValueUI, float blockPoints, float maxBlockPoints)
     {
         if (!IsAncientUI)

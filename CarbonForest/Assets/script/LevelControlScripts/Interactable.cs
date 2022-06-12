@@ -9,7 +9,7 @@ public class Interactable : MonoBehaviour {
     public bool isActive;
     protected bool isClose = false;
     public GameObject OnCloseFX;
-    [SerializeField] GameObject interactHint;
+    public GameObject interactHint;
     public Vector2 onCloseScale;
     [HideInInspector]
     public bool InRange = false;
