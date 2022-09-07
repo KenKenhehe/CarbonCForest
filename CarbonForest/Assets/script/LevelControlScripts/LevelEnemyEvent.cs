@@ -19,7 +19,7 @@ public class LevelEnemyEvent : MonoBehaviour {
     PlayerGeneralHandler player;
 
     [Header("For spawning an enemy at exact location")]
-    public Transform spawnTransform;
+    public Transform[] spawnTransforms;
     // Use this for initialization
     void Start () {
         player = FindObjectOfType<PlayerGeneralHandler>();
@@ -59,9 +59,18 @@ public class LevelEnemyEvent : MonoBehaviour {
         return enemyObject;
     }
 
-    public void SpawnEnemyAtTransform()
+    public bool hasSpawnLocation()
     {
-        Instantiate(enemyToSpawn, spawnTransform.position, Quaternion.identity);
+        return spawnTransforms.Length > 0;
+    }
+
+    public IEnumerator SpawnEnemyAtTransform()
+    {
+        for (int i = 0; i < spawnTransforms.Length; i++)
+        {
+            Instantiate(enemyToSpawn, spawnTransforms[i].position, Quaternion.identity);
+            yield return new WaitForSeconds(spawnRate);
+        }
     }
 
     public void CallShowEvent()

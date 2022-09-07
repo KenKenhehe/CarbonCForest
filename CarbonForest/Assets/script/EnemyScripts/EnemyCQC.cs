@@ -30,6 +30,7 @@ public class EnemyCQC : Enemy
     public Image blockBar;
 
     protected bool canAttack = true;
+    protected bool attacking = false;
     protected bool IsStunned = false;
 
     protected float randHoldTime;
@@ -201,12 +202,15 @@ public class EnemyCQC : Enemy
                     {
                         GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
                     }
-                    soundFXHandler.Play("ParrySuccess1");
+                    //soundFXHandler.Play("ParrySuccess1");
+                    //shakeController.CamBigShake();
+                    //Time.timeScale = .002f;
+                    print("ENEMY BLOCKED");
                     ParriedBehaviour();
+                    playerToFocus.GetComponent<PlayerGeneralHandler>().ParrySuccessFX();
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
 
-                    shakeController.CamBigShake();
-                    Time.timeScale = .002f;
+
                     health -= damage * blockDamageMultiplyer;
                     animator.SetTrigger("Stunned");
                     UpdateHealthUI();
@@ -220,7 +224,7 @@ public class EnemyCQC : Enemy
                     else if (maxHealth > 200)
                     {
                         float FXRotation = facingRight ? 90 : -90;
-                        Instantiate(blockExplosionFX, transform.position - new Vector3(0, 1, 0), Quaternion.Euler(0, 0, FXRotation));
+                        //Instantiate(blockExplosionFX, transform.position - new Vector3(0, 1, 0), Quaternion.Euler(0, 0, FXRotation));
                     }
                 }
             }
@@ -340,6 +344,7 @@ public class EnemyCQC : Enemy
         IsStunned = true;
         canAttack = false;
         canMove = false;
+        attacking = false;
         animator.SetBool("StunnedIdle", true);        
         yield return new WaitForSeconds(duration);
         canAttack = true;
@@ -450,5 +455,10 @@ public class EnemyCQC : Enemy
         {
             healthBar.fillAmount = (float)health / startHealth;
         }
+    }
+
+    public void EnableAttack()
+    {
+        attacking = false;
     }
 }

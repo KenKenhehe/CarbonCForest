@@ -11,8 +11,9 @@ public class Enemy : MonoBehaviour
 
     public int blockPoint = 2;
     public int maxBlockPoint = 3;
-    public bool blocking = false;
-    public bool isDead = false;
+
+    [HideInInspector] public bool blocking = false;
+    [HideInInspector] public bool isDead = false;
 
 
     protected PlayerAttack playerToFocus;
@@ -46,14 +47,16 @@ public class Enemy : MonoBehaviour
 
     public GameObject WhiteStandFX;
     public GameObject BlueStandFX;
+    public Vector2 StandFXSize = Vector2.one;
 
     protected WaitForSeconds hitDuration;
 
     public float xSize = 2;
 
-    public bool facingRight;
-    public bool takingDamage = false;
-    public bool canMove = true;
+    
+    [HideInInspector] public bool facingRight;
+    [HideInInspector] public bool takingDamage = false;
+    [HideInInspector] public bool canMove = true;
 
 
     public Color damagedColor;
@@ -107,8 +110,8 @@ public class Enemy : MonoBehaviour
                 transform.localScale = new Vector2(-xSize, transform.localScale.y);
                 if (WhiteStandFX != null && BlueStandFX != null)
                 {
-                    WhiteStandFX.transform.localScale = new Vector2(1, 1);
-                    BlueStandFX.transform.localScale = new Vector2(1, 1);
+                    WhiteStandFX.transform.localScale = new Vector2(StandFXSize.x, StandFXSize.y);
+                    BlueStandFX.transform.localScale = new Vector2(StandFXSize.x, StandFXSize.y);
                 }
             }
             else
@@ -117,8 +120,31 @@ public class Enemy : MonoBehaviour
                 transform.localScale = new Vector2(xSize, transform.localScale.y);
                 if (WhiteStandFX != null && BlueStandFX != null)
                 {
-                    WhiteStandFX.transform.localScale = new Vector2(-1, 1);
-                    BlueStandFX.transform.localScale = new Vector2(-1, 1);
+                    WhiteStandFX.transform.localScale = new Vector2(-StandFXSize.x, StandFXSize.y);
+                    BlueStandFX.transform.localScale = new Vector2(-StandFXSize.x, StandFXSize.y);
+                }
+            }
+        }
+    }
+
+    public void AdjustStandFXFacing()
+    {
+        if (playerToFocus != null && playerToFocus.GetComponent<PlayerGeneralHandler>().isDead == false)
+        {
+            if (playerToFocus.transform.position.x > transform.position.x)
+            {
+                if (WhiteStandFX != null && BlueStandFX != null)
+                {
+                    WhiteStandFX.transform.localScale = new Vector2(StandFXSize.x, StandFXSize.y);
+                    BlueStandFX.transform.localScale = new Vector2(StandFXSize.x, StandFXSize.y);
+                }
+            }
+            else
+            {
+                if (WhiteStandFX != null && BlueStandFX != null)
+                {
+                    WhiteStandFX.transform.localScale = new Vector2(-StandFXSize.x, StandFXSize.y);
+                    BlueStandFX.transform.localScale = new Vector2(-StandFXSize.x, StandFXSize.y);
                 }
             }
         }

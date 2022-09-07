@@ -22,7 +22,10 @@ public class LevelEventTrigger : MonoBehaviour {
         if(collision.gameObject.GetComponent<PlayerGeneralHandler>() != null || 
             collision.gameObject.GetComponent<MotoController>() != null)
         {
-            enemyEvent.StartCoroutine(enemyEvent.SpawnEnemyAtRandomX());
+            if (enemyEvent.hasSpawnLocation())
+                enemyEvent.StartCoroutine(enemyEvent.SpawnEnemyAtTransform());
+            else
+                enemyEvent.StartCoroutine(enemyEvent.SpawnEnemyAtRandomX());
             GetComponent<BoxCollider2D>().enabled = false;
             Pedstrain[] peds = FindObjectsOfType<Pedstrain>();
             if (peds.Length > 0)

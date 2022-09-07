@@ -54,6 +54,9 @@ public class PlayerGeneralHandler : MonoBehaviour
 
     public bool canBlock = true;
     public bool AttackEnabledAfterTut = true;
+
+    public bool IsStunned = false;
+
     [HideInInspector]
     public bool hasCollideWithEdge = false;
 
@@ -109,7 +112,6 @@ public class PlayerGeneralHandler : MonoBehaviour
 
     void Start()
     {
-        
         originalHealthBarColor = healthBar.color;
         originalColor = GetComponent<SpriteRenderer>().color;
         shakeController = FindObjectOfType<ShakeController>();
@@ -125,7 +127,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         blockPoints = startBlockPoint;
         playerMovement = GetComponent<PlayerMovement>();
 
-        if(healthValue != null)
+        if (healthValue != null)
             healthValue.text = healthPoints.ToString();
         //--------
         //For actual game save
@@ -149,6 +151,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         plane.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - .85f, transform.position.z);
         HandleInteractable();
         HandlePlayerDeadInput();
+
     }
 
     public void ChangeBlockFXDir()
@@ -215,7 +218,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         animator.SetBool("Defending", blockController.blocking);
         //blockBar.fillAmount = blockPoints / startBlockPoint;
         //blockValue.text = Mathf.FloorToInt(((blockPoints / startBlockPoint) * 100)).ToString() + "%";
-        
+
         //Change block value
         if (blockController.blocking == false)
         {
@@ -254,7 +257,7 @@ public class PlayerGeneralHandler : MonoBehaviour
                 WhiteStandFX.SetActive(false);
                 BlueStandFX.SetActive(false);
             }
-           
+
         }
         else
         {
@@ -265,7 +268,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         if (blockPoints <= 0)
         {
             StartCoroutine(StunnedAndRecover());
-           
+
         }
 
         if (blockController.blocking == true)
@@ -282,7 +285,7 @@ public class PlayerGeneralHandler : MonoBehaviour
                 {
                     colorState = 1;
                 }
-                    
+
             }
         }
     }
@@ -297,11 +300,10 @@ public class PlayerGeneralHandler : MonoBehaviour
     public void IncreaseFlowPoint()
     {
         flowPoint += (100 / 7);
-        print("Flow point: " + flowPoint);
-        if(flowPoint >= 100)
+        if (flowPoint >= 100)
         {
             flowPoint = 0;
-            if(resurrectCount < maxResCount)
+            if (resurrectCount < maxResCount)
                 resurrectCount += 1;
         }
 
@@ -314,42 +316,54 @@ public class PlayerGeneralHandler : MonoBehaviour
 
     public void TakeEnemyDamage(int damage, int EnemyColorState, Enemy enemy)
     {
-        if (enemy == null || blockController.blocking == false ||
-            enemy.facingRight == GetComponent<PlayerMovement>().facingRight)
+        if(enemy == null)
         {
+            enemy = new Enemy();
+            enemy.facingRight = !GetComponent<PlayerMovement>().facingRight; 
+        }
+
+        if (blockController.blocking == false || 
+            GetComponent<PlayerMovement>().facingRight == enemy.facingRight)
+        {
+            print("TAKE DAMAGE");
             SoundFXHandler.instance.Play("DamageSmall");
             int hitChance = Random.Range(1, chanceToStagger);
             Instantiate(takeDamageFX, transform.position + TakeDamageFXOffset, Quaternion.identity);
             healthPoints -= damage;
             UpdateHealthUI();
-            if(Random.Range(0, 9) < 1)
-            {
-                animator.SetTrigger("TakeDamage");
-            }
+
             StatusUIHandler.instance.PlayTakeDamageAnimation();
             if (healthPoints <= 0)
             {
                 PlayerDead();
             }
-            else if (Random.Range(0, 9) < 1)
+            //Randomaly disable player's control when damage taken
+            else if (Random.Range(0, 9) < 1 &&
+                IsStunned == false &&
+                GetComponent<BlockController>().blocking == false)
             {
                 DeactivateControl();
                 animator.SetTrigger("TakeDamage");
             }
             StartCoroutine(DamageEffect());
+
         }
-        else if (blockController.blocking == true &&
-            GetComponent<PlayerMovement>().facingRight != enemy.facingRight)
+        //else if (blockController.blocking == true &&
+        //     GetComponent<PlayerMovement>().facingRight != enemy.facingRight)
+        else
         {
-            counterAttack.PlayRandomCounterAttack();
-            if (EnemyColorState != colorState)
+            if (enemy == null || GetComponent<PlayerMovement>().facingRight != enemy.facingRight)
             {
-                StatusUIHandler.instance.TriggerToIdleStateAnimation();
-                StartCoroutine(StunnedAndRecover());
-                GetComponent<PlayerMovement>().parryStunned = true;
-                healthPoints -= (damage * 2);
-                blockController.DisableBlocking();
-                blockController.blocking = false;
+                counterAttack.PlayRandomCounterAttack();
+                if (EnemyColorState != colorState)
+                {
+                    StatusUIHandler.instance.TriggerToIdleStateAnimation();
+                    StartCoroutine(StunnedAndRecover());
+                    GetComponent<PlayerMovement>().parryStunned = true;
+                    healthPoints -= (damage * 2);
+                    blockController.DisableBlocking();
+                    blockController.blocking = false;
+                }
             }
         }
     }
@@ -369,7 +383,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         }
         healthBarFX.growing = true;
         healthBarFX.updatedPercentage = healthPoints / startHealth;
-        if(healthValue != null)
+        if (healthValue != null)
             healthValue.text = healthPoints.ToString();
     }
 
@@ -377,7 +391,7 @@ public class PlayerGeneralHandler : MonoBehaviour
     {
         healthBar.fillAmount = healthPoints / startHealth;
         print("updated health UI");
-        if(healthValue != null)
+        if (healthValue != null)
             healthValue.text = healthPoints.ToString();
     }
 
@@ -391,7 +405,7 @@ public class PlayerGeneralHandler : MonoBehaviour
     {
         GetComponentInChildren<SpriteRenderer>().color = new Color(1, 1, 1, 0.1f);
         healthBar.color = Color.white;
-        if(healthBarIcon != null)
+        if (healthBarIcon != null)
             healthBarIcon.color = Color.red;
 
         yield return new WaitForSeconds(0.2f);
@@ -487,12 +501,19 @@ public class PlayerGeneralHandler : MonoBehaviour
         StatusUIHandler.instance.PlayHealthRecoverUIFX();
     }
 
+    public void ParrySuccessFX()
+    {
+        SoundFXHandler.instance.Play("ParrySuccess1");
+        ShakeController.instance.CamBigShake();
+        Time.timeScale = 0.002f;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "ColliderRight")
         {
             print("COLLIDER RIGHT");
-            hasCollideWithEdge = true;       
+            hasCollideWithEdge = true;
         }
 
         if (collision.gameObject.tag == "ColliderLeft")
@@ -541,6 +562,7 @@ public class PlayerGeneralHandler : MonoBehaviour
 
     IEnumerator StunnedAndRecover()
     {
+        IsStunned = true;
         Time.timeScale = .002f;
         if (WhiteStandFX != null && BlueStandFX != null)
         {
@@ -566,7 +588,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         }
         blockPoints = startBlockPoint;
         yield return new WaitForSeconds(2f);
-        
+
         PlayerMovement.Instance.canMove = true;
         animator.SetBool("BlockFailIdle", false);
         canBlock = true;
@@ -581,6 +603,7 @@ public class PlayerGeneralHandler : MonoBehaviour
         {
             TutorialManagerZero.instance.ReTryParry();
         }
+        IsStunned = false;
     }
 
     public void CallPowerUp()

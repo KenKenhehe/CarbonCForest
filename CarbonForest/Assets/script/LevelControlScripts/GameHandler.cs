@@ -22,7 +22,9 @@ public class GameHandler : MonoBehaviour {
         if (PauseMenu.GameIsPause == false && TutorialManagerZero.InTutorial == false)
         {
             ResetTime();
+            //print(Time.timeScale);
         }
+
 	}
 
    void ResetTime()
