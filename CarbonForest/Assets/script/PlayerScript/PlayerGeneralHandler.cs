@@ -325,6 +325,14 @@ public class PlayerGeneralHandler : MonoBehaviour
         if (blockController.blocking == false || 
             GetComponent<PlayerMovement>().facingRight == enemy.facingRight)
         {
+            enemy = new Enemy();
+            enemy.facingRight = !GetComponent<PlayerMovement>().facingRight; 
+        }
+
+        if (blockController.blocking == false || 
+            GetComponent<PlayerMovement>().facingRight == enemy.facingRight)
+        {
+            print("TAKE DAMAGE");
             SoundFXHandler.instance.Play("DamageSmall");
             int hitChance = Random.Range(1, chanceToStagger);
             Instantiate(takeDamageFX, transform.position + TakeDamageFXOffset, Quaternion.identity);
