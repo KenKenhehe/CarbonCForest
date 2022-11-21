@@ -30,6 +30,9 @@ public class EliteSoldier : EnemyCQC
     public Vector3 SniperShootTransformOffset;
     LayerMask mask;
 
+    [Header("Toggle this to enable counter attack")]
+    public bool canCounterAttack = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,12 +71,19 @@ public class EliteSoldier : EnemyCQC
 
     public override void TakeDamage(int damage)
     {
-        if (blockPoint > 0)
+        if (canCounterAttack)
         {
-            blocking = true;
-            BlockPlayer();
-            health -= 1;
-            UpdateHealthUI();
+            if (blockPoint > 0)
+            {
+                blocking = true;
+                BlockPlayer();
+                health -= 1;
+                UpdateHealthUI();
+            }
+            else
+            {
+                base.TakeDamage(damage);
+            }
         }
         else
         {

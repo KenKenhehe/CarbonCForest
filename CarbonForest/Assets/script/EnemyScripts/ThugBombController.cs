@@ -84,7 +84,6 @@ public class ThugBombController : MonoBehaviour
         if (Vector3.Distance(player.transform.position, transform.position) < explodeRadius)
         {
             player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, 3, null);
-            
         }
         SoundFXHandler.instance.Play("EnemyExplode");
         Destroy(gameObject);

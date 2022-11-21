@@ -30,6 +30,7 @@ public class EnemyCQC : Enemy
     public Image blockBar;
 
     protected bool canAttack = true;
+    protected bool attacking = false;
     protected bool IsStunned = false;
 
     protected float randHoldTime;
@@ -55,7 +56,7 @@ public class EnemyCQC : Enemy
     // Update is called once per frame
     void Update()
     {
-        if(IsStunned == false)
+        if (IsStunned == false)
             EnableBehaviour();
     }
 
@@ -64,7 +65,7 @@ public class EnemyCQC : Enemy
         GameHandler.instance.globalEnemyCount += 1;
         if (AllStatusBars != null)
             AllStatusBars.SetActive(false);
-        
+
         hitDuration = new WaitForSeconds(0.2f);
         randomPatrolDir = Random.Range(-1f, 1f);
         animator = GetComponent<Animator>() == null ? GetComponentInChildren<Animator>() : GetComponent<Animator>();
@@ -84,7 +85,7 @@ public class EnemyCQC : Enemy
         colorState = Random.Range(0, 2);
         currentColorState = colorState;
         blockColorRenderer = blockBlob.GetComponent<SpriteRenderer>();
-        
+
 
         blockColorRenderer.color = new Color(blockColorRenderer.color.r,
             blockColorRenderer.color.g, blockColorRenderer.color.b,
@@ -101,7 +102,7 @@ public class EnemyCQC : Enemy
         //StartCoroutine(ChangePatrolDir());
         ChangeBlockColorAtRandom();
         CanMoveAfterShowAnimation();
-        
+
     }
 
     public virtual void EnableBehaviour()
@@ -115,12 +116,13 @@ public class EnemyCQC : Enemy
             MoveToPlayerWithRandomRate();
 
             AttackPlayerAtRate();
+
         }
     }
 
     public void MoveToPlayerWithRandomRate()
     {
-        if (randHoldTime <= 0 && canAttack == true && canMove == true)
+        if (randHoldTime <= 0 && canAttack == true && canMove == true && IsStunned == false)
         {
             MoveToPlayer();
         }
@@ -131,7 +133,7 @@ public class EnemyCQC : Enemy
         }
     }
 
-    
+
 
     public void AttackPlayerAtRate()
     {
@@ -201,12 +203,15 @@ public class EnemyCQC : Enemy
                     {
                         GameObject pbFX = Instantiate(parryBoomFX, transform.position, Quaternion.identity);
                     }
-                    soundFXHandler.Play("ParrySuccess1");
+                    //soundFXHandler.Play("ParrySuccess1");
+                    //shakeController.CamBigShake();
+                    //Time.timeScale = .002f;
+                    print("ENEMY BLOCKED");
                     ParriedBehaviour();
+                    playerToFocus.GetComponent<PlayerGeneralHandler>().ParrySuccessFX();
                     StartCoroutine(DisableAttackForAWhile(stunnedDuration));
 
-                    shakeController.CamBigShake();
-                    Time.timeScale = .002f;
+
                     health -= damage * blockDamageMultiplyer;
                     animator.SetTrigger("Stunned");
                     UpdateHealthUI();
@@ -220,7 +225,7 @@ public class EnemyCQC : Enemy
                     else if (maxHealth > 200)
                     {
                         float FXRotation = facingRight ? 90 : -90;
-                        Instantiate(blockExplosionFX, transform.position - new Vector3(0, 1, 0), Quaternion.Euler(0, 0, FXRotation));
+                        //Instantiate(blockExplosionFX, transform.position - new Vector3(0, 1, 0), Quaternion.Euler(0, 0, FXRotation));
                     }
                 }
             }
@@ -254,7 +259,7 @@ public class EnemyCQC : Enemy
     public void SpawnChangeStandFX(bool positron)
     {
         print("spawned stand fx");
-        Instantiate(positron == true ? standChangeFXPos : standChangeFXNeg, 
+        Instantiate(positron == true ? standChangeFXPos : standChangeFXNeg,
             transform.position + standChangeFXOffset, Quaternion.identity);
     }
 
@@ -270,29 +275,36 @@ public class EnemyCQC : Enemy
 
     public override void TakeDamage(int damage)
     {
-        blockBar.enabled = true;
+        if (blockBar != null)
+            blockBar.enabled = true;
+
         PlayTakeDamageSound();
-        
+
         base.TakeDamage(damage);
         if (health <= 1)
         {
             DeathBehaviour();
             PlayExplosionSound();
+
         }
         else
         {
             int bloodObjIndex = Random.Range(0, bloodFX.Length);
             int spawnDir = (facingRight == true ? 1 : -1);
-            Vector3 finalOffset = new Vector3(BloodFXOffset.x * spawnDir, BloodFXOffset.y, BloodFXOffset.z);
-            GameObject bloodfX = Instantiate(bloodFX[bloodObjIndex], transform.position + finalOffset, transform.rotation);
+            
+            if (bloodFX.Length > 0)
+            {
+                Vector3 finalOffset = new Vector3(BloodFXOffset.x * spawnDir, BloodFXOffset.y, BloodFXOffset.z);
+                GameObject bloodfX = Instantiate(bloodFX[bloodObjIndex], transform.position + finalOffset, transform.rotation);
 
-            //int spawnDir = (facingRight == true? -1 : 1);
+                //int spawnDir = (facingRight == true? -1 : 1);
 
-            bloodfX.transform.localScale = new Vector3(
-                bloodfX.transform.localScale.x * spawnDir,
-                bloodfX.transform.localScale.y,
-                bloodfX.transform.localScale.z
-                );
+                bloodfX.transform.localScale = new Vector3(
+                    bloodfX.transform.localScale.x * spawnDir,
+                    bloodfX.transform.localScale.y,
+                    bloodfX.transform.localScale.z
+                    );
+            }
 
             StartCoroutine(DamagedEffect());
             int chance = Random.Range(0, 100);
@@ -340,7 +352,8 @@ public class EnemyCQC : Enemy
         IsStunned = true;
         canAttack = false;
         canMove = false;
-        animator.SetBool("StunnedIdle", true);        
+        attacking = false;
+        animator.SetBool("StunnedIdle", true);
         yield return new WaitForSeconds(duration);
         canAttack = true;
         canMove = true;
@@ -374,7 +387,7 @@ public class EnemyCQC : Enemy
                 new Vector2(speed * Time.deltaTime * Random.Range(0, 2), rb2d.velocity.y);
         }
 
-       
+
     }
 
     public override float GetHealth()
@@ -425,7 +438,7 @@ public class EnemyCQC : Enemy
 
     public override void PlaySlashSound()
     {
-        soundFXHandler.Play("PoliceAttack" + Random.Range(1,4));
+        soundFXHandler.Play("PoliceAttack" + Random.Range(1, 4));
     }
 
     public int GetColorState()
@@ -451,4 +464,12 @@ public class EnemyCQC : Enemy
             healthBar.fillAmount = (float)health / startHealth;
         }
     }
+
+    public void EnableAttack()
+    {
+        attacking = false;
+    }
+
+   
+
 }

@@ -16,6 +16,10 @@ public class MotoController : Interactable {
     public Animator animator;
 
     bool canControl = true;
+
+    float verticalDir = 0;
+    float horizontalDir = 0;
+
 	// Use this for initialization
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
@@ -47,33 +51,19 @@ public class MotoController : Interactable {
 
     void BikeInput()
     {
+        verticalDir = Input.GetAxisRaw("Vertical");
+        horizontalDir = Input.GetAxisRaw("Horizontal");
         if (canControl == true)
         {
-            if (Input.GetKey(KeyCode.D))
-            {
-                transform.Translate(Vector2.right * bikeSpeed * Time.deltaTime);
-            }
-            else if(Input.GetKey(KeyCode.A)){
-                transform.Translate(Vector2.left * (bikeSpeed / 2) * Time.deltaTime);  
-            }
-
-            //Add vertical movement
-            if (Input.GetKey(KeyCode.W))
-            {
-                transform.Translate(Vector2.up * bikeSpeed * Time.deltaTime);
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                transform.Translate(Vector2.down * (bikeSpeed / 2) * Time.deltaTime);
-            }
-            
-            else
+            transform.Translate(new Vector2(horizontalDir, verticalDir)* bikeSpeed * Time.deltaTime);
+            if (horizontalDir == 0 && verticalDir == 0)
             {
                 transform.position = Vector2.Lerp(
-                    transform.position, 
-                    new Vector2(midBound, transform.position.y), 
-                    Time.deltaTime * 0.5f);
+                        transform.position,
+                        new Vector2(midBound, transform.position.y),
+                        Time.deltaTime * 0.5f);
             }
+            
             if(transform.position.x > rightBound)
             {
                 transform.position = new Vector2(rightBound, transform.position.y);

@@ -46,7 +46,7 @@ public class InteractableHolo : Interactable {
             HologramSprite.transform.localScale =
                 Vector3.Lerp(HologramSprite.transform.localScale, maxScale, Time.deltaTime * 5);
         }
-        else if(interacted == false)
+        else if (interacted == false)
         {
             HologramSprite.transform.localScale =
                 Vector3.Lerp(HologramSprite.transform.localScale, Vector3.zero, Time.deltaTime * 5);

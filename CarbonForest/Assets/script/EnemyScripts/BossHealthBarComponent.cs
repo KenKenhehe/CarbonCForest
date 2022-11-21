@@ -6,11 +6,12 @@ using UnityEngine.UI;
 public class BossHealthBarComponent : MonoBehaviour
 {
     public Slider Bar;
-    Enemy enemy;
+    public Enemy enemy;
     // Start is called before the first frame update
     private void Awake()
     {
-        enemy = GetComponent<Enemy>();
+        if(enemy == null)
+            enemy = GetComponent<Enemy>();
     }
 
     public void SetupForCombat()

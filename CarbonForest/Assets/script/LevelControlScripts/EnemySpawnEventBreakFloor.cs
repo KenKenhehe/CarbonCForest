@@ -19,7 +19,7 @@ public class EnemySpawnEventBreakFloor : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<PlayerGeneralHandler>() != null && hasTriggered == false)
         {
-            levelEnemyEvent.SpawnEnemyAtTransform();
+            StartCoroutine(levelEnemyEvent.SpawnEnemyAtTransform());
             
             StartCoroutine(BreakFloor());
             Destroy(gameObject, 1);

@@ -101,5 +101,6 @@ public class ArcherControllerTutorial : EnemyShooterController
     public override void DeathBehaviour()
     {
         DeathWithAnimation();
+        enabled = false;
     }
 }

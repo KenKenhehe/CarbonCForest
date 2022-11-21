@@ -100,6 +100,7 @@ public class AncientEnemyCQCTutorial : AncientEnemyCQC
         {
             Destroy(gameObject.transform.GetChild(i).gameObject);
         }
+        enabled = false;
     }
     public override void PlayExplosionSound()
     {

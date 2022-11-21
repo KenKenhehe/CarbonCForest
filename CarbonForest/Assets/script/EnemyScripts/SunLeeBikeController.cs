@@ -13,10 +13,18 @@ public class SunLeeBikeController : EnemyCQC
     }
 
     bool inBikeMode = true;
+    
     public static SunLeeBikeController instance;
     SunleeController sunleeController;
     [SerializeField] GameObject smokeObj;
+    [SerializeField] GameObject counterAttackFX;
+
+    public GameObject ChangeToNegFX;
+    public GameObject ChangeToPosFX;
+    
     public GameObject projectile;
+
+
     public Transform projectileTransform;
 
     public Dialog introDialog;
@@ -25,18 +33,32 @@ public class SunLeeBikeController : EnemyCQC
     float currentDashTime;
     public float dashSpeed;
 
+    public float FXOffset;
+
+    public int parryDamage = 30;
+
     bool dashing = false;
     bool BikeMode = true;
     bool hasDash = false;
+
+    [HideInInspector]
+    public bool turning = false;
 
     bool waitingForAction;
 
     public int currentDir = -1;
 
+    int destroyHitCount = 5;//5;
+
     [SerializeField] GameObject middleStateControler;
+
+    [HideInInspector]
+    public bool isDestroied;
 
 
     MotionState currentMotionState = MotionState.IDLE;
+
+    public ContinuousExplosionSpawner DestroyExplosionSpawner;
 
     // Start is called before the first frame update
 
@@ -56,7 +78,10 @@ public class SunLeeBikeController : EnemyCQC
         animator = GetComponent<Animator>();
        
         Initialize();
+        respondRange = 3.5f;
         print(sunleeController);
+        blocking = true;
+        isDestroied = false;
     }
 
     // Update is called once per frame
@@ -95,7 +120,7 @@ public class SunLeeBikeController : EnemyCQC
 
     public void OnBikeAttack()
     {
-        if (canAttack == true)
+        if (canAttack == true && turning == false)
         {
             if (Vector2.Distance(transform.position, playerToFocus.transform.position) <= respondRange)
             {
@@ -103,6 +128,22 @@ public class SunLeeBikeController : EnemyCQC
             }
         }
     }
+
+    public override void TakeDamage(int damage)
+    {
+        //base.TakeDamage(damage);
+        shakeController.CamShake();
+        soundFXHandler.Play("SwordCling" + Random.Range(1, 4));
+
+        Instantiate(counterAttackFX,
+           new Vector3(
+               (facingRight == true ? transform.position.x + FXOffset : transform.position.x - FXOffset),
+               transform.position.y,
+               transform.position.z),
+           Quaternion.identity);
+    }
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -115,6 +156,7 @@ public class SunLeeBikeController : EnemyCQC
                 currentDashTime = dashTime;
                 middleStateControler.SetActive(true);
                 GetComponent<SpriteRenderer>().enabled = false;
+                turning = true;
                 waitingForAction = true;
             }
 
@@ -132,6 +174,7 @@ public class SunLeeBikeController : EnemyCQC
             new Vector3(-projectileTransform.transform.localPosition.x,
             projectileTransform.transform.localPosition.y,
             projectileTransform.transform.localPosition.z);
+        AdjustStandFXFacing();
     }
 
     void BikeBehaviour()
@@ -177,19 +220,53 @@ public class SunLeeBikeController : EnemyCQC
 
     public override void ParriedBehaviour()
     {
-        if (BikeMode == true)
+        if (isDestroied == false)
         {
-            //Fall down from bike
-            sunleeController.GetComponent<BoxCollider2D>().isTrigger = true;
-            animator.SetTrigger("BikeOnlyRun");
-            BikeMode = false;
-            sunleeController.gameObject.SetActive(true);
-            sunleeController.GetComponent<Rigidbody2D>().AddForce(new Vector2(100, 0));
-            rb2d.constraints = RigidbodyConstraints2D.FreezePosition;
+            if (BikeMode == true)
+            {
+                //Fall down from bike
+                sunleeController.GetComponent<BoxCollider2D>().isTrigger = true;
+                animator.SetTrigger("BikeOnlyRun");
+                BikeMode = false;
+                sunleeController.gameObject.SetActive(true);
+                sunleeController.GetComponent<Rigidbody2D>().AddForce(new Vector2(100, 0));
+                rb2d.constraints = RigidbodyConstraints2D.FreezePosition;
+                sunleeController.TakeDamage(parryDamage);
+                destroyHitCount -= 1;
+                blockBar.gameObject.transform.parent.gameObject.SetActive(false);
+                if (destroyHitCount <= 1)
+                {
+                    isDestroied = true;
+                    //Bike destroy FX
+                    DestroyExplosionSpawner.PlayExplosion();
+                    GetComponent<BoxCollider2D>().enabled = false;
+                    sunleeController.blockBar.gameObject.transform.parent.gameObject.SetActive(true);
+                    blockBar.gameObject.SetActive(false);
+                    StartCoroutine(DisableBikeAfterExplode());
+                }
+
+            }
+            else
+            {
+                base.ParriedBehaviour();
+            }
         }
+    }
+
+    IEnumerator DisableBikeAfterExplode()
+    {
+        yield return new WaitForSeconds(DestroyExplosionSpawner.GetExplosionDuration());
+        GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    public override void ShowEnemyCurrentStand(bool show)
+    {
+        if(isDestroied == false)
+            base.ShowEnemyCurrentStand(show);
         else
         {
-            base.ParriedBehaviour();
+            WhiteStandFX.SetActive(false);
+            BlueStandFX.SetActive(false);
         }
     }
 
@@ -203,6 +280,9 @@ public class SunLeeBikeController : EnemyCQC
     {
         Destroy(smokeObj);
         animator.SetTrigger("ToCombat");
+        GetComponent<BossHealthBarComponent>().SetupForCombat();
+        if(isDestroied == false)
+            soundFXHandler.Play("SunleeTheme");
     }
 
     public void startAction()
@@ -223,6 +303,7 @@ public class SunLeeBikeController : EnemyCQC
     IEnumerator ActivateBehaviourList()
     {
         MotionState previousState = MotionState.IDLE;
+        int attackRound = 0;
         while (true)
         {
             if (waitingForAction && BikeMode == true)
@@ -249,22 +330,34 @@ public class SunLeeBikeController : EnemyCQC
                     }
                     previousState = MotionState.RANGE;
                 }
-                //else if(currentMotionState == MotionState.SWITCH_STAND)
-                //{
-                //    //Play switch stand animation
-                //    animator.SetTrigger("Switch");
+                else if (currentMotionState == MotionState.SWITCH_STAND)
+                {
+                    //Play switch stand animation
+                    //animator.SetTrigger("SwitchStand");
+                    SwitchStand();
+                }
 
-                //    //Flip the color state 
-                //    colorState = (colorState == 0 ? 1 : 0);
-
-
-                //}
                 //70 persent chance next attack is dash, to avoid bomb filling the screen
                 currentMotionState = (Random.Range(0, 100) > 85) ? MotionState.DASH : MotionState.RANGE;
+                attackRound += 1;
+                if(attackRound >= Random.Range(2,5))
+                {
+                    currentMotionState = MotionState.SWITCH_STAND;
+                    attackRound = 0;
+                }
                 //print(currentMotionState);
             }
             yield return new WaitForSeconds(.5f);
         }
+    }
+
+    //Trigger this function in "switch stand" animation as animation event
+    public void SwitchStand()
+    {
+        colorState = (colorState == 0 ? 1 : 0);
+        GameObject changeStyleFXobj = Instantiate(colorState == 0 ? ChangeToNegFX : ChangeToPosFX,
+            transform.position, Quaternion.identity);
+        Destroy(changeStyleFXobj, 1);
     }
 
     public void startDash()
@@ -289,5 +382,6 @@ public class SunLeeBikeController : EnemyCQC
     public void setBikeMode(bool bikeMode)
     {
         this.BikeMode = bikeMode;
+        blockBar.gameObject.transform.parent.gameObject.SetActive(true);
     }
 }

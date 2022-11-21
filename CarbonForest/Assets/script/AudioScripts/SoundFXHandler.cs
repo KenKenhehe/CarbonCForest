@@ -55,7 +55,7 @@ public class SoundFXHandler : MonoBehaviour {
     public void StopFadeOut(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        StartCoroutine(FadeOut(0.01f, s.source));
+        StartCoroutine(FadeOut(0.05f, s.source));
     }
 
     // --- for fade in/out ---
@@ -70,7 +70,7 @@ public class SoundFXHandler : MonoBehaviour {
 
     public IEnumerator FadeOut(float fadeSpeed, AudioSource source)
     {
-        while (source.volume >= 0.05f)
+        while (source.volume >= 0.1f)
         {
             source.volume -= fadeSpeed;
             yield return new WaitForSeconds(0.01f);

@@ -13,6 +13,6 @@ public class SunleeMiddleStateControler : MonoBehaviour
         spriteRendererParent.flipX = GetComponentInParent<SunLeeBikeController>().currentDir== 1 ? true : false;
         gameObject.SetActive(false);
         gameObject.GetComponent<SpriteRenderer>().flipX = GetComponentInParent<SunLeeBikeController>().currentDir == 1 ? true : false;
-        
+        GetComponentInParent<SunLeeBikeController>().turning = false;
     }
 }

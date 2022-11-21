@@ -102,5 +102,6 @@ public class AncientEnemyCQC : EnemyCQC
             Destroy(gameObject.transform.GetChild(i).gameObject);
         }
         DeathWithAnimation();
+        enabled = false;
     }
 }

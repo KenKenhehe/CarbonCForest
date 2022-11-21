@@ -48,7 +48,6 @@ public class BulletController : MonoBehaviour {
                 player.GetComponent<PlayerMovement>().dodging == false)
             {
                 player.GetComponent<PlayerGeneralHandler>().TakeEnemyDamage(damage, 0, enemy);
-                print("Damage player");
                 Destroy(gameObject);
             }
             else if(player.GetComponent<BlockController>().blocking == true)

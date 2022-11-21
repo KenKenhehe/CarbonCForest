@@ -7,6 +7,9 @@ public class SecurityDoorHandler : Interactable
     [HideInInspector]
     public bool CanOpen;
 
+    public bool isExitDoor;
+    public GameObject exit;
+
     public static SecurityDoorHandler instance;
     BoxCollider2D boxCollider2D;
 
@@ -24,6 +27,11 @@ public class SecurityDoorHandler : Interactable
         CanOpen = false;
         boxCollider2D = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
+        if (isExitDoor)
+        {
+            boxCollider2D.isTrigger = true;
+        }
+        exit.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,14 +45,23 @@ public class SecurityDoorHandler : Interactable
     {
         if(CanOpen == true)
         {
-            boxCollider2D.isTrigger = true;
-
-            //play door open animation
+            print("Opening door");
             TerminalAnimator.SetTrigger("Unlock");
             animator.SetTrigger("Open");
+            if (!isExitDoor)
+            {
+                boxCollider2D.isTrigger = true;
+
+                //play door open animation
+                boxCollider2D.enabled = false;
+            }
+            else
+            {
+                exit.SetActive(true);
+                boxCollider2D.enabled = false;
+            }
 
         }
-
         else
         {
             print("Door locked, need key card...");
@@ -52,7 +69,7 @@ public class SecurityDoorHandler : Interactable
             //play lock animation
             TerminalAnimator.SetTrigger("Locked");
 
-            // play lock sound
+            //TODO play lock sound
         }
     }
 

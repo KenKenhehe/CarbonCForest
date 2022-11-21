@@ -282,7 +282,6 @@ public class TutorialManagerZero : MonoBehaviour
         {
             GameObject player = collision.gameObject;
 
-            print("NORMAL ATTACK");
             normalAttackHintObj =
                 Instantiate(normalAttackHint,
                 normalAttackHintTransform.position,
@@ -290,6 +289,7 @@ public class TutorialManagerZero : MonoBehaviour
 
             normalAttackHint.gameObject.GetComponentInChildren<MeshRenderer>().sortingOrder = 20;
             hasAttack = true;
+            Destroy(normalAttackHintObj, 8);
         }
     }
 
