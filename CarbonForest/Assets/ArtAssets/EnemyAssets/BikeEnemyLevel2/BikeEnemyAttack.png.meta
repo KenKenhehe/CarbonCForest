@@ -9,7 +9,7 @@ TextureImporter:
     21300008: BikeEnemyAttack_4
     21300010: BikeEnemyAttack_5
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -94,17 +94,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 640
-        width: 200
+        y: 384
+        width: 128
         height: 128
-      alignment: 9
-      pivot: {x: 0.32, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0792c0f69f0f614cac5b1fa3b7dd65a
+      spriteID: 3861a5485f660f64caed4e8ae3e91c2d
       vertices: []
       indices: 
       edges: []
@@ -114,17 +114,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 512
-        width: 200
+        y: 256
+        width: 128
         height: 128
-      alignment: 9
-      pivot: {x: 0.32, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 367db638bab57c84e9752d7c6d0c4222
+      spriteID: 85333d53868404049a33c715ff4d5357
       vertices: []
       indices: 
       edges: []
@@ -134,17 +134,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 384
-        width: 200
+        y: 128
+        width: 128
         height: 128
-      alignment: 9
-      pivot: {x: 0.32, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b530274a5c338d4082bf352775e9606
+      spriteID: 420e4483b6cc8fc46b74cf9fdb00de33
       vertices: []
       indices: 
       edges: []
@@ -154,57 +154,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 256
-        width: 200
-        height: 128
-      alignment: 9
-      pivot: {x: 0.32, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 37f7c40936738d246834ac904b90409c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BikeEnemyAttack_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 200
-        height: 128
-      alignment: 9
-      pivot: {x: 0.32, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cd871cee0c5f432488296c06f26f4287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BikeEnemyAttack_5
-      rect:
-        serializedVersion: 2
-        x: 0
         y: 0
-        width: 200
+        width: 128
         height: 128
-      alignment: 9
-      pivot: {x: 0.32, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2865cfa5b92292445a89ea78c85dc945
+      spriteID: 5e6cc06392ee546428c7b071c6e5a50b
       vertices: []
       indices: 
       edges: []

@@ -15,6 +15,7 @@ public class ScrollController : MonoBehaviour {
     public GameObject bgMusic;
 
     public GameObject mech;
+    GameObject mechObj;
     private int levelIndex;
     public GameObject darkBluryImage;
 
@@ -69,6 +70,7 @@ public class ScrollController : MonoBehaviour {
         yield return new WaitForSeconds(110);
         flashBlack.SetActive(true);
         FindObjectOfType<SoundFXHandler>().gameObject.SetActive(false);
+        mechObj.SetActive(false);
         yield return new WaitForSeconds(10);
         if(!isDemo)
             SceneManager.LoadScene(levelIndex + 1);
@@ -100,7 +102,7 @@ public class ScrollController : MonoBehaviour {
     IEnumerator WaitAndSpawnMech()
     {
         yield return new WaitForSeconds(mechMusicTiming);
-        Instantiate(mech);
+        mechObj = Instantiate(mech);
     }
     IEnumerator WaitAndFireFinishBeam()
     {

@@ -22,6 +22,12 @@ public class ControllerVibrationHandler : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        isVibrate = false;
+    }
+
     void FixedUpdate()
     {
         // SetVibration should be sent in a slower rate.

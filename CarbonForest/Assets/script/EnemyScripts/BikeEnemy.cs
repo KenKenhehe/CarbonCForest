@@ -52,7 +52,7 @@ public class BikeEnemy : Enemy {
             FindObjectOfType<ShakeController>().CamBigShake();
             Destroy(gameObject);
             Instantiate(explosionFXs[Random.Range(0, explosionFXs.Length)], transform.position + Vector3.down, Quaternion.identity);
-            Instantiate(destoryFX, transform.position + Vector3.down, Quaternion.Euler(0, 0, 90));
+            Instantiate(destoryFX, transform.position + Vector3.down, Quaternion.identity);
             PlayExplosionSound();
         }
         StartCoroutine(DamagedEffect());

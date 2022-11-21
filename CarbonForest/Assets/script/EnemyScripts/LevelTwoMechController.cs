@@ -18,6 +18,7 @@ public class LevelTwoMechController : Enemy
 
     public GameObject beamTarget;
     public GameObject beamExplosionFX;
+    public GameObject shieldFX;
 
     public float minShootBeamDuration;
     public float maxShootBeamDuration;
@@ -77,6 +78,8 @@ public class LevelTwoMechController : Enemy
         base.TakeDamage(damage);
         StartCoroutine(DamagedEffect());
         soundFXHandler.Play("BikeDamaged");
+        GameObject shieldFXObj = Instantiate(shieldFX, transform.position, Quaternion.identity);
+        Destroy(shieldFXObj, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
